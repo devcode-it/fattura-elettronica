@@ -6,15 +6,15 @@
 # Fattura Elettronica verso privati e PA
 
 ## Descrizione
-La libreria è stata testata generando solo fatture semplici. 
-I casi particolari non sono stati ancora trattati. 
-Potete segnalare qualsiasi necessità o problema 
+La libreria è stata testata generando solo fatture semplici.
+I casi particolari non sono stati ancora trattati.
+Potete segnalare qualsiasi necessità o problema
 [qui](https://github.com/deved-it/fattura-elettronica/issues/new).
 
 ## installazione
 
     composer require deved/fattura-elettronica
-    
+
 ## Esempio completo
 
 ```php
@@ -66,7 +66,7 @@ $fattura = $fatturaElettronicaFactory->create(
 // ottenere il nome della fattura conforme per l'SDI
 $file = $fattura->getFileName();
 
-//generazione file XML 
+//generazione file XML
 $xml = $fattura->toXml();
 
 //print su schermo
@@ -105,7 +105,7 @@ class EsempioFattura implements FatturaInterface, IntermediarioInterface
 
 ```php
 
-$fatturaElettronica = new \Deved\FatturaElettronica\FatturaAdapter($esempioFattura);
+$fatturaElettronica = new \Dasc3er\FatturaElettronica\FatturaAdapter($esempioFattura);
 $nome = $fatturaElettronica->getFileName();
 $xml = $fatturaElettronica->toXml();
 

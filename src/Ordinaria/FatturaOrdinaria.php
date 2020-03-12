@@ -174,6 +174,6 @@ class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
             __DIR__.'/../../xsd/fattura_pa_1.2.1.xsd'
         );
 
-        return $validator->errors;
+        return $validator->getErrors();
     }
 }

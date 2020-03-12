@@ -23,7 +23,18 @@ class DatiRiepilogo extends ElementoFattura
 
     protected Decimal $Imposta;
 
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->AliquotaIVA = new Decimal(2);
+        $this->SpeseAccessorie = new Decimal(2);
+        $this->Arrotondamento = new Decimal(2);
+        $this->ImponibileImporto = new Decimal(2);
+        $this->Imposta = new Decimal(2);
+    }
+
+    public static function build(
         ?float $AliquotaIVA = null,
         ?string $Natura = null,
         ?float $SpeseAccessorie = null,
@@ -33,15 +44,19 @@ class DatiRiepilogo extends ElementoFattura
         ?string $EsigibilitaIVA = null,
         ?string $RiferimentoNormativo = null
     ) {
-        $this->AliquotaIVA = new Decimal(2, $AliquotaIVA);
-        $this->SpeseAccessorie = new Decimal(2, $SpeseAccessorie);
-        $this->Arrotondamento = new Decimal(2, $Arrotondamento);
-        $this->ImponibileImporto = new Decimal(2, $ImponibileImporto);
-        $this->Imposta = new Decimal(2, $Imposta);
+        $element = new static();
 
-        $this->Natura = $Natura;
-        $this->EsigibilitaIVA = $EsigibilitaIVA ?: 'I';
-        $this->RiferimentoNormativo = $RiferimentoNormativo;
+        $element->AliquotaIVA = ($AliquotaIVA);
+        $element->SpeseAccessorie = ($SpeseAccessorie);
+        $element->Arrotondamento = ($Arrotondamento);
+        $element->ImponibileImporto = ($ImponibileImporto);
+        $element->Imposta = ($Imposta);
+
+        $element->Natura = $Natura;
+        $element->EsigibilitaIVA = $EsigibilitaIVA ?: 'I';
+        $element->RiferimentoNormativo = $RiferimentoNormativo;
+
+        return $element;
     }
 
     public function getAliquotaIVA(): ?float

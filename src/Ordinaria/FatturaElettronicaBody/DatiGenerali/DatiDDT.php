@@ -4,7 +4,7 @@ namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenera
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
 
-class DatiDdt extends ElementoFattura
+class DatiDDT extends ElementoFattura
 {
     protected ?string $NumeroDDT;
 
@@ -13,17 +13,23 @@ class DatiDdt extends ElementoFattura
     /** @var int[] */
     protected iterable $RiferimentoNumeroLinea;
 
-    /**
-     * DatiDdt constructor.
-     */
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->RiferimentoNumeroLinea = [];
+    }
+
+    public static function build(
         ?string $NumeroDDT = null,
         ?string $DataDDT = null
     ) {
-        $this->NumeroDDT = $NumeroDDT;
-        $this->DataDDT = $DataDDT;
+        $element = new static();
 
-        $this->RiferimentoNumeroLinea = [];
+        $element->NumeroDDT = $NumeroDDT;
+        $element->DataDDT = $DataDDT;
+
+        return $element;
     }
 
     /**
@@ -41,7 +47,7 @@ class DatiDdt extends ElementoFattura
         return $this->NumeroDDT;
     }
 
-    public function setNumeroDDT(?string $NumeroDDT): DatiDdt
+    public function setNumeroDDT(?string $NumeroDDT): DatiDDT
     {
         $this->NumeroDDT = $NumeroDDT;
 
@@ -53,7 +59,7 @@ class DatiDdt extends ElementoFattura
         return $this->DataDDT;
     }
 
-    public function setDataDDT(?string $DataDDT): DatiDdt
+    public function setDataDDT(?string $DataDDT): DatiDDT
     {
         $this->DataDDT = $DataDDT;
 
@@ -66,5 +72,19 @@ class DatiDdt extends ElementoFattura
     public function getRiferimentoNumeroLinea(): iterable
     {
         return $this->RiferimentoNumeroLinea;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize(array $content): void
+    {
+        if (isset($content['RiferimentoNumeroLinea']) && !is_array($content['RiferimentoNumeroLinea'])) {
+            $content['RiferimentoNumeroLinea'] = [
+                $content['RiferimentoNumeroLinea'],
+            ];
+        }
+
+        parent::unserialize($content);
     }
 }

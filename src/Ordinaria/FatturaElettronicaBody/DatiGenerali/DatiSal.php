@@ -8,9 +8,14 @@ class DatiSal extends ElementoFattura
 {
     protected ?int $RiferimentoFase;
 
-    public function __construct(?int $RiferimentoFase = null)
-    {
-        $this->RiferimentoFase = $RiferimentoFase;
+    public static function build(
+?int $RiferimentoFase = null
+    ) {
+        $element = new static();
+
+        $element->RiferimentoFase = $RiferimentoFase;
+
+        return $element;
     }
 
     public function getRiferimentoFase(): ?int

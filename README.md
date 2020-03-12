@@ -18,8 +18,6 @@ Potete segnalare qualsiasi necessità o problema
 ## Esempio di utilizzo
 
 ```php
-require __DIR__.'/vendor/autoload.php';
-
 use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
 use Dasc3er\FatturaElettronica\Common\Sede;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
@@ -27,7 +25,9 @@ use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestat
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaOrdinaria;
 use Dasc3er\FatturaElettronica\Tabelle\TipoDocumento;
 
-$fattura = new FatturaOrdinaria(
+require __DIR__.'/vendor/autoload.php';
+
+$fattura = FatturaOrdinaria::build(
     TipoDocumento::Fattura,
     '2018-11-22',
     '2018221111',
@@ -35,13 +35,13 @@ $fattura = new FatturaOrdinaria(
 );
 
 // Anagrafica cedente
-$anagraficaCedente = new DatiAnagraficiCedente(
+$anagraficaCedente = DatiAnagraficiCedente::build(
     '12345678901',
     'IT',
     '12345678901',
     'Acme SpA',
 );
-$sedeCedente = new Sede(
+$sedeCedente = Sede::build(
     'Via Roma 10',
     null,
     'Tarvisio',
@@ -55,14 +55,14 @@ $cedente->setDatiAnagrafici($anagraficaCedente);
 $cedente->setSede($sedeCedente);
 
 // Anagrafica cessionario
-$anagraficaCessionario = new DatiAnagrafici(
+$anagraficaCessionario = DatiAnagrafici::build(
     'XYZYZX77M04H888K',
     null,
     null,
     'Pinco Palla'
 );
 
-$sedeCessionario = new Sede(
+$sedeCessionario = Sede::build(
     'Via Diaz 35',
     null,
     'Tarvisio',
@@ -78,11 +78,11 @@ $fattura->getDatiGenerali()
     ->getDatiGeneraliDocumento()
     ->setImportoTotaleDocumento(122);
 
-$linea = new DettaglioLinee('Articolo1', 50, 'ABC', 120, 10);
+$linea = DettaglioLinee::build('Articolo1', 50, 'ABC', 120, 10);
 $fattura->getDatiBeniServizi()->addLinea($linea);
 
 // Generazione
-$xml = $fattura->toXml();
+$xml = $fattura->__toString();
 
 $file = $fattura->getFileName();
 var_dump($xml);

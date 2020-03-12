@@ -11,17 +11,24 @@ class ScontoMaggiorazione extends ElementoFattura
     protected Decimal $Percentuale;
     protected Decimal $Importo;
 
-    /**
-     * ScontoMaggiorazione constructor.
-     */
-    public function __construct(
+    public function __construct()
+    {
+        $this->Percentuale = new Decimal(2);
+        $this->Importo = new Decimal(2);
+    }
+
+    public static function build(
         ?string $Tipo = null,
         ?float $Percentuale = null,
         ?float $Importo = null
     ) {
-        $this->Tipo = $Tipo;
-        $this->Percentuale = new Decimal(2, $Percentuale);
-        $this->Importo = new Decimal(2, $Importo);
+        $element = new static();
+
+        $element->Tipo = $Tipo;
+        $element->Percentuale = $Percentuale;
+        $element->Importo = $Importo;
+
+        return $element;
     }
 
     public function getTipo(): ?string

@@ -8,21 +8,27 @@ use Dasc3er\FatturaElettronica\ElementoFattura;
 
 class CessionarioCommittente extends ElementoFattura
 {
-    /** @var DatiAnagrafici */
     public DatiAnagrafici $DatiAnagrafici;
 
-    /** @var Sede */
     public Sede $Sede;
 
-    /**
-     * CessionarioCommittente constructor.
-     */
     public function __construct(
         ?DatiAnagrafici $DatiAnagrafici = null,
         ?Sede $Sede = null
     ) {
-        $this->DatiAnagrafici = $DatiAnagrafici ?: new DatiAnagrafici();
-        $this->Sede = $Sede ?: new Sede();
+        $this->DatiAnagrafici = new DatiAnagrafici();
+        $this->Sede = new Sede();
+    }
+
+    public static function build(
+        ?DatiAnagrafici $DatiAnagrafici = null,
+        ?Sede $Sede = null
+    ) {
+        $element = new static();
+        $element->DatiAnagrafici = $DatiAnagrafici ?: new DatiAnagrafici();
+        $element->Sede = $Sede ?: new Sede();
+
+        return $element;
     }
 
     public function getDatiAnagrafici(): DatiAnagrafici

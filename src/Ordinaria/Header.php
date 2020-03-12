@@ -22,13 +22,22 @@ class Header extends ElementoFattura
     /** @var DatiAnagrafici|null */
     protected DatiAnagrafici $TerzoIntermediarioOSoggettoEmittente;
 
-    public function __construct(
-        string $ProgressivoInvio
-    ) {
-        $this->DatiTrasmissione = new DatiTrasmissione($ProgressivoInvio);
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->DatiTrasmissione = new DatiTrasmissione();
         $this->CedentePrestatore = new CedentePrestatore();
         $this->CessionarioCommittente = new CessionarioCommittente();
+    }
 
+    public static function build(
+        string $ProgressivoInvio
+    ) {
+        $element = new static();
+        $element->getDatiTrasmissione()->setProgressivoInvio($ProgressivoInvio);
+
+        return $element;
         /*
         $this->TerzoIntermediarioOSoggettoEmittente = new DatiAnagrafici();
         protected string $SoggettoEmittente = 'TZ';

@@ -16,16 +16,20 @@ class Allegati extends ElementoFattura
 
     protected ?string $Attachment;
 
-    public function __construct(
+    public static function build(
         ?string $NomeAttachment = null,
         ?string $FormatoAttachment = null,
         ?string $DescrizioneAttachment = null,
         ?string $Attachment = null
     ) {
-        $this->NomeAttachment = $NomeAttachment;
-        $this->FormatoAttachment = $FormatoAttachment;
-        $this->DescrizioneAttachment = $DescrizioneAttachment;
-        $this->Attachment = $Attachment;
+        $element = new static();
+
+        $element->NomeAttachment = $NomeAttachment;
+        $element->FormatoAttachment = $FormatoAttachment;
+        $element->DescrizioneAttachment = $DescrizioneAttachment;
+        $element->Attachment = $Attachment;
+
+        return $element;
     }
 
     public function getNomeAttachment(): ?string

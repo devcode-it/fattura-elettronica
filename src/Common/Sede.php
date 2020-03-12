@@ -18,7 +18,7 @@ class Sede extends ElementoFattura
 
     protected ?string $Nazione;
 
-    public function __construct(
+    public static function build(
         ?string $Indirizzo = null,
         ?string $NumeroCivico = null,
         ?string $Comune = null,
@@ -26,12 +26,16 @@ class Sede extends ElementoFattura
         ?string $Provincia = null,
         ?string $Nazione = null
     ) {
-        $this->Indirizzo = $Indirizzo;
-        $this->NumeroCivico = $NumeroCivico;
-        $this->Comune = $Comune;
-        $this->CAP = $CAP;
-        $this->Provincia = $Provincia;
-        $this->Nazione = $Nazione;
+        $element = new static();
+
+        $element->Indirizzo = $Indirizzo;
+        $element->NumeroCivico = $NumeroCivico;
+        $element->Comune = $Comune;
+        $element->CAP = $CAP;
+        $element->Provincia = $Provincia;
+        $element->Nazione = $Nazione;
+
+        return $element;
     }
 
     public function getIndirizzo(): ?string

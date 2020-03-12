@@ -17,9 +17,15 @@ class DatiBeniServizi extends ElementoFattura
 
     public function __construct()
     {
-        $this->DettaglioLinee = new Collection(DettaglioLinee::class);
+        parent::__construct();
 
+        $this->DettaglioLinee = new Collection(DettaglioLinee::class);
         $this->DatiRiepilogo = new Collection(DatiRiepilogo::class);
+    }
+
+    public static function build(): self
+    {
+        return new static();
     }
 
     public function addLinea(DettaglioLinee $linea): DatiBeniServizi

@@ -14,11 +14,24 @@ class DatiPagamento extends ElementoFattura
     /** @var DettaglioPagamento[] */
     protected Collection $DettaglioPagamento;
 
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->CondizioniPagamento = CondizioniPagamento::Completo;
+        $this->DettaglioPagamento = new Collection(DettaglioPagamento::class);
+    }
+
+    public static function build(
         ?string $CondizioniPagamento = null
     ) {
-        $this->CondizioniPagamento = $CondizioniPagamento ?: CondizioniPagamento::Completo;
-        $this->DettaglioPagamento = new Collection(DettaglioPagamento::class);
+        $element = new static();
+
+        if ($CondizioniPagamento) {
+            $element->CondizioniPagamento = $CondizioniPagamento;
+        }
+
+        return $element;
     }
 
     public function getCondizioniPagamento(): ?string

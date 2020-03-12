@@ -9,7 +9,7 @@ class DatiAnagrafici extends Original
 {
     protected ?string $RegimeFiscale;
 
-    public function __construct(
+    public static function build(
         ?string $CodiceFiscale = null,
         ?string $IdPaese = null,
         ?string $IdCodice = null,
@@ -18,9 +18,11 @@ class DatiAnagrafici extends Original
         ?string $Cognome = null,
         ?string $RegimeFiscale = null
     ) {
-        parent::__construct($CodiceFiscale, $IdPaese, $IdCodice, $Denominazione, $Nome, $Cognome);
+        $element = parent::build($CodiceFiscale, $IdPaese, $IdCodice, $Denominazione, $Nome, $Cognome);
 
-        $this->RegimeFiscale = $RegimeFiscale ?: RegimeFiscale::Ordinario;
+        $element->RegimeFiscale = $RegimeFiscale ?: RegimeFiscale::Ordinario;
+
+        return $element;
     }
 
     public function isEmpty(): bool

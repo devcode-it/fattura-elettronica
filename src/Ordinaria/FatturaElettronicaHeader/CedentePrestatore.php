@@ -2,30 +2,43 @@
 
 namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 
-use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
+use Dasc3er\FatturaElettronica\Common\Contatti;
 use Dasc3er\FatturaElettronica\Common\Sede;
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\IscrizioneREA;
 
 class CedentePrestatore extends ElementoFattura
 {
-    /** @var DatiAnagrafici */
     protected DatiAnagrafici $DatiAnagrafici;
 
-    /** @var Sede */
     protected Sede $Sede;
 
-    /** @var IscrizioneREA */
-    protected ?IscrizioneREA $IscrizioneREA;
+    protected IscrizioneREA $IscrizioneREA;
 
-    public function __construct(
+    protected Contatti $Contatti;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->DatiAnagrafici = new DatiAnagrafici();
+        $this->Sede = new Sede();
+        $this->Contatti = new Contatti();
+        $this->IscrizioneREA = new IscrizioneRea();
+    }
+
+    public static function build(
         ?DatiAnagrafici $DatiAnagrafici = null,
         ?Sede $Sede = null,
         ?IscrizioneREA $IscrizioneREA = null
     ) {
-        $this->DatiAnagrafici = $DatiAnagrafici ?: new DatiAnagrafici();
-        $this->Sede = $Sede ?: new Sede();
-        $this->IscrizioneREA = $IscrizioneREA ?: new IscrizioneRea();
+        $element = new static();
+        $element->DatiAnagrafici = $DatiAnagrafici;
+        $element->Sede = $Sede ?: new Sede();
+        $element->IscrizioneREA = $IscrizioneREA;
+
+        return $element;
     }
 
     public function getDatiAnagrafici(): DatiAnagrafici

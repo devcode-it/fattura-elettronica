@@ -2,8 +2,9 @@
 
 namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
-use Dasc3er\FatturaElettronica\Common\CodiceArticolo;
+use Dasc3er\FatturaElettronica\Common\ScontoMaggiorazione;
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Fields\Collection;
 use Dasc3er\FatturaElettronica\Fields\Decimal;
 
 class DettaglioLinee extends ElementoFattura
@@ -15,7 +16,7 @@ class DettaglioLinee extends ElementoFattura
     protected ?string $TipoCessionePrestazione;
 
     /** @var CodiceArticolo[] */
-    protected iterable $codiceArticolo;
+    protected Collection $CodiceArticolo;
 
     protected string $Descrizione;
 
@@ -30,7 +31,7 @@ class DettaglioLinee extends ElementoFattura
     protected Decimal $PrezzoUnitario;
 
     /** @var ScontoMaggiorazione[] */
-    protected iterable $ScontoMaggiorazione;
+    protected Collection $ScontoMaggiorazione;
 
     protected Decimal $PrezzoTotale;
 
@@ -43,9 +44,23 @@ class DettaglioLinee extends ElementoFattura
     protected ?string $RiferimentoAmministrazione;
 
     /** @var AltriDatiGestionali[] */
-    protected iterable $AltriDatiGestionali;
+    protected Collection $AltriDatiGestionali;
 
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->Quantita = new Decimal(4);
+        $this->PrezzoUnitario = new Decimal(4);
+        $this->AliquotaIVA = new Decimal(2);
+        $this->PrezzoTotale = new Decimal(4);
+
+        $this->CodiceArticolo = new Collection(CodiceArticolo::class);
+        $this->ScontoMaggiorazione = new Collection(ScontoMaggiorazione::class);
+        $this->AltriDatiGestionali = new Collection(AltriDatiGestionali::class);
+    }
+
+    public static function build(
         string $Descrizione,
         float $Quantita,
         ?string $UnitaMisura,
@@ -54,20 +69,22 @@ class DettaglioLinee extends ElementoFattura
         ?string $Ritenuta = null,
         ?string $Natura = null
     ) {
+        $element = new static();
+
         // Impostazione numero automatico
-        $this->NumeroLinea = self::$numero_linea;
+        $element->NumeroLinea = self::$numero_linea;
         self::$numero_linea = self::$numero_linea + 1;
 
-        $this->Descrizione = $Descrizione;
-        $this->UnitaMisura = $UnitaMisura;
-        $this->Ritenuta = $Ritenuta;
-        $this->Natura = $Natura;
+        $element->Descrizione = $Descrizione;
+        $element->UnitaMisura = $UnitaMisura;
+        $element->Ritenuta = $Ritenuta;
+        $element->Natura = $Natura;
 
-        $this->Quantita = new Decimal(2, $Quantita);
-        $this->PrezzoUnitario = new Decimal(2, $PrezzoUnitario);
-        $this->AliquotaIVA = new Decimal(2, $AliquotaIVA);
+        $element->setQuantita($Quantita);
+        $element->setPrezzoUnitario($PrezzoUnitario);
+        $element->setAliquotaIVA($AliquotaIVA);
 
-        $this->PrezzoTotale = new Decimal(2);
+        return $element;
     }
 
     public function getNumeroLinea(): int
@@ -99,7 +116,7 @@ class DettaglioLinee extends ElementoFattura
      */
     public function getCodiceArticolo(): iterable
     {
-        return $this->codiceArticolo;
+        return $this->CodiceArticolo;
     }
 
     public function getDescrizione(): string

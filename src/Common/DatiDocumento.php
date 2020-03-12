@@ -21,7 +21,12 @@ class DatiDocumento extends ElementoFattura
 
     protected ?string $CodiceCIG;
 
-    public function __construct(
+    public function __construct()
+    {
+        $this->RiferimentoNumeroLinea = [];
+    }
+
+    public static function build(
         ?string $IdDocumento = null,
         ?string $Data = null,
         ?string $NumItem = null,
@@ -29,14 +34,16 @@ class DatiDocumento extends ElementoFattura
         ?string $CodiceCUP = null,
         ?string $CodiceCIG = null
     ) {
-        $this->RiferimentoNumeroLinea = [];
+        $element = new static();
 
-        $this->IdDocumento = $IdDocumento;
-        $this->Data = $Data;
-        $this->NumItem = $NumItem;
-        $this->CodiceCommessaConvenzione = $CodiceCommessaConvenzione;
-        $this->CodiceCUP = $CodiceCUP;
-        $this->CodiceCIG = $CodiceCIG;
+        $element->IdDocumento = $IdDocumento;
+        $element->Data = $Data;
+        $element->NumItem = $NumItem;
+        $element->CodiceCommessaConvenzione = $CodiceCommessaConvenzione;
+        $element->CodiceCUP = $CodiceCUP;
+        $element->CodiceCIG = $CodiceCIG;
+
+        return $element;
     }
 
     /**

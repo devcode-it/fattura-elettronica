@@ -10,12 +10,16 @@ class IdFiscaleIva extends ElementoFattura
 
     protected ?string $IdCodice;
 
-    public function __construct(
+    public static function build(
         ?string $IdPaese = null,
         ?string $IdCodice = null
     ) {
-        $this->IdPaese = $IdPaese;
-        $this->IdCodice = $IdCodice;
+        $element = new static();
+
+        $element->IdPaese = $IdPaese;
+        $element->IdCodice = $IdCodice;
+
+        return $element;
     }
 
     public function getIdPaese(): ?string

@@ -4,19 +4,23 @@ namespace Dasc3er\FatturaElettronica\Common;
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
 
-class ContattiTrasmittente extends ElementoFattura
+class Contatti extends ElementoFattura
 {
     protected ?string $Telefono;
+
+    protected ?string $Fax;
 
     protected ?string $Email;
 
     public static function build(
         ?string $Telefono = null,
+        ?string $Fax = null,
         ?string $Email = null
     ) {
         $element = new static();
 
         $element->Telefono = $Telefono;
+        $element->Fax = $Fax;
         $element->Email = $Email;
 
         return $element;
@@ -42,6 +46,18 @@ class ContattiTrasmittente extends ElementoFattura
     public function setEmail(?string $Email): ContattiTrasmittente
     {
         $this->Email = $Email;
+
+        return $this;
+    }
+
+    public function getFax(): ?string
+    {
+        return $this->Fax;
+    }
+
+    public function setFax(?string $Fax): ContattiTrasmittente
+    {
+        $this->Fax = $Fax;
 
         return $this;
     }

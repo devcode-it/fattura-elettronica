@@ -17,35 +17,50 @@ class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
     protected Header $FatturaElettronicaHeader;
     protected Body $FatturaElettronicaBody;
 
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->FatturaElettronicaHeader = new Header();
+        $this->FatturaElettronicaBody = new Body();
+    }
+
+    public static function build(
         string $TipoDocumento,
         string $Data,
         string $Numero,
         string $ProgressivoInvio
     ) {
-        $this->FatturaElettronicaHeader = new Header($ProgressivoInvio);
-        $this->FatturaElettronicaBody = new Body($TipoDocumento, $Data, $Numero);
+        $element = new static();
+
+        $element->FatturaElettronicaHeader = Header::build($ProgressivoInvio);
+        $element->FatturaElettronicaBody = Body::build($TipoDocumento, $Data, $Numero);
+
+        return $element;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function toXml(\XMLWriter $writer): void
+    public function serialize(\XMLWriter $writer): void
     {
+        $writer->writePi('xml-stylesheet', 'type="text/xsl" encoding="UTF-8" indent="yes" href="http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2.1/fatturaPA_v1.2.1.xsl"');
+
         $writer->startElementNS('p', 'FatturaElettronica', null);
         $writer->writeAttribute('versione', 'FPR12');
         $writer->writeAttributeNS('xmlns', 'ds', null, 'http://www.w3.org/2000/09/xmldsig#');
         $writer->writeAttributeNS('xmlns', 'p', null, 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2');
         $writer->writeAttributeNS('xmlns', 'xsi', null, 'http://www.w3.org/2001/XMLSchema-instance');
+        $writer->writeAttributeNS('xsi', 'schemaLocation', null, 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd');
 
         // FatturaElettronicaHeader
         $writer->startElement('FatturaElettronicaHeader');
-        $this->FatturaElettronicaHeader->toXml($writer);
+        $this->FatturaElettronicaHeader->serialize($writer);
         $writer->endElement();
 
         // FatturaElettronicaBody
         $writer->startElement('FatturaElettronicaBody');
-        $this->FatturaElettronicaBody->toXml($writer);
+        $this->FatturaElettronicaBody->serialize($writer);
         $writer->endElement();
 
         $writer->endElement();
@@ -155,7 +170,7 @@ class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
     {
         $validator = new Validator();
         $isValid = $validator->validate(
-            $this->toXml(),
+            $this->serialize(),
             __DIR__.'/../../xsd/fattura_pa_1.2.1.xsd'
         );
 

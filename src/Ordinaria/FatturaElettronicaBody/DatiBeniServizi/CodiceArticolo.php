@@ -1,6 +1,6 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Common;
+namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
 
@@ -10,12 +10,16 @@ class CodiceArticolo extends ElementoFattura
 
     protected ?string $CodiceValore;
 
-    public function __construct(
+    public static function build(
         ?string $CodiceTipo = null,
         ?string $CodiceValore = null
     ) {
-        $this->CodiceTipo = $CodiceTipo;
-        $this->CodiceValore = $CodiceValore;
+        $element = new static();
+
+        $element->CodiceTipo = $CodiceTipo;
+        $element->CodiceValore = $CodiceValore;
+
+        return $element;
     }
 
     public function getCodiceTipo(): ?string

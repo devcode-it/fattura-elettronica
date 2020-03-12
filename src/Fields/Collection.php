@@ -4,9 +4,13 @@ namespace Dasc3er\FatturaElettronica\Fields;
 
 use ArrayIterator;
 use Dasc3er\FatturaElettronica\Interfaces\FieldInterface;
+use Dasc3er\FatturaElettronica\Interfaces\UnserializeInterface;
 use IteratorAggregate;
 
-class Collection implements IteratorAggregate, FieldInterface
+/**
+ * Classe per la gestione virtuale di elementi che possono essere prsenti più volte in una stessa sezione.
+ */
+class Collection implements IteratorAggregate, FieldInterface, UnserializeInterface
 {
     protected $values;
     protected string $class;
@@ -85,5 +89,23 @@ class Collection implements IteratorAggregate, FieldInterface
     public function isEmpty(): bool
     {
         return empty($this->values);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function unserialize(array $content): void
+    {
+        if (!isset($content[0])) {
+            $content = [$content];
+        }
+
+        $class = $this->class;
+        foreach ($content as $i => $var) {
+            $element = new $class();
+            $element->unserialize($var);
+
+            $this->add($element);
+        }
     }
 }

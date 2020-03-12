@@ -23,7 +23,17 @@ class DatiCassaPrevidenziale extends ElementoFattura
 
     protected ?string $RiferimentoAmministrazione;
 
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->AlCassa = new Decimal(2);
+        $this->ImportoContributoCassa = new Decimal(2);
+        $this->ImponibileCassa = new Decimal(2);
+        $this->AliquotaIVA = new Decimal(2);
+    }
+
+    public static function build(
         ?string $TipoCassa = null,
         ?float $AlCassa = null,
         ?float $ImportoContributoCassa = null,
@@ -33,15 +43,19 @@ class DatiCassaPrevidenziale extends ElementoFattura
         ?string $Natura = null,
         ?string $RiferimentoAmministrazione = null
     ) {
-        $this->TipoCassa = $TipoCassa;
-        $this->Ritenuta = $Ritenuta;
-        $this->Natura = $Natura;
-        $this->RiferimentoAmministrazione = $RiferimentoAmministrazione;
+        $element = new static();
 
-        $this->AlCassa = new Decimal(2, $AlCassa);
-        $this->ImportoContributoCassa = new Decimal(2, $ImportoContributoCassa);
-        $this->ImponibileCassa = new Decimal(2, $ImponibileCassa);
-        $this->AliquotaIVA = new Decimal(2, $AliquotaIVA);
+        $element->TipoCassa = $TipoCassa;
+        $element->Ritenuta = $Ritenuta;
+        $element->Natura = $Natura;
+        $element->RiferimentoAmministrazione = $RiferimentoAmministrazione;
+
+        $element->AlCassa = $AlCassa;
+        $element->ImportoContributoCassa = $ImportoContributoCassa;
+        $element->ImponibileCassa = $ImponibileCassa;
+        $element->AliquotaIVA = $AliquotaIVA;
+
+        return $element;
     }
 
     public function getTipoCassa(): ?string

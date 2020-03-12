@@ -10,12 +10,16 @@ class DatiVeicoli extends ElementoFattura
 
     protected ?string $TotalePercorso;
 
-    public function __construct(
+    public static function build(
         ?string $Data = null,
         ?string $TotalePercorso = null
     ) {
-        $this->Data = $Data;
-        $this->TotalePercorso = $TotalePercorso;
+        $element = new static();
+
+        $element->Data = $Data;
+        $element->TotalePercorso = $TotalePercorso;
+
+        return $element;
     }
 
     public function getData(): ?string

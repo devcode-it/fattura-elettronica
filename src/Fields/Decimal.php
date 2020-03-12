@@ -5,6 +5,9 @@ namespace Dasc3er\FatturaElettronica\Fields;
 use Dasc3er\FatturaElettronica\Interfaces\FieldInterface;
 use Dasc3er\FatturaElettronica\Interfaces\StringInterface;
 
+/**
+ * Classe per la gestione della formattazione automatica dei campi decimali.
+ */
 class Decimal implements FieldInterface, StringInterface
 {
     /** @var int */
@@ -15,10 +18,10 @@ class Decimal implements FieldInterface, StringInterface
 
     public function __construct(
         int $decimals = 2,
-        ?float $value = null
+        $value = null
     ) {
         $this->decimals = $decimals;
-        $this->value = $value;
+        $this->set($value);
     }
 
     public function __toString(): string
@@ -32,7 +35,7 @@ class Decimal implements FieldInterface, StringInterface
             $value = floatval($value);
         }
 
-        if (!is_float($value)) {
+        if (is_float($value)) {
             $this->value = $value;
         } else {
             $this->value = null;

@@ -21,18 +21,22 @@ class IscrizioneREA extends ElementoFattura
 
     protected string $StatoLiquidazione;
 
-    public function __construct(
+    public static function build(
         ?string $ufficio = null,
         ?string $numeroRea = null,
         ?string $capitaleSociale = null,
         ?string $socioUnico = null,
         ?string $statoLiquidazione = 'LN'
     ) {
-        $this->Ufficio = $ufficio;
-        $this->NumeroRea = $numeroRea;
-        $this->CapitaleSociale = $capitaleSociale;
-        $this->SocioUnico = $socioUnico;
-        $this->StatoLiquidazione = $statoLiquidazione;
+        $element = new static();
+
+        $element->Ufficio = $ufficio;
+        $element->NumeroRea = $numeroRea;
+        $element->CapitaleSociale = $capitaleSociale;
+        $element->SocioUnico = $socioUnico;
+        $element->StatoLiquidazione = $statoLiquidazione;
+
+        return $element;
     }
 
     public function isEmpty(): bool

@@ -25,23 +25,33 @@ class DatiGeneraliDocumento extends ElementoFattura
 
     protected Decimal $ImportoTotaleDocumento;
 
-    public function __construct(
-        ?string $TipoDocumento = null,
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->ImportoTotaleDocumento = new Decimal(2);
+
+        $this->DatiRitenuta = new Collection(DatiRitenuta::class);
+        $this->DatiCassaPrevidenziale = new Collection(DatiCassaPrevidenziale::class);
+    }
+
+    public static function build(
+?string $TipoDocumento = null,
         ?string $Data = null,
         ?string $Numero = null,
         ?float $ImportoTotaleDocumento = null,
         ?string $Divisa = null
     ) {
-        $this->TipoDocumento = $TipoDocumento ?: TipoDocumento::Fattura;
+        $element = new static();
+        $element->TipoDocumento = $TipoDocumento ?: TipoDocumento::Fattura;
 
-        $this->Data = $Data;
-        $this->Numero = $Numero;
-        $this->Divisa = $Divisa ?: 'EUR';
+        $element->Data = $Data;
+        $element->Numero = $Numero;
+        $element->Divisa = $Divisa ?: 'EUR';
 
-        $this->ImportoTotaleDocumento = new Decimal(2, $ImportoTotaleDocumento);
+        $element->ImportoTotaleDocumento->set($ImportoTotaleDocumento);
 
-        $this->DatiRitenuta = new Collection(DatiRitenuta::class);
-        $this->DatiCassaPrevidenziale = new Collection(DatiCassaPrevidenziale::class);
+        return $element;
     }
 
     public function getDivisa(): string

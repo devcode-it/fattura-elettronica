@@ -12,14 +12,18 @@ class Anagrafica extends ElementoFattura
 
     protected ?string $Cognome;
 
-    public function __construct(
+    public static function build(
         ?string $Denominazione = null,
         ?string $Nome = null,
         ?string $Cognome = null
     ) {
-        $this->Denominazione = $Denominazione;
-        $this->Nome = $Nome;
-        $this->Cognome = $Cognome;
+        $element = new static();
+
+        $element->Denominazione = $Denominazione;
+        $element->Nome = $Nome;
+        $element->Cognome = $Cognome;
+
+        return $element;
     }
 
     public function getDenominazione(): ?string

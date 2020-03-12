@@ -1,6 +1,6 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Common;
+namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
 
@@ -14,16 +14,20 @@ class AltriDatiGestionali extends ElementoFattura
 
     protected ?string $RiferimentoData;
 
-    public function __construct(
+    public static function build(
         ?string $TipoDato = null,
         ?string $RiferimentoTesto = null,
         ?string $RiferimentoNumero = null,
         ?string $RiferimentoData = null
     ) {
-        $this->TipoDato = $TipoDato;
-        $this->RiferimentoTesto = $RiferimentoTesto;
-        $this->RiferimentoNumero = $RiferimentoNumero;
-        $this->RiferimentoData = $RiferimentoData;
+        $element = new static();
+
+        $element->TipoDato = $TipoDato;
+        $element->RiferimentoTesto = $RiferimentoTesto;
+        $element->RiferimentoNumero = $RiferimentoNumero;
+        $element->RiferimentoData = $RiferimentoData;
+
+        return $element;
     }
 
     public function getTipoDato(): ?string

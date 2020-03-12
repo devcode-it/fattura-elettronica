@@ -12,10 +12,7 @@ class DatiTrasmissione extends ElementoFattura
     const FORMATO_PA = 'FPA12';
     const FORMATO_PRIVATO = 'FPR12';
 
-    public IdFiscaleIva $IdTrasmittente;
-
-    /** @var ContattiTrasmittente[] */
-    public Collection $ContattiTrasmittente;
+    protected IdFiscaleIva $IdTrasmittente;
 
     protected string $ProgressivoInvio;
 
@@ -23,9 +20,18 @@ class DatiTrasmissione extends ElementoFattura
 
     protected string $CodiceDestinatario;
 
+    /** @var ContattiTrasmittente[] */
+    protected Collection $ContattiTrasmittente;
+
     protected ?string $PECDestinatario;
 
-    public function __construct(
+    public function __construct()
+    {
+        $this->ContattiTrasmittente = new Collection(ContattiTrasmittente::class);
+        $this->IdTrasmittente = new IdFiscaleIva();
+    }
+
+    public static function build(
         string $ProgressivoInvio,
         ?string $IdPaese = null,
         ?string $IdCodice = null,
@@ -33,14 +39,15 @@ class DatiTrasmissione extends ElementoFattura
         ?string $PECDestinatario = null,
         ?bool $is_pubblica_amministrazione = false
     ) {
-        $this->IdTrasmittente = new IdFiscaleIva($IdPaese, $IdCodice);
-        $this->ProgressivoInvio = $ProgressivoInvio;
-        $this->CodiceDestinatario = $CodiceDestinatario ?: '0000000';
-        $this->PECDestinatario = $PECDestinatario;
+        $element = new static();
 
-        $this->ContattiTrasmittente = new Collection(ContattiTrasmittente::class);
+        $element->IdTrasmittente = IdFiscaleIva::build($IdPaese, $IdCodice);
+        $element->ProgressivoInvio = $ProgressivoInvio;
+        $element->CodiceDestinatario = $CodiceDestinatario ?: '0000000';
+        $element->PECDestinatario = $PECDestinatario;
 
-        $this->FormatoTrasmissione = $is_pubblica_amministrazione ? self::FORMATO_PA : self::FORMATO_PRIVATO;
+        //$element->FormatoTrasmissione = $is_pubblica_amministrazione ? self::FORMATO_PA : self::FORMATO_PRIVATO;
+        return $element;
     }
 
     public function addContattiTrasmittente(

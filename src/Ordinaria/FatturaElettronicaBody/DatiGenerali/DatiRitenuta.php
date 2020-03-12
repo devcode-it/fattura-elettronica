@@ -15,16 +15,28 @@ class DatiRitenuta extends ElementoFattura
 
     protected ?string $CausalePagamento;
 
-    public function __construct(
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->ImportoRitenuta = new Decimal(2);
+        $this->AliquotaRitenuta = new Decimal(2);
+    }
+
+    public static function build(
         ?string $TipoRitenuta,
         ?float $ImportoRitenuta,
         ?float $AliquotaRitenuta,
         ?string $CausalePagamento
     ) {
-        $this->TipoRitenuta = $TipoRitenuta;
-        $this->ImportoRitenuta = $ImportoRitenuta;
-        $this->AliquotaRitenuta = $AliquotaRitenuta;
-        $this->CausalePagamento = $CausalePagamento;
+        $element = new static();
+
+        $element->TipoRitenuta = $TipoRitenuta;
+        $element->ImportoRitenuta = $ImportoRitenuta;
+        $element->AliquotaRitenuta = $AliquotaRitenuta;
+        $element->CausalePagamento = $CausalePagamento;
+
+        return $element;
     }
 
     public function getTipoRitenuta(): ?string

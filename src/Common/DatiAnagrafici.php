@@ -10,10 +10,15 @@ class DatiAnagrafici extends ElementoFattura
 
     protected ?string $CodiceFiscale;
 
-    /** @var Anagrafica */
     protected Anagrafica $Anagrafica;
 
-    public function __construct(
+    public function __construct()
+    {
+        $this->IdFiscaleIVA = new IdFiscaleIVA();
+        $this->Anagrafica = new Anagrafica();
+    }
+
+    public static function build(
         ?string $CodiceFiscale = null,
         ?string $IdPaese = null,
         ?string $IdCodice = null,
@@ -21,10 +26,13 @@ class DatiAnagrafici extends ElementoFattura
         ?string $Nome = null,
         ?string $Cognome = null
     ) {
-        $this->CodiceFiscale = $CodiceFiscale;
-        $this->IdFiscaleIVA = new IdFiscaleIVA($IdPaese, $IdCodice);
+        $element = new static();
 
-        $this->Anagrafica = new Anagrafica($Denominazione, $Nome, $Cognome);
+        $element->CodiceFiscale = $CodiceFiscale;
+        $element->IdFiscaleIVA = IdFiscaleIVA::build($IdPaese, $IdCodice);
+        $element->Anagrafica = Anagrafica::build($Denominazione, $Nome, $Cognome);
+
+        return $element;
     }
 
     public function setDenominazione(?string $value): DatiAnagrafici

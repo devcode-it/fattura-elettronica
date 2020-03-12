@@ -27,17 +27,27 @@ class Body extends ElementoFattura
     /** @var DatiVeicoli */
     protected DatiVeicoli $DatiVeicoli;
 
-    public function __construct(
-        string $TipoDocumento,
-        string $Data,
-        string $Numero
-    ) {
-        $this->DatiGenerali = new DatiGenerali($TipoDocumento, $Data, $Numero);
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->DatiGenerali = new DatiGenerali();
         $this->DatiBeniServizi = new DatiBeniServizi();
         $this->DatiPagamento = new DatiPagamento();
         $this->DatiVeicoli = new DatiVeicoli();
 
         $this->Allegati = new Collection(Allegati::class);
+    }
+
+    public static function build(
+        string $TipoDocumento,
+        string $Data,
+        string $Numero
+    ) {
+        $element = new static();
+        $element->DatiGenerali = DatiGenerali::build($TipoDocumento, $Data, $Numero);
+
+        return $element;
     }
 
     public function getDatiGenerali(): DatiGenerali

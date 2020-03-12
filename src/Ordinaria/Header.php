@@ -35,19 +35,6 @@ class Header extends ElementoFattura
         */
     }
 
-    public function getXmlTags(): iterable
-    {
-        // Fix per IdTrasmittente non impostato
-        $trasmittente = $this->DatiTrasmissione->getIdTrasmittente();
-        $anagrafica = $this->CedentePrestatore->getDatiAnagrafici()->getIdFiscaleIVA();
-        if ($trasmittente->isEmpty()) {
-            $trasmittente->setIdPaese($anagrafica->getIdPaese());
-            $trasmittente->setIdCodice($anagrafica->getIdCodice());
-        }
-
-        return parent::getXmlTags();
-    }
-
     public function getDatiTrasmissione(): DatiTrasmissione
     {
         return $this->DatiTrasmissione;
@@ -94,5 +81,18 @@ class Header extends ElementoFattura
         $this->TerzoIntermediarioOSoggettoEmittente = $TerzoIntermediarioOSoggettoEmittente;
 
         return $this;
+    }
+
+    protected function getXmlTags(): iterable
+    {
+        // Fix per IdTrasmittente non impostato
+        $trasmittente = $this->DatiTrasmissione->getIdTrasmittente();
+        $anagrafica = $this->CedentePrestatore->getDatiAnagrafici()->getIdFiscaleIVA();
+        if ($trasmittente->isEmpty()) {
+            $trasmittente->setIdPaese($anagrafica->getIdPaese());
+            $trasmittente->setIdCodice($anagrafica->getIdCodice());
+        }
+
+        return parent::getXmlTags();
     }
 }

@@ -4,6 +4,7 @@ namespace Dasc3er\FatturaElettronica\Ordinaria;
 
 use Dasc3er\FatturaElettronica\Common\Allegati;
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Fields\Collection;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
@@ -21,7 +22,7 @@ class Body extends ElementoFattura
     protected DatiPagamento $DatiPagamento;
 
     /** @var Allegati[] */
-    protected iterable $Allegati;
+    protected Collection $Allegati;
 
     /** @var DatiVeicoli */
     protected DatiVeicoli $DatiVeicoli;
@@ -36,7 +37,7 @@ class Body extends ElementoFattura
         $this->DatiPagamento = new DatiPagamento();
         $this->DatiVeicoli = new DatiVeicoli();
 
-        $this->Allegati = [];
+        $this->Allegati = new Collection(Allegati::class);
     }
 
     public function getDatiGenerali(): DatiGenerali
@@ -90,7 +91,7 @@ class Body extends ElementoFattura
     /**
      * @return Allegati[]
      */
-    public function getAllegati(): iterable
+    public function getAllegati(): Collection
     {
         return $this->Allegati;
     }

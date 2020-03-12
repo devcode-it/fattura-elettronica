@@ -74,7 +74,7 @@ package-lock.json
 *.old
 *.txt
 tmp/
-
+*.cache
 !.gitkeep
 
 test.php

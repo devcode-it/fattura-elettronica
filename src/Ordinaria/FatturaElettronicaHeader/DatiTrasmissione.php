@@ -5,6 +5,7 @@ namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 use Dasc3er\FatturaElettronica\Common\ContattiTrasmittente;
 use Dasc3er\FatturaElettronica\Common\IdFiscaleIva;
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Fields\Collection;
 
 class DatiTrasmissione extends ElementoFattura
 {
@@ -14,7 +15,7 @@ class DatiTrasmissione extends ElementoFattura
     public IdFiscaleIva $IdTrasmittente;
 
     /** @var ContattiTrasmittente[] */
-    public iterable $ContattiTrasmittente;
+    public Collection $ContattiTrasmittente;
 
     protected string $ProgressivoInvio;
 
@@ -37,7 +38,7 @@ class DatiTrasmissione extends ElementoFattura
         $this->CodiceDestinatario = $CodiceDestinatario ?: '0000000';
         $this->PECDestinatario = $PECDestinatario;
 
-        $this->ContattiTrasmittente = [];
+        $this->ContattiTrasmittente = new Collection(ContattiTrasmittente::class);
 
         $this->FormatoTrasmissione = $is_pubblica_amministrazione ? self::FORMATO_PA : self::FORMATO_PRIVATO;
     }
@@ -46,7 +47,7 @@ class DatiTrasmissione extends ElementoFattura
         ?string $Telefono = null,
         ?string $Email = null
     ) {
-        $this->ContattiTrasmittente[] = new ContattiTrasmittente($Telefono, $Email);
+        $this->ContattiTrasmittente->add(new ContattiTrasmittente($Telefono, $Email));
     }
 
     public function getProgressivoInvio(): string
@@ -109,7 +110,7 @@ class DatiTrasmissione extends ElementoFattura
         return $this;
     }
 
-    public function getContattiTrasmittente(): iterable
+    public function getContattiTrasmittente(): Collection
     {
         return $this->ContattiTrasmittente;
     }

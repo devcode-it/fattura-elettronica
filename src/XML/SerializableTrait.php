@@ -2,6 +2,9 @@
 
 namespace Dasc3er\FatturaElettronica\XML;
 
+use Dasc3er\FatturaElettronica\Interfaces\SerializableInterface;
+use Dasc3er\FatturaElettronica\Interfaces\StringInterface;
+
 trait SerializableTrait
 {
     /**
@@ -15,7 +18,7 @@ trait SerializableTrait
         $writer->startDocument('1.0', 'UTF-8');
         $writer->setIndent(4);
 
-        $this->toXmlBlock($writer);
+        $this->toXml($writer);
 
         return $writer->outputMemory(true);
     }
@@ -57,7 +60,7 @@ trait SerializableTrait
     /**
      * {@inheritdoc}
      */
-    public function toXmlBlock(\XMLWriter $writer): void
+    public function toXml(\XMLWriter $writer): void
     {
         $vars = $this->getXmlTags();
 
@@ -66,6 +69,12 @@ trait SerializableTrait
         }
     }
 
+    /**
+     * Scrive un elemento composto.
+     *
+     * @param $key
+     * @param $element
+     */
     protected static function writeXml(\XMLWriter $writer, $key, $element): void
     {
         if (!isset($element)) {
@@ -81,7 +90,7 @@ trait SerializableTrait
         } elseif ($element instanceof SerializableInterface) {
             if (!$element->isEmpty()) {
                 $writer->startElement($key);
-                $element->toXmlBlock($writer);
+                $element->toXml($writer);
                 $writer->endElement();
             }
         } elseif (is_iterable($element)) {

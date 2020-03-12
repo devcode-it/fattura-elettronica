@@ -3,6 +3,7 @@
 namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Fields\Collection;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiContratto;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiConvenzione;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiDdt;
@@ -15,16 +16,16 @@ class DatiGenerali extends ElementoFattura
     public DatiGeneraliDocumento $DatiGeneraliDocumento;
 
     /** @var DatiContratto[] */
-    public iterable $DatiContratto = [];
+    public Collection $DatiContratto;
 
     /** @var DatiSal */
     public DatiSal $DatiSal;
 
     /** @var DatiConvenzione[] */
-    public iterable $DatiConvenzione = [];
+    public Collection $DatiConvenzione;
 
     /** @var DatiDdt[] */
-    public iterable $DatiDdt = [];
+    public Collection $DatiDdt;
 
     public function __construct(
         string $TipoDocumento,
@@ -36,9 +37,9 @@ class DatiGenerali extends ElementoFattura
         $this->DatiGeneraliDocumento = new DatiGeneraliDocumento($TipoDocumento, $Data, $Numero, $ImportoTotaleDocumento, $Divisa);
         $this->DatiSal = new DatiSal();
 
-        $this->DatiContratto = [];
-        $this->DatiConvenzione = [];
-        $this->DatiDdt = [];
+        $this->DatiContratto = new Collection(DatiContratto::class);
+        $this->DatiConvenzione = new Collection(DatiConvenzione::class);
+        $this->DatiDdt = new Collection(DatiDdt::class);
     }
 
     public function getDatiGeneraliDocumento(): DatiGeneraliDocumento
@@ -68,7 +69,7 @@ class DatiGenerali extends ElementoFattura
     /**
      * @return DatiContratto[]
      */
-    public function getDatiContratto(): iterable
+    public function getDatiContratto(): Collection
     {
         return $this->DatiContratto;
     }
@@ -76,7 +77,7 @@ class DatiGenerali extends ElementoFattura
     /**
      * @return DatiConvenzione[]
      */
-    public function getDatiConvenzione(): iterable
+    public function getDatiConvenzione(): Collection
     {
         return $this->DatiConvenzione;
     }
@@ -84,7 +85,7 @@ class DatiGenerali extends ElementoFattura
     /**
      * @return DatiDdt[]
      */
-    public function getDatiDdt(): iterable
+    public function getDatiDdt(): Collection
     {
         return $this->DatiDdt;
     }

@@ -2,9 +2,10 @@
 
 namespace Dasc3er\FatturaElettronica\Fields;
 
-use Dasc3er\FatturaElettronica\XML\StringInterface;
+use Dasc3er\FatturaElettronica\Interfaces\FieldInterface;
+use Dasc3er\FatturaElettronica\Interfaces\StringInterface;
 
-class Decimal implements StringInterface
+class Decimal implements FieldInterface, StringInterface
 {
     /** @var int */
     protected int $decimals;
@@ -25,9 +26,17 @@ class Decimal implements StringInterface
         return number_format($this->value, $this->decimals, '.', '');
     }
 
-    public function set(?float $value): void
+    public function set($value): void
     {
-        $this->value = $value;
+        if (!is_float($value) && is_numeric($value)) {
+            $value = floatval($value);
+        }
+
+        if (!is_float($value)) {
+            $this->value = $value;
+        } else {
+            $this->value = null;
+        }
     }
 
     public function get(): ?float

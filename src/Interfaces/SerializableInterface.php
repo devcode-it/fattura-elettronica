@@ -1,11 +1,11 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\XML;
+namespace Dasc3er\FatturaElettronica\Interfaces;
 
 interface SerializableInterface extends EmptyInterface
 {
     /**
      * Gestisce la serializzazione dell'elemento in XML.
      */
-    public function toXmlBlock(\XMLWriter $writer): void;
+    public function toXml(\XMLWriter $writer): void;
 }

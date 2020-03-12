@@ -61,7 +61,7 @@ class Anagrafica extends ElementoFattura
     /**
      * {@inheritdoc}
      */
-    public function getXmlTags(): iterable
+    protected function getXmlTags(): iterable
     {
         if (!empty($this->Denominazione)) {
             $this->Nome = null;

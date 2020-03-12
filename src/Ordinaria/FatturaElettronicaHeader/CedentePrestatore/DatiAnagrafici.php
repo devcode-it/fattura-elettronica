@@ -28,7 +28,7 @@ class DatiAnagrafici extends Original
         return parent::isEmpty();
     }
 
-    public function getXmlTags(): iterable
+    protected function getXmlTags(): iterable
     {
         $vars = parent::getXmlTags();
 

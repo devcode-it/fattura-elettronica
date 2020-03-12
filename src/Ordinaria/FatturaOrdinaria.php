@@ -30,7 +30,7 @@ class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
     /**
      * {@inheritdoc}
      */
-    public function toXmlBlock(\XMLWriter $writer): void
+    public function toXml(\XMLWriter $writer): void
     {
         $writer->startElementNS('p', 'FatturaElettronica', null);
         $writer->writeAttribute('versione', 'FPR12');
@@ -40,12 +40,12 @@ class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
 
         // FatturaElettronicaHeader
         $writer->startElement('FatturaElettronicaHeader');
-        $this->FatturaElettronicaHeader->toXmlBlock($writer);
+        $this->FatturaElettronicaHeader->toXml($writer);
         $writer->endElement();
 
         // FatturaElettronicaBody
         $writer->startElement('FatturaElettronicaBody');
-        $this->FatturaElettronicaBody->toXmlBlock($writer);
+        $this->FatturaElettronicaBody->toXml($writer);
         $writer->endElement();
 
         $writer->endElement();

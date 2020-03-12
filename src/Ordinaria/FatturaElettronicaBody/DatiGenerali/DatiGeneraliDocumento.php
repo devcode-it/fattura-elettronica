@@ -3,6 +3,7 @@
 namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Fields\Collection;
 use Dasc3er\FatturaElettronica\Fields\Decimal;
 use Dasc3er\FatturaElettronica\Tabelle\TipoDocumento;
 
@@ -17,10 +18,10 @@ class DatiGeneraliDocumento extends ElementoFattura
     protected string $Numero;
 
     /** @var DatiRitenuta[] */
-    protected iterable $DatiRitenuta;
+    protected Collection $DatiRitenuta;
 
     /** @var DatiCassaPrevidenziale[] */
-    protected iterable $DatiCassaPrevidenziale;
+    protected Collection $DatiCassaPrevidenziale;
 
     protected Decimal $ImportoTotaleDocumento;
 
@@ -39,8 +40,8 @@ class DatiGeneraliDocumento extends ElementoFattura
 
         $this->ImportoTotaleDocumento = new Decimal(2, $ImportoTotaleDocumento);
 
-        $this->DatiRitenuta = [];
-        $this->DatiCassaPrevidenziale = [];
+        $this->DatiRitenuta = new Collection(DatiRitenuta::class);
+        $this->DatiCassaPrevidenziale = new Collection(DatiCassaPrevidenziale::class);
     }
 
     public function getDivisa(): string
@@ -82,7 +83,7 @@ class DatiGeneraliDocumento extends ElementoFattura
     /**
      * @return DatiRitenuta[]
      */
-    public function getDatiRitenuta(): iterable
+    public function getDatiRitenuta(): Collection
     {
         return $this->DatiRitenuta;
     }
@@ -90,7 +91,7 @@ class DatiGeneraliDocumento extends ElementoFattura
     /**
      * @return DatiCassaPrevidenziale[]
      */
-    public function getDatiCassaPrevidenziale(): iterable
+    public function getDatiCassaPrevidenziale(): Collection
     {
         return $this->DatiCassaPrevidenziale;
     }

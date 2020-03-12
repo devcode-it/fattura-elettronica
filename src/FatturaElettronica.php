@@ -2,11 +2,13 @@
 
 namespace Dasc3er\FatturaElettronica;
 
-use Dasc3er\FatturaElettronica\XML\SerializableInterface;
-use Dasc3er\FatturaElettronica\XML\Serializer;
+use Dasc3er\FatturaElettronica\Interfaces\SerializableInterface;
+use Dasc3er\FatturaElettronica\XML\SerializableTrait;
 
 abstract class FatturaElettronica implements SerializableInterface, FatturaInterface
 {
+    use SerializableTrait;
+
     /**
      * {@inheritdoc}
      */
@@ -25,15 +27,5 @@ abstract class FatturaElettronica implements SerializableInterface, FatturaInter
         $progressivoInvio = $this->FatturaElettronicaHeader->DatiTrasmissione->ProgressivoInvio;
 
         return $idPaese.$idCodice.'_'.$progressivoInvio.'.xml';
-    }
-
-    /**
-     * Restituisce l'xml della fattura elettronica.
-     *
-     * @throws \Exception
-     */
-    public function toXml(): string
-    {
-        return Serializer::serialize($this);
     }
 }

@@ -274,7 +274,7 @@ class DettaglioLinee extends ElementoFattura
         return $this->AltriDatiGestionali;
     }
 
-    public function getXmlTags(): iterable
+    protected function getXmlTags(): iterable
     {
         if ($this->PrezzoTotale->isEmpty()) {
             $prezzo_unitario = $this->PrezzoUnitario->get();

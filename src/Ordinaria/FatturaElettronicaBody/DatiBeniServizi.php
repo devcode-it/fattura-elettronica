@@ -3,39 +3,38 @@
 namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
 use Dasc3er\FatturaElettronica\ElementoFattura;
+use Dasc3er\FatturaElettronica\Fields\Collection;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
 use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
 
 class DatiBeniServizi extends ElementoFattura
 {
-    /** @var DettaglioLinee */
-    public iterable $DettaglioLinee;
+    /** @var DettaglioLinee[] */
+    public Collection $DettaglioLinee;
 
-    /** @var DatiRiepilogo */
-    public iterable $DatiRiepilogo;
+    /** @var DatiRiepilogo[] */
+    public Collection $DatiRiepilogo;
 
-    /**
-     * DatiBeniServizi constructor.
-     */
     public function __construct()
     {
-        $this->DettaglioLinee = [];
-        $this->DatiRiepilogo = [];
+        $this->DettaglioLinee = new Collection(DettaglioLinee::class);
+
+        $this->DatiRiepilogo = new Collection(DatiRiepilogo::class);
     }
 
     public function addLinea(DettaglioLinee $linea): DatiBeniServizi
     {
-        $this->DettaglioLinee[] = $linea;
+        $this->DettaglioLinee->add($linea);
 
         return $this;
     }
 
-    public function getDettaglioLinee(): DettaglioLinee
+    public function getDettaglioLinee(): Collection
     {
         return $this->DettaglioLinee;
     }
 
-    public function getDatiRiepilogo(): DatiRiepilogo
+    public function getDatiRiepilogo(): Collection
     {
         return $this->DatiRiepilogo;
     }
@@ -43,29 +42,68 @@ class DatiBeniServizi extends ElementoFattura
     /**
      * {@inheritdoc}
      */
-    public function getXmlTags(): iterable
+    protected function getXmlTags(): iterable
     {
-        if (empty($this->datiRiepilogo)) {
-            //$this->DatiRiepilogo = $this->calcolaDatiRiepilogo();
+        if ($this->DatiRiepilogo->isEmpty()) {
+            $this->calcolaDatiRiepilogo();
         }
 
         return parent::getXmlTags();
     }
 
-    protected function calcolaDatiRiepilogo(): iterable
+    protected function calcolaDatiRiepilogo(): void
     {
-        $results = [];
+        $righe = collect($this->getDettaglioLinee()->toArray());
 
-        $imponibile = 0;
-        $aliquota = 22;
+        // Riepiloghi per IVA per percentuale
+        $riepiloghi_percentuali = $righe->filter(function ($item, $key) {
+            return empty($item->AliquotaIVA);
+        })->groupBy(function ($item, $key) {
+            return $item->AliquotaIVA;
+        });
+        foreach ($riepiloghi_percentuali as $riepilogo) {
+            $totale = $riepilogo->sum(function ($item) {
+                return $item->PrezzoTotale;
+            });
+            $percentuale = $riepilogo->first()->AliquotaIVA;
+            $imposta = $totale * $percentuale / 100;
 
-        foreach ($this->DettaglioLinee as $linea) {
-            $imponibile += $linea->prezzoTotale(false);
-            $aliquota = $linea->getAliquotaIva();
-
-            $results[] = new DatiRiepilogo($imponibile, $aliquota);
+            // Creazione dettaglio
+            $dettaglio = new DatiRiepilogo(
+                $percentuale,
+                null,
+                null,
+                null,
+                $totale,
+                $imposta
+            );
+            $this->DatiRiepilogo->add($dettaglio);
         }
 
-        return $results;
+        // Riepiloghi per IVA per natura
+        $riepiloghi_natura = $righe->filter(function ($item, $key) {
+            return !empty($item->Natura);
+        })->groupBy(function ($item, $key) {
+            return $item->Natura;
+        });
+        foreach ($riepiloghi_natura as $riepilogo) {
+            $totale = $riepilogo->sum(function ($item) {
+                return $item->PrezzoTotale;
+            });
+            $percentuale = $riepilogo->first()->AliquotaIVA;
+            $natura = $riepilogo->first()->Natura;
+            $imposta = $totale * $percentuale / 100;
+
+            // Creazione dettaglio
+            $dettaglio = new DatiRiepilogo(
+                $percentuale,
+                $natura,
+                null,
+                null,
+                $totale,
+                $imposta
+            );
+            $this->DatiRiepilogo->add($dettaglio);
+        }
     }
 }

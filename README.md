@@ -5,17 +5,21 @@
 
 # Libreria Fattura Elettronica
 
-## Descrizione
-La libreria è stata testata generando solo fatture semplici.
-I casi particolari non sono stati ancora trattati.
-Potete segnalare qualsiasi necessità o problema
-[qui](https://github.com/deved-it/fattura-elettronica/issues/new).
+Libreria per la gestione della Fatturazione elettronica per la creazione delle fatture elettroniche italiane, testata e mantenuta.
+
+La libreria nasce originalmente come fork della versione 1.1.12 di [deved-it/fattura-elettronica](https://github.com/deved-it/fattura-elettronica), ma integra molte funzionalità aggiuntive rispetto alla versione originale.
+
 
 ## Installazione
 
-    composer require deved/fattura-elettronica
+Per ora non è disponibile un pacchetto registrato tramite Composer.
 
-## Esempio di utilizzo
+Per installare la libreria deved-it/fattura-elettronica:
+```bash
+composer require deved/fattura-elettronica
+```
+
+## Generazione fattura
 
 ```php
 use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
@@ -83,9 +87,19 @@ $fattura->getDatiBeniServizi()->addLinea($linea);
 
 // Generazione
 $xml = $fattura->__toString();
+$filename = $fattura->getFileName();
+$errors = $fattura->validate();
+```
 
-$file = $fattura->getFileName();
-var_dump($xml);
-var_dump($file);
-var_dump($fattura->validate());
+## Lettura fattura elettronica
+
+```php
+<?php
+
+use Dasc3er\FatturaElettronica\FatturaElettronica;
+
+require __DIR__.'/vendor/autoload.php';
+
+// Lettura
+$fattura = FatturaElettronica::parse(__DIR__.'/test.xml');
 ```

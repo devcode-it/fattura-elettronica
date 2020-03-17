@@ -5,6 +5,7 @@ namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenera
 use Dasc3er\FatturaElettronica\ElementoFattura;
 use Dasc3er\FatturaElettronica\Fields\Collection;
 use Dasc3er\FatturaElettronica\Fields\Decimal;
+use Dasc3er\FatturaElettronica\Fields\Text;
 use Dasc3er\FatturaElettronica\Tabelle\TipoDocumento;
 
 class DatiGeneraliDocumento extends ElementoFattura
@@ -25,6 +26,8 @@ class DatiGeneraliDocumento extends ElementoFattura
 
     protected Decimal $ImportoTotaleDocumento;
 
+    protected Text $Causale;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,10 +36,12 @@ class DatiGeneraliDocumento extends ElementoFattura
 
         $this->DatiRitenuta = new Collection(DatiRitenuta::class);
         $this->DatiCassaPrevidenziale = new Collection(DatiCassaPrevidenziale::class);
+
+        $this->Causale = new Text(200);
     }
 
     public static function build(
-?string $TipoDocumento = null,
+        ?string $TipoDocumento = null,
         ?string $Data = null,
         ?string $Numero = null,
         ?float $ImportoTotaleDocumento = null,
@@ -126,6 +131,18 @@ class DatiGeneraliDocumento extends ElementoFattura
     public function setTipoDocumento(string $TipoDocumento): DatiGeneraliDocumento
     {
         $this->TipoDocumento = $TipoDocumento;
+
+        return $this;
+    }
+
+    public function getCausale(): string
+    {
+        return $this->Causale->get();
+    }
+
+    public function setCausale(?string $Causale): DatiGeneraliDocumento
+    {
+        $this->Causale->set($Causale);
 
         return $this;
     }

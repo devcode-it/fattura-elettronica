@@ -8,56 +8,19 @@ use Dasc3er\FatturaElettronica\Interfaces\UnserializeInterface;
 use IteratorAggregate;
 
 /**
- * Classe per la gestione virtuale di elementi che possono essere prsenti più volte in una stessa sezione.
+ * Classe per la gestione virtuale di stringhe che hanno lunghezza massima e possono essere separate in più elementi.
  */
-class Collection implements IteratorAggregate, FieldInterface, UnserializeInterface
+class Text implements IteratorAggregate, FieldInterface, UnserializeInterface
 {
-    protected $values;
-    protected string $class;
+    protected int $length;
+    protected ?string $content;
 
-    public function __construct(string $class)
-    {
-        $this->class = $class;
-
-        $this->values = [];
-    }
-
-    /**
-     * Aggiunge un elemento alla collezione.
-     *
-     * @param $value
-     */
-    public function add($value): ?int
-    {
-        if ($value instanceof $this->class) {
-            $this->values[] = $value;
-
-            return array_key_last($this->values);
-        }
-
-        return null;
-    }
-
-    /**
-     * Rimuove l'elemento di indice indicato dalla collezione.
-     */
-    public function remove(int $index): void
-    {
-        if (isset($this->values[$index])) {
-            unset($this->values[$index]);
-        }
-    }
-
-    /**
-     * Restituisce l'elemento di indice indicato dalla collezione.
-     */
-    public function getElement(int $index)
-    {
-        if (isset($this->values[$index])) {
-            return $this->values[$index];
-        }
-
-        return null;
+    public function __construct(
+        int $length,
+        ?string $content = null
+    ) {
+        $this->length = $length;
+        $this->content = $content;
     }
 
     /**
@@ -65,7 +28,7 @@ class Collection implements IteratorAggregate, FieldInterface, UnserializeInterf
      */
     public function set($value): void
     {
-        // TODO: Implement set() method.
+        $this->content = $value;
     }
 
     /**
@@ -73,22 +36,22 @@ class Collection implements IteratorAggregate, FieldInterface, UnserializeInterf
      */
     public function get()
     {
-        return $this->toArray();
+        return $this->content;
     }
 
     public function toArray(): array
     {
-        return $this->values;
+        return !$this->isEmpty() ? str_split($this->content, $this->length) : [];
     }
 
     public function getIterator()
     {
-        return new ArrayIterator($this->values);
+        return new ArrayIterator($this->toArray());
     }
 
     public function isEmpty(): bool
     {
-        return empty($this->values);
+        return empty($this->content);
     }
 
     /**
@@ -100,12 +63,11 @@ class Collection implements IteratorAggregate, FieldInterface, UnserializeInterf
             $content = [$content];
         }
 
-        $class = $this->class;
+        $result = '';
         foreach ($content as $i => $var) {
-            $element = new $class();
-            $element->unserialize($var);
-
-            $this->add($element);
+            $result .= $var;
         }
+
+        $this->content = $result;
     }
 }

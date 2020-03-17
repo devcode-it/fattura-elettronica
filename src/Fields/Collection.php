@@ -8,7 +8,7 @@ use Dasc3er\FatturaElettronica\Interfaces\UnserializeInterface;
 use IteratorAggregate;
 
 /**
- * Classe per la gestione virtuale di elementi che possono essere prsenti più volte in una stessa sezione.
+ * Classe per la gestione virtuale di elementi che possono essere presenti più volte in una stessa sezione.
  */
 class Collection implements IteratorAggregate, FieldInterface, UnserializeInterface
 {

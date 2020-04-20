@@ -3,9 +3,7 @@
 namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
- * @source https://github.com/deved-it/fattura-elettronica
- *
- * Class CondizioniPagamento
+ * Tabella contenente le informazioni per i campi di tipo CondizioniPagamento.
  */
 class CondizioniPagamento extends Tabella
 {

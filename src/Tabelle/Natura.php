@@ -3,8 +3,7 @@
 namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
- * @source https://github.com/deved-it/fattura-elettronica
- * Class Natura
+ * Tabella contenente le informazioni per i campi di tipo Natura.
  */
 class Natura extends Tabella
 {

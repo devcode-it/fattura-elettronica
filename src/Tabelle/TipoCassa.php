@@ -3,8 +3,7 @@
 namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
- * @source https://github.com/deved-it/fattura-elettronica
- * Class TipoCassa
+ * Tabella contenente le informazioni per i campi di tipo TipoCassa.
  */
 class TipoCassa extends Tabella
 {

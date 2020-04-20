@@ -3,9 +3,7 @@
 namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
- * @source https://github.com/deved-it/fattura-elettronica
- *
- * Class ModalitaPagamento
+ * Tabella contenente le informazioni per i campi di tipo ModalitaPagamento.
  */
 class ModalitaPagamento extends Tabella
 {

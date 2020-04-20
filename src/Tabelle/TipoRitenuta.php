@@ -2,6 +2,9 @@
 
 namespace DevCode\FatturaElettronica\Tabelle;
 
+/**
+ * Tabella contenente le informazioni per i campi di tipo TipoRitenuta.
+ */
 class TipoRitenuta extends Tabella
 {
     /**

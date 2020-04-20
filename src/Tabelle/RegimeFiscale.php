@@ -3,8 +3,7 @@
 namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
- * @source https://github.com/deved-it/fattura-elettronica
- * Class RegimeFiscale
+ * Tabella contenente le informazioni per i campi di tipo RegimeFiscale.
  */
 class RegimeFiscale extends Tabella
 {

@@ -2,6 +2,9 @@
 
 namespace DevCode\FatturaElettronica\Tabelle;
 
+/**
+ * Tabella contenente le informazioni per i campi di tipo FormatoTrasmissione.
+ */
 class FormatoTrasmissione extends Tabella
 {
     const VersioneTrasmissione = '12'; // 1.2

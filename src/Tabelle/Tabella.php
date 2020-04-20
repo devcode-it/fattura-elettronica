@@ -2,6 +2,9 @@
 
 namespace DevCode\FatturaElettronica\Tabelle;
 
+/**
+ * Struttura dedicata alla gestione delle tabelle di informazioni per la Fattura Elettronica.
+ */
 abstract class Tabella
 {
     /**

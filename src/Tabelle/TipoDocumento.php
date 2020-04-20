@@ -3,8 +3,7 @@
 namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
- * @source https://github.com/deved-it/fattura-elettronica
- * Class TipoDocumento
+ * Tabella contenente le informazioni per i campi di tipo TipoDocumento.
  */
 class TipoDocumento extends Tabella
 {

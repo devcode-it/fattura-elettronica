@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
 
-use Dasc3er\FatturaElettronica\Common\IdFiscaleIva;
+use DevCode\FatturaElettronica\Common\IdFiscaleIva;
 
 class IdTrasmittente extends IdFiscaleIva
 {

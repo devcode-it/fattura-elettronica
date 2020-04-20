@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\ElementoFattura;
 
 class DatiVeicoli extends ElementoFattura
 {

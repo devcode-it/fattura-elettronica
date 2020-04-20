@@ -1,12 +1,12 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Collection;
-use Dasc3er\FatturaElettronica\Fields\Decimal;
-use Dasc3er\FatturaElettronica\Fields\Text;
-use Dasc3er\FatturaElettronica\Tabelle\TipoDocumento;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Collection;
+use DevCode\FatturaElettronica\Fields\Decimal;
+use DevCode\FatturaElettronica\Fields\Text;
+use DevCode\FatturaElettronica\Tabelle\TipoDocumento;
 
 class DatiGeneraliDocumento extends ElementoFattura
 {

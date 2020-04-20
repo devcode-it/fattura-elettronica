@@ -1,6 +1,6 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Interfaces;
+namespace DevCode\FatturaElettronica\Interfaces;
 
 interface FieldInterface extends EmptyInterface
 {

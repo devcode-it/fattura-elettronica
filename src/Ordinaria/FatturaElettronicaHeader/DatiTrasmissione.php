@@ -1,11 +1,11 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 
-use Dasc3er\FatturaElettronica\Common\ContattiTrasmittente;
-use Dasc3er\FatturaElettronica\Common\IdFiscaleIva;
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Collection;
+use DevCode\FatturaElettronica\Common\ContattiTrasmittente;
+use DevCode\FatturaElettronica\Common\IdFiscaleIva;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Collection;
 
 class DatiTrasmissione extends ElementoFattura
 {

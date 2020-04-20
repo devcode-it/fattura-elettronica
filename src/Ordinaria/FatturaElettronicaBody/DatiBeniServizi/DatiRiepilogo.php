@@ -1,9 +1,9 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Decimal;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Decimal;
 
 class DatiRiepilogo extends ElementoFattura
 {

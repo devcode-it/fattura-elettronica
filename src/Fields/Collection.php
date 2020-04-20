@@ -1,10 +1,10 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Fields;
+namespace DevCode\FatturaElettronica\Fields;
 
 use ArrayIterator;
-use Dasc3er\FatturaElettronica\Interfaces\FieldInterface;
-use Dasc3er\FatturaElettronica\Interfaces\UnserializeInterface;
+use DevCode\FatturaElettronica\Interfaces\FieldInterface;
+use DevCode\FatturaElettronica\Interfaces\UnserializeInterface;
 use IteratorAggregate;
 
 /**

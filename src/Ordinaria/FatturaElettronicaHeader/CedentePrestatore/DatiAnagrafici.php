@@ -1,9 +1,9 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
 
-use Dasc3er\FatturaElettronica\Common\DatiAnagrafici as Original;
-use Dasc3er\FatturaElettronica\Tabelle\RegimeFiscale;
+use DevCode\FatturaElettronica\Common\DatiAnagrafici as Original;
+use DevCode\FatturaElettronica\Tabelle\RegimeFiscale;
 
 class DatiAnagrafici extends Original
 {

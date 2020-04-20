@@ -1,12 +1,12 @@
 {
-    "name": "dasc3er/fattura-elettronica",
+    "name": "devcode-it/fattura-elettronica",
     "description": "Libreria per la gestione della Fatturazione elettronica per la creazione delle fatture elettroniche italiane",
     "type": "library",
     "authors": [
     ],
     "autoload": {
         "psr-4": {
-            "Dasc3er\\FatturaElettronica\\": "src/"
+            "DevCode\\FatturaElettronica\\": "src/"
         }
     },
     "require": {
@@ -15,7 +15,6 @@
         "ext-dom": "*",
         "ext-simplexml": "*",
         "ext-libxml": "*",
-        "ext-xls": "*",
         "ext-json": "*",
         "illuminate/support": "^7.1"
     }

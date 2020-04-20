@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\ElementoFattura;
 
 class CodiceArticolo extends ElementoFattura
 {

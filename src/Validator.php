@@ -1,6 +1,6 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica;
+namespace DevCode\FatturaElettronica;
 
 class Validator
 {

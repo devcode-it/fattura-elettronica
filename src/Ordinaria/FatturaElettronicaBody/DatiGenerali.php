@@ -1,14 +1,14 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Collection;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiContratto;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiConvenzione;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiDDT;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiSal;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Collection;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiContratto;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiConvenzione;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiDDT;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiSal;
 
 class DatiGenerali extends ElementoFattura
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica;
+namespace DevCode\FatturaElettronica;
 
-use Dasc3er\FatturaElettronica\Interfaces\FieldInterface;
-use Dasc3er\FatturaElettronica\Interfaces\SerializeInterface;
-use Dasc3er\FatturaElettronica\Interfaces\StringInterface;
-use Dasc3er\FatturaElettronica\Interfaces\UnserializeInterface;
+use DevCode\FatturaElettronica\Interfaces\FieldInterface;
+use DevCode\FatturaElettronica\Interfaces\SerializeInterface;
+use DevCode\FatturaElettronica\Interfaces\StringInterface;
+use DevCode\FatturaElettronica\Interfaces\UnserializeInterface;
 
 abstract class ElementoFattura implements SerializeInterface, UnserializeInterface
 {

@@ -1,14 +1,14 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria;
+namespace DevCode\FatturaElettronica\Ordinaria;
 
-use Dasc3er\FatturaElettronica\Common\Allegati;
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Collection;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiVeicoli;
+use DevCode\FatturaElettronica\Common\Allegati;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Collection;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiVeicoli;
 
 class Body extends ElementoFattura
 {

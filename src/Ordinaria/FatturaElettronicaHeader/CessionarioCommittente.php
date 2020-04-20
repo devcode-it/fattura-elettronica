@@ -1,10 +1,10 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 
-use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
-use Dasc3er\FatturaElettronica\Common\Sede;
-use Dasc3er\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Common\DatiAnagrafici;
+use DevCode\FatturaElettronica\Common\Sede;
+use DevCode\FatturaElettronica\ElementoFattura;
 
 class CessionarioCommittente extends ElementoFattura
 {

@@ -1,9 +1,9 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Common;
+namespace DevCode\FatturaElettronica\Common;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Decimal;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Decimal;
 
 class ScontoMaggiorazione extends ElementoFattura
 {

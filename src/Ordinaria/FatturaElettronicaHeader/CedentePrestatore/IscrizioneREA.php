@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\ElementoFattura;
 
 class IscrizioneREA extends ElementoFattura
 {

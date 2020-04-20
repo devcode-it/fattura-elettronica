@@ -1,11 +1,11 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Fields\Collection;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\DettaglioPagamento;
-use Dasc3er\FatturaElettronica\Tabelle\CondizioniPagamento;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Fields\Collection;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\DettaglioPagamento;
+use DevCode\FatturaElettronica\Tabelle\CondizioniPagamento;
 
 class DatiPagamento extends ElementoFattura
 {

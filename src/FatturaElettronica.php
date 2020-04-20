@@ -1,10 +1,11 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica;
+namespace DevCode\FatturaElettronica;
 
-use Dasc3er\FatturaElettronica\Interfaces\SerializeInterface;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaOrdinaria;
-use Dasc3er\FatturaElettronica\Tabelle\FormatoTrasmissione;
+use DevCode\FatturaElettronica\Interfaces\SerializeInterface;
+use DevCode\FatturaElettronica\Ordinaria\FatturaOrdinaria;
+use DevCode\FatturaElettronica\Tabelle\FormatoTrasmissione;
+use Exception;
 
 abstract class FatturaElettronica extends ElementoFattura implements SerializeInterface, FatturaInterface
 {

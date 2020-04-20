@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\ElementoFattura;
 
 class DatiSal extends ElementoFattura
 {

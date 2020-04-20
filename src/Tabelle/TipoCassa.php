@@ -1,6 +1,6 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Tabelle;
+namespace DevCode\FatturaElettronica\Tabelle;
 
 /**
  * @source https://github.com/deved-it/fattura-elettronica

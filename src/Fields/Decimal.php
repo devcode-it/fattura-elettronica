@@ -1,9 +1,9 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Fields;
+namespace DevCode\FatturaElettronica\Fields;
 
-use Dasc3er\FatturaElettronica\Interfaces\FieldInterface;
-use Dasc3er\FatturaElettronica\Interfaces\StringInterface;
+use DevCode\FatturaElettronica\Interfaces\FieldInterface;
+use DevCode\FatturaElettronica\Interfaces\StringInterface;
 
 /**
  * Classe per la gestione della formattazione automatica dei campi decimali.

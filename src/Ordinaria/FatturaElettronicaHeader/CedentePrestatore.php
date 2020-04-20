@@ -1,12 +1,12 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 
-use Dasc3er\FatturaElettronica\Common\Contatti;
-use Dasc3er\FatturaElettronica\Common\Sede;
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\IscrizioneREA;
+use DevCode\FatturaElettronica\Common\Contatti;
+use DevCode\FatturaElettronica\Common\Sede;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\IscrizioneREA;
 
 class CedentePrestatore extends ElementoFattura
 {

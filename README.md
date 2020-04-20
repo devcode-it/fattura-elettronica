@@ -22,12 +22,12 @@ composer require deved/fattura-elettronica
 ## Generazione fattura
 
 ```php
-use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
-use Dasc3er\FatturaElettronica\Common\Sede;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedente;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaOrdinaria;
-use Dasc3er\FatturaElettronica\Tabelle\TipoDocumento;
+use DevCode\FatturaElettronica\Common\DatiAnagrafici;
+use DevCode\FatturaElettronica\Common\Sede;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedente;
+use DevCode\FatturaElettronica\Ordinaria\FatturaOrdinaria;
+use DevCode\FatturaElettronica\Tabelle\TipoDocumento;
 
 require __DIR__.'/vendor/autoload.php';
 
@@ -96,7 +96,7 @@ $errors = $fattura->validate();
 ```php
 <?php
 
-use Dasc3er\FatturaElettronica\FatturaElettronica;
+use DevCode\FatturaElettronica\FatturaElettronica;
 
 require __DIR__.'/vendor/autoload.php';
 

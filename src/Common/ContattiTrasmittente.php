@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Common;
+namespace DevCode\FatturaElettronica\Common;
 
-use Dasc3er\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\ElementoFattura;
 
 class ContattiTrasmittente extends ElementoFattura
 {

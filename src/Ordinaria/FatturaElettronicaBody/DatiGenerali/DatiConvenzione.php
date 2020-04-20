@@ -1,8 +1,8 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
+namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use Dasc3er\FatturaElettronica\Common\DatiDocumento;
+use DevCode\FatturaElettronica\Common\DatiDocumento;
 
 class DatiConvenzione extends DatiDocumento
 {

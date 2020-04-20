@@ -1,12 +1,12 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria;
+namespace DevCode\FatturaElettronica\Ordinaria;
 
-use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
-use Dasc3er\FatturaElettronica\ElementoFattura;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
+use DevCode\FatturaElettronica\Common\DatiAnagrafici;
+use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
 
 class Header extends ElementoFattura
 {

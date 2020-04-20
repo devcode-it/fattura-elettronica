@@ -1,16 +1,16 @@
 <?php
 
-namespace Dasc3er\FatturaElettronica\Ordinaria;
+namespace DevCode\FatturaElettronica\Ordinaria;
 
-use Dasc3er\FatturaElettronica\Common\DatiAnagrafici;
-use Dasc3er\FatturaElettronica\FatturaElettronica;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
-use Dasc3er\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
-use Dasc3er\FatturaElettronica\XML\Validator;
+use DevCode\FatturaElettronica\Common\DatiAnagrafici;
+use DevCode\FatturaElettronica\FatturaElettronica;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
+use DevCode\FatturaElettronica\Validator;
 
 class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
 {
@@ -170,7 +170,7 @@ class FatturaOrdinaria extends FatturaElettronica implements FatturaInterface
     {
         $validator = new Validator();
         $isValid = $validator->validate(
-            $this->serialize(),
+            $this->__toString(),
             __DIR__.'/../../xsd/fattura_pa_1.2.1.xsd'
         );
 

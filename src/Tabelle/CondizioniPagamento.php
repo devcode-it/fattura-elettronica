@@ -19,9 +19,9 @@ class CondizioniPagamento extends Tabella
     public static function getCodifiche(): iterable
     {
         return [
-           'TP01' => 'pagamento a rate',
-           'TP02' => 'pagamento completo',
-           'TP03' => 'anticipo',
+           'TP01' => 'Pagamento a rate',
+           'TP02' => 'Pagamento completo',
+           'TP03' => 'Anticipo',
         ];
     }
 }

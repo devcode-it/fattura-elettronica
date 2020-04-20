@@ -22,11 +22,23 @@ class TipoDocumento extends Tabella
     {
         return [
             'TD01' => 'Fattura',
-            'TD02' => 'acconto/anticipo su fattura',
-            'TD03' => 'acconto/anticipo su parcella',
-            'TD04' => 'nota di credito',
-            'TD05' => 'nota di debito',
-            'TD06' => 'parcella',
+            'TD02' => 'Acconto/anticipo su fattura',
+            'TD03' => 'Acconto/anticipo su parcella',
+            'TD04' => 'Nota di credito',
+            'TD05' => 'Nota di debito',
+            'TD06' => 'Parcella',
+            'TD16' => 'Integrazione fattura reverse charge interno',
+            'TD17' => 'Integrazione/autofattura per acquisto servizi dall\'estero',
+            'TD18' => 'Integrazione per acquisto di beni intracomunitari',
+            'TD19' => 'Integrazione/autofattura per acquisto di beni ex art.17 c.2 DPR 633/72',
+            'TD20' => 'Autofattura per regolarizzazione e integrazione delle fatture (art.6 c.8 d.lgs. 471/97 o art.46 c.5 D.L. 331/93)',
+            'TD21' => 'Autofattura per splafonamento',
+            'TD22' => 'Estrazione beni da deposito IVA',
+            'TD23' => 'Estrazione beni da deposito IVA con versamento dell\'IVA',
+            'TD24' => 'Fattura differita di cui all\'art.21=>comma 4=>lett. a)',
+            'TD25' => 'Fattura differita di cui all\'art.21=>comma 4=>terzo periodo lett. b)',
+            'TD26' => 'Cessione di beni ammortizzabili e per passaggi interni (ex art.36 DPR 633/72)',
+            'TD27' => 'Fattura per autoconsumo o per cessioni gratuite senza rivalsa',
         ];
     }
 }

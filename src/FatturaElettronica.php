@@ -3,11 +3,13 @@
 namespace DevCode\FatturaElettronica;
 
 use DevCode\FatturaElettronica\Interfaces\SerializeInterface;
-use DevCode\FatturaElettronica\Ordinaria\FatturaOrdinaria;
-use DevCode\FatturaElettronica\Tabelle\FormatoTrasmissione;
+use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\FatturaOrdinaria;
+use DevCode\FatturaElettronica\FatturaSemplificata;
+use DevCode\FatturaElettronica\FormatoTrasmissione;
 use Exception;
 
-abstract class FatturaElettronica extends ElementoFattura implements SerializeInterface, FatturaInterface
+abstract class FatturaElettronica extends Elemento implements SerializeInterface
 {
     /**
      * {@inheritdoc}
@@ -29,7 +31,7 @@ abstract class FatturaElettronica extends ElementoFattura implements SerializeIn
         return $idPaese.$idCodice.'_'.$progressivoInvio.'.xml';
     }
 
-    public static function parse(string $file): FatturaInterface
+    public static function parse(string $file): FatturaSemplificata|FatturaOrdinaria
     {
         $content = file_get_contents($file);
 
@@ -46,7 +48,7 @@ abstract class FatturaElettronica extends ElementoFattura implements SerializeIn
         $content = json_decode(json_encode($xml), true);
 
         if ($versione == FormatoTrasmissione::Semplificata) {
-            // TODO
+            $result = new FatturaSemplificata();
         } else {
             $result = new FatturaOrdinaria();
         }

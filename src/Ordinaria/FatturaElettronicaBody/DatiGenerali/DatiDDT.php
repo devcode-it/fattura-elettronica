@@ -2,89 +2,54 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Carbon\Carbon;
+use DevCode\FatturaElettronica\Standard\Data;
+use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Testo;
 
-class DatiDDT extends ElementoFattura
-{
-    protected ?string $NumeroDDT;
-
-    protected ?string $DataDDT;
-
-    /** @var int[] */
-    protected iterable $RiferimentoNumeroLinea;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->RiferimentoNumeroLinea = [];
+/*
+* Blocco da valorizzare nei casi di fattura "differita" per indicare il documento con cui è stato consegnato il bene (gli elementi informativi del blocco possono essere ripetuti se la fattura fa riferimento a più consegne e quindi a più documenti di trasporto)
+*/
+class DatiDDT extends Elemento {
+    protected Testo $NumeroDDT;
+	protected Data $DataDDT;
+	protected int $RiferimentoNumeroLinea;
+    public function __construct(?string $NumeroDDT = null, null|string|Carbon|\DateTime $DataDDT = null, ?int $RiferimentoNumeroLinea = null) {
+        $this->NumeroDDT = new Testo(false, 1, 20, 1);
+		$this->DataDDT = new Data(false);
+		$this->RiferimentoNumeroLinea = 0;
+        if (!is_null($NumeroDDT)) $this->setNumeroDDT($NumeroDDT);
+		if (!is_null($DataDDT)) $this->setDataDDT($DataDDT);
+		if (!is_null($RiferimentoNumeroLinea)) $this->setRiferimentoNumeroLinea($RiferimentoNumeroLinea);
+    }
+    
+    public function getNumeroDDT() : ?string {
+        return $this->NumeroDDT->get();
     }
 
-    public static function build(
-        ?string $NumeroDDT = null,
-        ?string $DataDDT = null
-    ) {
-        $element = new static();
-
-        $element->NumeroDDT = $NumeroDDT;
-        $element->DataDDT = $DataDDT;
-
-        return $element;
-    }
-
-    /**
-     * Aggiunge il riferimento indicato all'elenco.
-     *
-     * @param $value
-     */
-    public function addRiferimento($value): void
-    {
-        $this->RiferimentoNumeroLinee[] = $value;
-    }
-
-    public function getNumeroDDT(): ?string
-    {
-        return $this->NumeroDDT;
-    }
-
-    public function setNumeroDDT(?string $NumeroDDT): DatiDDT
-    {
-        $this->NumeroDDT = $NumeroDDT;
+    public function setNumeroDDT(?string $value) {
+        $this->NumeroDDT->set($value);
 
         return $this;
     }
 
-    public function getDataDDT(): ?string
-    {
-        return $this->DataDDT;
+    public function getDataDDT() : ?string {
+        return $this->DataDDT->get();
     }
 
-    public function setDataDDT(?string $DataDDT): DatiDDT
-    {
-        $this->DataDDT = $DataDDT;
+    public function setDataDDT(null|string|Carbon|\DateTime $value) {
+        $this->DataDDT->set($value);
 
         return $this;
     }
 
-    /**
-     * @return int[]
-     */
-    public function getRiferimentoNumeroLinea(): iterable
-    {
+    public function getRiferimentoNumeroLinea() : ?int {
         return $this->RiferimentoNumeroLinea;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function unserialize(array $content): void
-    {
-        if (isset($content['RiferimentoNumeroLinea']) && !is_array($content['RiferimentoNumeroLinea'])) {
-            $content['RiferimentoNumeroLinea'] = [
-                $content['RiferimentoNumeroLinea'],
-            ];
-        }
+    public function setRiferimentoNumeroLinea(int $value) {
+        $this->RiferimentoNumeroLinea = $value;
 
-        parent::unserialize($content);
+        return $this;
     }
 }

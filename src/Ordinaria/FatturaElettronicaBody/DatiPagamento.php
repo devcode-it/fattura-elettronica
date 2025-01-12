@@ -2,64 +2,49 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use DevCode\FatturaElettronica\ElementoFattura;
-use DevCode\FatturaElettronica\Fields\Collection;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\DettaglioPagamento;
-use DevCode\FatturaElettronica\Tabelle\CondizioniPagamento;
+use DevCode\FatturaElettronica\Standard\Collezione;
+use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Testo;
 
-class DatiPagamento extends ElementoFattura
-{
-    protected ?string $CondizioniPagamento;
-
-    /** @var DettaglioPagamento[] */
-    protected Collection $DettaglioPagamento;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->CondizioniPagamento = CondizioniPagamento::Completo;
-        $this->DettaglioPagamento = new Collection(DettaglioPagamento::class);
+/*
+* Blocco destinato a descrivere le modalità di pagamento per la cessione/prestazione rappresentata in fattura
+*/
+class DatiPagamento extends Elemento {
+    protected Testo $CondizioniPagamento;
+	protected Collezione $DettaglioPagamento;
+    public function __construct(?string $CondizioniPagamento = null) {
+        $this->CondizioniPagamento = new Testo(false, 4, 4, 1);
+		$this->DettaglioPagamento = new Collezione(DettaglioPagamento::class, 1);
+        if (!is_null($CondizioniPagamento)) $this->setCondizioniPagamento($CondizioniPagamento);
+    }
+    
+    public function getCondizioniPagamento() : ?string {
+        return $this->CondizioniPagamento->get();
     }
 
-    public static function build(
-        ?string $CondizioniPagamento = null
-    ) {
-        $element = new static();
-
-        if ($CondizioniPagamento) {
-            $element->CondizioniPagamento = $CondizioniPagamento;
-        }
-
-        return $element;
-    }
-
-    public function getCondizioniPagamento(): ?string
-    {
-        return $this->CondizioniPagamento;
-    }
-
-    public function setCondizioniPagamento(?string $CondizioniPagamento): DatiPagamento
-    {
-        $this->CondizioniPagamento = $CondizioniPagamento;
+    public function setCondizioniPagamento(?string $value) {
+        $this->CondizioniPagamento->set($value);
 
         return $this;
     }
 
-    /**
-     * @return DettaglioPagamento[]
-     */
-    public function getDettaglioPagamento(): Collection
-    {
+    public function getDettaglioPagamento() : Collezione {
         return $this->DettaglioPagamento;
     }
 
-    /**
-     * @return DettaglioPagamento[]
-     */
-    public function addPagamento(DettaglioPagamento $pagamento): DatiPagamento
-    {
-        $this->DettaglioPagamento->add($pagamento);
+    public function getAllDettaglioPagamento() : array {
+        return $this->DettaglioPagamento->toList();
+    }
+
+    public function addDettaglioPagamento(DettaglioPagamento $elemento) {
+        $this->DettaglioPagamento->add($elemento);
+
+        return $this;
+    }
+
+    public function removeDettaglioPagamento(int $index) {
+        $this->DettaglioPagamento->remove($index);
 
         return $this;
     }

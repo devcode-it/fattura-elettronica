@@ -2,114 +2,60 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use DevCode\FatturaElettronica\ElementoFattura;
-use DevCode\FatturaElettronica\Fields\Collection;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
+use DevCode\FatturaElettronica\Standard\Collezione;
+use DevCode\FatturaElettronica\Standard\Elemento;
 
-class DatiBeniServizi extends ElementoFattura
-{
-    /** @var DettaglioLinee[] */
-    public Collection $DettaglioLinee;
-
-    /** @var DatiRiepilogo[] */
-    public Collection $DatiRiepilogo;
-
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->DettaglioLinee = new Collection(DettaglioLinee::class);
-        $this->DatiRiepilogo = new Collection(DatiRiepilogo::class);
+/*
+* Blocco sempre obbligatorio. Contiene natura, qualità, quantità e gli elementi necessari a determinare il valore dei beni e/o dei servizi formanti oggetto dell'operazione
+*/
+class DatiBeniServizi extends Elemento {
+    protected Collezione $DettaglioLinee;
+	protected Collezione $DatiRiepilogo;
+    public function __construct() {
+        $this->DettaglioLinee = new Collezione(DettaglioLinee::class, 1);
+		$this->DatiRiepilogo = new Collezione(DatiRiepilogo::class, 1);
+        
+    }
+    
+    public function getDettaglioLinee() : Collezione {
+        return $this->DettaglioLinee;
     }
 
-    public static function build(): self
-    {
-        return new static();
+    public function getAllDettaglioLinee() : array {
+        return $this->DettaglioLinee->toList();
     }
 
-    public function addLinea(DettaglioLinee $linea): DatiBeniServizi
-    {
-        $this->DettaglioLinee->add($linea);
+    public function addDettaglioLinee(DettaglioLinee $elemento) {
+        $this->DettaglioLinee->add($elemento);
 
         return $this;
     }
 
-    public function getDettaglioLinee(): Collection
-    {
-        return $this->DettaglioLinee;
+    public function removeDettaglioLinee(int $index) {
+        $this->DettaglioLinee->remove($index);
+
+        return $this;
     }
 
-    public function getDatiRiepilogo(): Collection
-    {
+    public function getDatiRiepilogo() : Collezione {
         return $this->DatiRiepilogo;
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    protected function getXmlTags(): iterable
-    {
-        if ($this->DatiRiepilogo->isEmpty()) {
-            $this->calcolaDatiRiepilogo();
-        }
-
-        return parent::getXmlTags();
+    public function getAllDatiRiepilogo() : array {
+        return $this->DatiRiepilogo->toList();
     }
 
-    protected function calcolaDatiRiepilogo(): void
-    {
-        $righe = collect($this->getDettaglioLinee()->toArray());
+    public function addDatiRiepilogo(DatiRiepilogo $elemento) {
+        $this->DatiRiepilogo->add($elemento);
 
-        // Riepiloghi per IVA per percentuale
-        $riepiloghi_percentuali = $righe->filter(function ($item, $key) {
-            return empty($item->AliquotaIVA);
-        })->groupBy(function ($item, $key) {
-            return $item->AliquotaIVA;
-        });
-        foreach ($riepiloghi_percentuali as $riepilogo) {
-            $totale = $riepilogo->sum(function ($item) {
-                return $item->PrezzoTotale;
-            });
-            $percentuale = $riepilogo->first()->AliquotaIVA;
-            $imposta = $totale * $percentuale / 100;
+        return $this;
+    }
 
-            // Creazione dettaglio
-            $dettaglio = new DatiRiepilogo(
-                $percentuale,
-                null,
-                null,
-                null,
-                $totale,
-                $imposta
-            );
-            $this->DatiRiepilogo->add($dettaglio);
-        }
+    public function removeDatiRiepilogo(int $index) {
+        $this->DatiRiepilogo->remove($index);
 
-        // Riepiloghi per IVA per natura
-        $riepiloghi_natura = $righe->filter(function ($item, $key) {
-            return !empty($item->Natura);
-        })->groupBy(function ($item, $key) {
-            return $item->Natura;
-        });
-        foreach ($riepiloghi_natura as $riepilogo) {
-            $totale = $riepilogo->sum(function ($item) {
-                return $item->PrezzoTotale;
-            });
-            $percentuale = $riepilogo->first()->AliquotaIVA;
-            $natura = $riepilogo->first()->Natura;
-            $imposta = $totale * $percentuale / 100;
-
-            // Creazione dettaglio
-            $dettaglio = new DatiRiepilogo(
-                $percentuale,
-                $natura,
-                null,
-                null,
-                $totale,
-                $imposta
-            );
-            $this->DatiRiepilogo->add($dettaglio);
-        }
+        return $this;
     }
 }

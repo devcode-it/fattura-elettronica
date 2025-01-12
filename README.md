@@ -9,43 +9,53 @@ Libreria per la gestione della Fatturazione elettronica per la creazione delle f
 
 La libreria nasce originalmente come fork della versione 1.1.12 di [deved-it/fattura-elettronica](https://github.com/deved-it/fattura-elettronica), ma integra molte funzionalità aggiuntive rispetto alla versione originale.
 
-
 ## Installazione
 
 Per ora non è disponibile un pacchetto registrato tramite Composer.
 
 Per installare la libreria deved-it/fattura-elettronica:
 ```bash
-composer require deved/fattura-elettronica
+composer require devcode/fattura-elettronica
 ```
+
+## Aggiornamento contenuti
+
+L'aggiornamento delle classi disponibili per la fattura elettronica può essere effettuato tramite lo script `build/generate.py` in Python.
+
+Questo script sovrascriverà i contenuti delle cartelle `src/Semplificata` e `src/Ordinaria` con classi aggiornate sulla base dei contenuti del file Excel con i dettagli dello schema.
+
+Riferimento per lo schema ufficiale: https://www.agenziaentrate.gov.it/portale/web/guest/specifiche-tecniche-versione-1.8
 
 ## Generazione fattura
 
 ```php
-use DevCode\FatturaElettronica\Common\DatiAnagrafici;
-use DevCode\FatturaElettronica\Common\Sede;
+require_once __DIR__.'/vendor/autoload.php';
+
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\DatiAnagrafici as DatiAnagraficiCessionarioCommittente;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\Sede as SedeCedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\Sede as SedeCessionarioCommittente;
+
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedente;
-use DevCode\FatturaElettronica\Ordinaria\FatturaOrdinaria;
-use DevCode\FatturaElettronica\Tabelle\TipoDocumento;
-
-require __DIR__.'/vendor/autoload.php';
+use DevCode\FatturaElettronica\FatturaOrdinaria;
+use DevCode\FatturaElettronica\TipoDocumento;
 
 $fattura = FatturaOrdinaria::build(
-    TipoDocumento::Fattura,
+    TipoDocumento::Fattura->value,
     '2018-11-22',
     '2018221111',
     '001'
 );
 
 // Anagrafica cedente
-$anagraficaCedente = DatiAnagraficiCedente::build(
+$anagraficaCedente = new DatiAnagraficiCedentePrestatore(
     '12345678901',
     'IT',
     '12345678901',
     'Acme SpA',
 );
-$sedeCedente = Sede::build(
+$sedeCedente = new SedeCedentePrestatore(
     'Via Roma 10',
     null,
     'Tarvisio',
@@ -59,14 +69,14 @@ $cedente->setDatiAnagrafici($anagraficaCedente);
 $cedente->setSede($sedeCedente);
 
 // Anagrafica cessionario
-$anagraficaCessionario = DatiAnagrafici::build(
+$anagraficaCessionario = new DatiAnagraficiCessionarioCommittente(
     'XYZYZX77M04H888K',
     null,
     null,
     'Pinco Palla'
 );
 
-$sedeCessionario = Sede::build(
+$sedeCessionario = new SedeCessionarioCommittente(
     'Via Diaz 35',
     null,
     'Tarvisio',
@@ -82,8 +92,12 @@ $fattura->getDatiGenerali()
     ->getDatiGeneraliDocumento()
     ->setImportoTotaleDocumento(122);
 
-$linea = DettaglioLinee::build('Articolo1', 50, 'ABC', 120, 10);
-$fattura->getDatiBeniServizi()->addLinea($linea);
+$linea = new DettaglioLinee();
+$linea->setDescrizione('Articolo1');
+$linea->setPrezzoUnitario(60);
+$linea->setPrezzoTotale(120);
+$linea->setAliquotaIVA(10);
+$fattura->getDatiBeniServizi()->addDettaglioLinee($linea);
 
 // Generazione
 $xml = $fattura->__toString();
@@ -96,9 +110,9 @@ $errors = $fattura->validate();
 ```php
 <?php
 
-use DevCode\FatturaElettronica\FatturaElettronica;
-
 require __DIR__.'/vendor/autoload.php';
+
+use DevCode\FatturaElettronica\FatturaElettronica;
 
 // Lettura
 $fattura = FatturaElettronica::parse(__DIR__.'/test.xml');

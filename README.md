@@ -54,7 +54,7 @@ $fattura->getFatturaElettronicaHeader()
     ->getIdTrasmittente()
     ->setIdPaese('IT')
     ->setIdCodice('01234567890');
-    
+
 $fattura->getFatturaElettronicaHeader()
 ->getDatiTrasmissione()
 ->setCodiceDestinatario('ABC1234');
@@ -68,33 +68,28 @@ $anagraficaCedente->IdFiscaleIVA->setIdCodice('12345678901');
 $anagraficaCedente->Anagrafica
     ->setDenominazione('Acme SpA');
 
-$sedeCedente = new SedeCedentePrestatore(
-    'Via Roma 10',
-    null,
-    '33018',
-    'Tarvisio',
-    'UD',
-    'IT',
-);
+$sedeCedente = (new SedeCedentePrestatore())
+    ->setIndirizzo('Via Roma 10')
+    ->setCAP('33018')
+    ->setComune('Tarvisio')
+    ->setProvincia('UD')
+    ->setNazione('IT');
 
 $cedente = $fattura->getCedentePrestatore()
     ->setDatiAnagrafici($anagraficaCedente)
     ->setSede($sedeCedente);
 
 // Anagrafica cessionario
-$anagraficaCessionario = new DatiAnagraficiCessionarioCommittente(
-    'XYZYZX77M04H888K',
-);
+$anagraficaCessionario = (new DatiAnagraficiCessionarioCommittente())
+    ->setCodiceFiscale('XYZYZX77M04H888K');
 $anagraficaCessionario->Anagrafica->setDenominazione('Pinco Palla');
 
-$sedeCessionario = new SedeCessionarioCommittente(
-    'Via Diaz 35',
-    null,
-    '33018',
-    'Tarvisio',
-    'UD',
-    'IT',
-);
+$sedeCessionario = (new SedeCessionarioCommittente())
+    ->setIndirizzo('Via Diaz 35')
+    ->setCAP('33018')
+    ->setComune('Tarvisio')
+    ->setProvincia('UD')
+    ->setNazione('IT');
 $cessionario = $fattura->getCessionarioCommittente();
 $cessionario->setDatiAnagrafici($anagraficaCessionario);
 $cessionario->setSede($sedeCessionario);

@@ -4,7 +4,6 @@ $finder = (new PhpCsFixer\Finder())
     ->files()
     ->exclude('node_modules')
     ->exclude('vendor')
-    ->exclude('build')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true)
     ->in(__DIR__);

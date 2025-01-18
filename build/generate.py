@@ -338,8 +338,9 @@ print(f"Lettura percorsi")
 percorso = os.path.dirname(__file__)
 percorso_generazione = os.path.join(percorso, "..", "src")
 prefisso_namespace = "DevCode\FatturaElettronica"
-with open(os.path.join(percorso, "prefix.php")) as f:
-    prefisso_file = f.read()
+prefisso_file = """<?php
+
+namespace DevCode\FatturaElettronica{namespace};"""
 
 print(f"Generazione codice per Fattura Ordinaria")
 genera_da_file(

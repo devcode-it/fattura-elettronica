@@ -2,6 +2,7 @@
 
 require_once __DIR__.'/../vendor/autoload.php';
 
+use League\Csv\Reader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
 
@@ -24,7 +25,7 @@ function estraiLista($array, $key)
     return array_merge(...$list);
 }
 
-function parseElement(SimpleXMLElement $elemento, array $riferimento_numero, string $namespace)
+function parseElement(SimpleXMLElement $elemento, array $riferimento_numero, string $namespace, array $descrizioni)
 {
     $attributi = $elemento->attributes();
     $nome = (string) $attributi['name'];
@@ -34,21 +35,29 @@ function parseElement(SimpleXMLElement $elemento, array $riferimento_numero, str
 
     $sotto_namespace = count($riferimento_numero) == 1 ? $namespace : $namespace.'\\'.$nome;
 
-    $numero = implode('.', $riferimento_numero);
+    $numero = implode('.', array_slice($riferimento_numero, 1));
     print_r("\nLettura struttura $numero $nome ($namespace)");
 
     $minimo_occorrenze = intval($attributi->minOccurs ?? 1);
 
-    if (!empty($elemento->xpath('ancestor::*[xs:choice]'))) {
+    if (!empty($elemento->xpath('ancestor::xs:choice'))) {
+        print_r("\n\t$nome ($namespace) is inside a choice element - set as optional");
         $minimo_occorrenze = 0;
     }
 
-    $massimo_occorrenze = (string) $attributi->maxOccurs ?? 1;
+    $massimo_occorrenze = empty((string) $attributi->maxOccurs) ? 1 : (string) $attributi->maxOccurs;
     $massimo_occorrenze = $massimo_occorrenze == 'unbounded' ? null : intval($massimo_occorrenze);
 
     $tipo_interno = $attributi['type'];
     // Interpreta tipo composito
-    $info_tipo = parseComplexType($elemento, $nome, $tipo_interno, $sotto_namespace, $riferimento_numero);
+    $info_tipo = parseComplexType(
+        $elemento,
+        $nome,
+        $tipo_interno,
+        $sotto_namespace,
+        $riferimento_numero,
+        $descrizioni
+    );
 
     $contenuti = [];
     if (!isset($info_tipo)) {
@@ -109,11 +118,17 @@ function parseElement(SimpleXMLElement $elemento, array $riferimento_numero, str
 
     print_r("\nGenerazione struttura $numero $nome ($namespace)");
     $doc = trim((string) $info_tipo['doc']);
+    $doc_descrizione = isset($descrizioni[$numero]) ? trim((string) $descrizioni[$numero]) : '';
 
     salvaClasse($namespace, $nome, "
 {$contenuto_importazioni}
 
-/*
+/**
+* @riferimento $numero
+* @name $nome
+*
+* $doc_descrizione
+*
 * $doc
 */
 class {$nome} extends Elemento {
@@ -131,7 +146,7 @@ class {$nome} extends Elemento {
     ];
 }
 
-function parseComplexType(SimpleXMLElement $elemento, string $nome, string $tipo, string $namespace, array $riferimento_numero)
+function parseComplexType(SimpleXMLElement $elemento, string $nome, string $tipo, string $namespace, array $riferimento_numero, array $descrizioni)
 {
     // Ricerca globale
     $riferimenti = $elemento->xpath("//xs:complexType[@name='$tipo']");
@@ -156,7 +171,8 @@ function parseComplexType(SimpleXMLElement $elemento, string $nome, string $tipo
         $elementi[] = parseElement(
             $el,
             array_merge($riferimento_numero, [$key + 1]),
-            $namespace
+            $namespace,
+            $descrizioni
         );
     }
 
@@ -228,6 +244,12 @@ function parseSimpleType(SimpleXMLElement $elemento, string $nome, string $tipo,
         if (!empty($match)) {
             $minimo_lunghezza = $match[2];
             $massimo_lunghezza = $match[3];
+        } else {
+            preg_match('/(.+?)\{([0-9]+)\}/', $regex, $match);
+
+            if (!empty($match)) {
+                $minimo_lunghezza = $massimo_lunghezza = $match[2];
+            }
         }
     }
 
@@ -269,7 +291,8 @@ function salvaEnum(SimpleXMLElement $elemento, array $valori, string $namespace)
         $doc = !empty($rif_doc) ? (string) $rif_doc[0] : null;
 
         $contenuti[] = sprintf('
-    /*
+
+    /**
     * %s
     */
     case %s = "%s";
@@ -515,15 +538,15 @@ function generaAttributoClasse(SimpleXMLElement $elemento, string $namespace, ar
 
     return [
         'import' => [$namespace.'\\'.$nome],
-        'init' => ["\$this->{$nome} = new {$nome}({$opzionale});"],
+        'init' => ["\$this->{$nome} = new {$nome}();"],
         'constructor' => [],
         'properties' => ["protected {$nome} \${$nome};"],
         'body' => ["
-    public function get{$nome}() : $nome {
+    public function get{$nome}() : {$nome} {
         return \$this->{$nome};
     }
 
-    public function set{$nome}({$nome} \$$nome) {
+    public function set{$nome}({$nome} \${$nome}) {
         \$this->{$nome} = \$$nome;
 
         return \$this;
@@ -535,7 +558,9 @@ function salvaClasse(string $namespace, string $nome, string $contenuto)
 {
     global $filesystem;
 
-    $prefisso = file_get_contents(__DIR__.'/prefix.php');
+    $prefisso = "<?php
+
+namespace DevCode\FatturaElettronica{namespace};";
     $prefisso = str_replace('{namespace}', strlen($namespace) ? '\\'.$namespace : '', $prefisso);
 
     $percorso = __DIR__.'/../src/'.$namespace;
@@ -548,10 +573,64 @@ function salvaClasse(string $namespace, string $nome, string $contenuto)
     );
 }
 
-$xml = simplexml_load_file('specification/Schema_VFSM10.xsd');
-$filesystem->remove(__DIR__.'/../src/Semplificata');
-parseElement($xml->xpath('.//xs:element')[0], [1], 'Semplificata');
+function estraiDescrizioniDaCSV($filename)
+{
+    try {
+        $csv = Reader::createFromPath(__DIR__.'/../specification/'.$filename, 'r');
+    } catch (Exception $e) {
+        return [];
+    }
+    $csv->setDelimiter(';');
 
-$xml = simplexml_load_file('specification/Schema_VFPR12.xsd');
-$filesystem->remove(__DIR__.'/../src/Ordinaria');
-parseElement($xml->xpath('.//xs:element')[0], [1], 'Ordinaria');
+    $records = $csv->getRecords();
+    $descrizioni = [];
+    foreach ($records as $offset => $record) {
+        $numero = null;
+        foreach ($record as $i => $val) {
+            if ($i > 8) {
+                break;
+            }
+
+            if (!empty($val)) {
+                $numero = trim(trim(explode('<', $val)[0], '<>'));
+                break;
+            }
+        }
+
+        if (empty($numero)) {
+            continue;
+        }
+        $descrizioni[$numero] = $record[11];
+    }
+
+    return $descrizioni;
+}
+
+function generaDaSchema($schema_file, $descrizioni, $namespace)
+{
+    global $filesystem;
+
+    $xml = simplexml_load_file(__DIR__.'/../specification/'.$schema_file);
+
+    $filesystem->remove(__DIR__.'/../src/'.$namespace);
+
+    parseElement($xml->xpath('.//xs:element')[0], [1], $namespace, $descrizioni);
+}
+
+print_r("Generazione per Fattura Semplicata\n\n");
+generaDaSchema(
+    'Schema_VFSM10.xsd',
+    estraiDescrizioniDaCSV('RappresentazioneTabellareFattSemplificata.csv'),
+    'Semplificata'
+);
+
+print_r("\n\n------------------------------------\n\n");
+
+print_r("Generazione per Fattura Ordinaria\n\n");
+generaDaSchema(
+    'Schema_VFPR12.xsd',
+    estraiDescrizioniDaCSV('RappresentazioneTabellareFattOrdinaria 1.8_vers 260214.csv'),
+    'Ordinaria'
+);
+
+print_r("\n\n");

@@ -239,16 +239,26 @@ function parseSimpleType(SimpleXMLElement $elemento, string $nome, string $tipo,
     }
 
     if (!is_null($regex)) {
-        preg_match('/(.+?)\{([0-9]+),\s*([0-9]+)\}/', $regex, $match);
+        // Match per regex con dimensioni variabili definite
+        preg_match('/(.+?)\{([0-9]+),\s*([0-9]+)\}\)?/', $regex, $match);
 
         if (!empty($match)) {
             $minimo_lunghezza = $match[2];
             $massimo_lunghezza = $match[3];
         } else {
-            preg_match('/(.+?)\{([0-9]+)\}/', $regex, $match);
+            // Match per regex con dimensioni statiche definite
+            preg_match('/(.+?)\{([0-9]+)\}\)?/', $regex, $match);
 
             if (!empty($match)) {
                 $minimo_lunghezza = $massimo_lunghezza = $match[2];
+            }
+            // Match per regex di numeri con cifre limitate
+            else {
+                preg_match_all('/(\[0\-9\])+?/', $regex, $match);
+
+                if (str_repeat('[0-9]', count($match[0])) == $regex) {
+                    $minimo_lunghezza = $massimo_lunghezza = count($match[0]);
+                }
             }
         }
     }

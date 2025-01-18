@@ -2,46 +2,52 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Carbon\Carbon;
+use DevCode\FatturaElettronica\Standard\Data;
+use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Testo;
 
-class DatiVeicoli extends ElementoFattura
+/*
+* Dati relativi ai veicoli di cui all'art. 38, comma 4 del dl 331 del 1993
+*/
+class DatiVeicoli extends Elemento
 {
-    protected ?string $Data;
+    protected Data $Data;
+    protected Testo $TotalePercorso;
 
-    protected ?string $TotalePercorso;
-
-    public static function build(
-        ?string $Data = null,
-        ?string $TotalePercorso = null
-    ) {
-        $element = new static();
-
-        $element->Data = $Data;
-        $element->TotalePercorso = $TotalePercorso;
-
-        return $element;
+    public function __construct(string|Carbon|\DateTime|null $Data = null, ?string $TotalePercorso = null)
+    {
+        parent::__construct(true);
+        $this->Data = new Data(false, 'YYYY-MM-DD');
+        $this->TotalePercorso = new Testo(false, 1, 15, 1);
+        if (!is_null($Data)) {
+            $this->setData($Data);
+        }
+        if (!is_null($TotalePercorso)) {
+            $this->setTotalePercorso($TotalePercorso);
+        }
     }
 
     public function getData(): ?string
     {
-        return $this->Data;
+        return $this->Data->get();
     }
 
-    public function setData(?string $Data): DatiVeicoli
+    public function setData(string|Carbon|\DateTime|null $value)
     {
-        $this->Data = $Data;
+        $this->Data->set($value);
 
         return $this;
     }
 
     public function getTotalePercorso(): ?string
     {
-        return $this->TotalePercorso;
+        return $this->TotalePercorso->get();
     }
 
-    public function setTotalePercorso(?string $TotalePercorso): DatiVeicoli
+    public function setTotalePercorso(?string $value)
     {
-        $this->TotalePercorso = $TotalePercorso;
+        $this->TotalePercorso->set($value);
 
         return $this;
     }

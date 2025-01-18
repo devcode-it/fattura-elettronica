@@ -3,15 +3,12 @@
 namespace DevCode\FatturaElettronica;
 
 use DevCode\FatturaElettronica\Interfaces\SerializeInterface;
-use DevCode\FatturaElettronica\Ordinaria\FatturaOrdinaria;
-use DevCode\FatturaElettronica\Tabelle\FormatoTrasmissione;
-use Exception;
+use DevCode\FatturaElettronica\Standard\Elemento;
 
-abstract class FatturaElettronica extends ElementoFattura implements SerializeInterface, FatturaInterface
+abstract class FatturaElettronica extends Elemento implements SerializeInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    protected ?string $schema = null;
+
     public function isEmpty(): bool
     {
         return false;
@@ -29,7 +26,7 @@ abstract class FatturaElettronica extends ElementoFattura implements SerializeIn
         return $idPaese.$idCodice.'_'.$progressivoInvio.'.xml';
     }
 
-    public static function parse(string $file): FatturaInterface
+    public static function parse(string $file): FatturaSemplificata|FatturaOrdinaria
     {
         $content = file_get_contents($file);
 
@@ -39,20 +36,34 @@ abstract class FatturaElettronica extends ElementoFattura implements SerializeIn
         if ($xml === false) {
             $message = libxml_get_last_error()->message;
 
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $versione = (string) $xml['versione'];
-        $content = json_decode(json_encode($xml), true);
-
-        if ($versione == FormatoTrasmissione::Semplificata) {
-            // TODO
+        if ($versione == FormatoTrasmissione::Semplificata->value) {
+            $result = new FatturaSemplificata();
         } else {
-            $result = new FatturaOrdinaria();
+            $result = new FatturaOrdinaria($versione);
         }
 
+        $content = json_decode(json_encode($xml), true);
         $result->unserialize($content);
 
         return $result;
+    }
+
+    /**
+     * Valida il contenuto XML della fattura contro il formato XSD disponibile.
+     */
+    public function validator(): Validatore
+    {
+        $validatore = new Validatore();
+
+        $validatore->validator(
+            $this->__toString(),
+            __DIR__.'/../specification/'.$this->schema
+        );
+
+        return $validatore;
     }
 }

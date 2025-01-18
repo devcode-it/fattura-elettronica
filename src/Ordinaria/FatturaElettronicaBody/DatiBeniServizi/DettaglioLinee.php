@@ -2,304 +2,323 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
-use DevCode\FatturaElettronica\Common\ScontoMaggiorazione;
-use DevCode\FatturaElettronica\ElementoFattura;
-use DevCode\FatturaElettronica\Fields\Collection;
-use DevCode\FatturaElettronica\Fields\Decimal;
+use DevCode\FatturaElettronica\Carbon\Carbon;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\AltriDatiGestionali;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\CodiceArticolo;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\ScontoMaggiorazione;
+use DevCode\FatturaElettronica\Standard\Collezione;
+use DevCode\FatturaElettronica\Standard\Data;
+use DevCode\FatturaElettronica\Standard\Decimale;
+use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Testo;
 
-class DettaglioLinee extends ElementoFattura
+/*
+* Blocco contenente le linee di dettaglio del documento (gli elementi informativi del blocco si ripetono per ogni riga di dettaglio).
+*/
+class DettaglioLinee extends Elemento
 {
-    protected static int $numero_linea = 1;
-
     protected int $NumeroLinea;
+    protected Testo $TipoCessionePrestazione;
+    protected Collezione $CodiceArticolo;
+    protected Testo $Descrizione;
+    protected Decimale $Quantita;
+    protected Testo $UnitaMisura;
+    protected Data $DataInizioPeriodo;
+    protected Data $DataFinePeriodo;
+    protected Decimale $PrezzoUnitario;
+    protected Collezione $ScontoMaggiorazione;
+    protected Decimale $PrezzoTotale;
+    protected Decimale $AliquotaIVA;
+    protected Testo $Ritenuta;
+    protected Testo $Natura;
+    protected Testo $RiferimentoAmministrazione;
+    protected Collezione $AltriDatiGestionali;
 
-    protected ?string $TipoCessionePrestazione;
-
-    /** @var CodiceArticolo[] */
-    protected Collection $CodiceArticolo;
-
-    protected string $Descrizione;
-
-    protected Decimal $Quantita;
-
-    protected ?string $UnitaMisura;
-
-    protected ?string $DataInizioPeriodo;
-
-    protected ?string $DataFinePeriodo;
-
-    protected Decimal $PrezzoUnitario;
-
-    /** @var ScontoMaggiorazione[] */
-    protected Collection $ScontoMaggiorazione;
-
-    protected Decimal $PrezzoTotale;
-
-    protected Decimal $AliquotaIVA;
-
-    protected ?string $Ritenuta;
-
-    protected ?string $Natura;
-
-    protected ?string $RiferimentoAmministrazione;
-
-    /** @var AltriDatiGestionali[] */
-    protected Collection $AltriDatiGestionali;
-
-    public function __construct()
+    public function __construct(?int $NumeroLinea = null, ?string $TipoCessionePrestazione = null, ?string $Descrizione = null, ?float $Quantita = null, ?string $UnitaMisura = null, string|Carbon|\DateTime|null $DataInizioPeriodo = null, string|Carbon|\DateTime|null $DataFinePeriodo = null, ?float $PrezzoUnitario = null, ?float $PrezzoTotale = null, ?float $AliquotaIVA = null, ?string $Ritenuta = null, ?string $Natura = null, ?string $RiferimentoAmministrazione = null)
     {
-        parent::__construct();
-
-        $this->Quantita = new Decimal(4);
-        $this->PrezzoUnitario = new Decimal(4);
-        $this->AliquotaIVA = new Decimal(2);
-        $this->PrezzoTotale = new Decimal(4);
-
-        $this->CodiceArticolo = new Collection(CodiceArticolo::class);
-        $this->ScontoMaggiorazione = new Collection(ScontoMaggiorazione::class);
-        $this->AltriDatiGestionali = new Collection(AltriDatiGestionali::class);
+        parent::__construct(false);
+        $this->NumeroLinea = 1;
+        $this->TipoCessionePrestazione = new Testo(true, 2, 2, 1);
+        $this->CodiceArticolo = new Collezione(CodiceArticolo::class, 0);
+        $this->Descrizione = new Testo(false, 1, 1000, 1);
+        $this->Quantita = new Decimale(true);
+        $this->UnitaMisura = new Testo(true, 1, 10, 1);
+        $this->DataInizioPeriodo = new Data(true, 'YYYY-MM-DD');
+        $this->DataFinePeriodo = new Data(true, 'YYYY-MM-DD');
+        $this->PrezzoUnitario = new Decimale(false);
+        $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0);
+        $this->PrezzoTotale = new Decimale(false);
+        $this->AliquotaIVA = new Decimale(false);
+        $this->Ritenuta = new Testo(true, 2, 2, 1);
+        $this->Natura = new Testo(true, 2, 4, 1);
+        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
+        $this->AltriDatiGestionali = new Collezione(AltriDatiGestionali::class, 0);
+        if (!is_null($NumeroLinea)) {
+            $this->setNumeroLinea($NumeroLinea);
+        }
+        if (!is_null($TipoCessionePrestazione)) {
+            $this->setTipoCessionePrestazione($TipoCessionePrestazione);
+        }
+        if (!is_null($Descrizione)) {
+            $this->setDescrizione($Descrizione);
+        }
+        if (!is_null($Quantita)) {
+            $this->setQuantita($Quantita);
+        }
+        if (!is_null($UnitaMisura)) {
+            $this->setUnitaMisura($UnitaMisura);
+        }
+        if (!is_null($DataInizioPeriodo)) {
+            $this->setDataInizioPeriodo($DataInizioPeriodo);
+        }
+        if (!is_null($DataFinePeriodo)) {
+            $this->setDataFinePeriodo($DataFinePeriodo);
+        }
+        if (!is_null($PrezzoUnitario)) {
+            $this->setPrezzoUnitario($PrezzoUnitario);
+        }
+        if (!is_null($PrezzoTotale)) {
+            $this->setPrezzoTotale($PrezzoTotale);
+        }
+        if (!is_null($AliquotaIVA)) {
+            $this->setAliquotaIVA($AliquotaIVA);
+        }
+        if (!is_null($Ritenuta)) {
+            $this->setRitenuta($Ritenuta);
+        }
+        if (!is_null($Natura)) {
+            $this->setNatura($Natura);
+        }
+        if (!is_null($RiferimentoAmministrazione)) {
+            $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
+        }
     }
 
-    public static function build(
-        string $Descrizione,
-        float $Quantita,
-        ?string $UnitaMisura,
-        float $PrezzoUnitario,
-        ?float $AliquotaIVA,
-        ?string $Ritenuta = null,
-        ?string $Natura = null
-    ) {
-        $element = new static();
-
-        // Impostazione numero automatico
-        $element->NumeroLinea = self::$numero_linea;
-        self::$numero_linea = self::$numero_linea + 1;
-
-        $element->Descrizione = $Descrizione;
-        $element->UnitaMisura = $UnitaMisura;
-        $element->Ritenuta = $Ritenuta;
-        $element->Natura = $Natura;
-
-        $element->setQuantita($Quantita);
-        $element->setPrezzoUnitario($PrezzoUnitario);
-        $element->setAliquotaIVA($AliquotaIVA);
-
-        return $element;
-    }
-
-    public function getNumeroLinea(): int
+    public function getNumeroLinea(): ?int
     {
         return $this->NumeroLinea;
     }
 
-    public function setNumeroLinea(int $NumeroLinea): DettaglioLinee
+    public function setNumeroLinea(int $value)
     {
-        $this->NumeroLinea = $NumeroLinea;
+        $this->NumeroLinea = $value;
 
         return $this;
     }
 
     public function getTipoCessionePrestazione(): ?string
     {
-        return $this->TipoCessionePrestazione;
+        return $this->TipoCessionePrestazione->get();
     }
 
-    public function setTipoCessionePrestazione(?string $TipoCessionePrestazione): DettaglioLinee
+    public function setTipoCessionePrestazione(?string $value)
     {
-        $this->TipoCessionePrestazione = $TipoCessionePrestazione;
+        $this->TipoCessionePrestazione->set($value);
 
         return $this;
     }
 
-    /**
-     * @return CodiceArticolo[]
-     */
-    public function getCodiceArticolo(): iterable
+    public function getCodiceArticolo(): Collezione
     {
         return $this->CodiceArticolo;
     }
 
-    public function getDescrizione(): string
+    public function getAllCodiceArticolo(): array
     {
-        return $this->Descrizione;
+        return $this->CodiceArticolo->toList();
     }
 
-    public function setDescrizione(string $Descrizione): DettaglioLinee
+    public function addCodiceArticolo(CodiceArticolo $elemento)
     {
-        $this->Descrizione = $Descrizione;
+        $this->CodiceArticolo->add($elemento);
 
         return $this;
     }
 
-    /**
-     * @return Decimal
-     */
+    public function removeCodiceArticolo(int $index)
+    {
+        $this->CodiceArticolo->remove($index);
+
+        return $this;
+    }
+
+    public function getDescrizione(): ?string
+    {
+        return $this->Descrizione->get();
+    }
+
+    public function setDescrizione(?string $value)
+    {
+        $this->Descrizione->set($value);
+
+        return $this;
+    }
+
     public function getQuantita(): ?float
     {
         return $this->Quantita->get();
     }
 
-    /**
-     * @param Decimal $Quantita
-     */
-    public function setQuantita(?float $Quantita): DettaglioLinee
+    public function setQuantita(?float $value)
     {
-        $this->Quantita->set($Quantita);
+        $this->Quantita->set($value);
 
         return $this;
     }
 
     public function getUnitaMisura(): ?string
     {
-        return $this->UnitaMisura;
+        return $this->UnitaMisura->get();
     }
 
-    public function setUnitaMisura(?string $UnitaMisura): DettaglioLinee
+    public function setUnitaMisura(?string $value)
     {
-        $this->UnitaMisura = $UnitaMisura;
+        $this->UnitaMisura->set($value);
 
         return $this;
     }
 
     public function getDataInizioPeriodo(): ?string
     {
-        return $this->DataInizioPeriodo;
+        return $this->DataInizioPeriodo->get();
     }
 
-    public function setDataInizioPeriodo(?string $DataInizioPeriodo): DettaglioLinee
+    public function setDataInizioPeriodo(string|Carbon|\DateTime|null $value)
     {
-        $this->DataInizioPeriodo = $DataInizioPeriodo;
+        $this->DataInizioPeriodo->set($value);
 
         return $this;
     }
 
     public function getDataFinePeriodo(): ?string
     {
-        return $this->DataFinePeriodo;
+        return $this->DataFinePeriodo->get();
     }
 
-    public function setDataFinePeriodo(?string $DataFinePeriodo): DettaglioLinee
+    public function setDataFinePeriodo(string|Carbon|\DateTime|null $value)
     {
-        $this->DataFinePeriodo = $DataFinePeriodo;
+        $this->DataFinePeriodo->set($value);
 
         return $this;
     }
 
-    /**
-     * @return Decimal
-     */
     public function getPrezzoUnitario(): ?float
     {
         return $this->PrezzoUnitario->get();
     }
 
-    /**
-     * @param Decimal $PrezzoUnitario
-     */
-    public function setPrezzoUnitario(?float $PrezzoUnitario): DettaglioLinee
+    public function setPrezzoUnitario(?float $value)
     {
-        $this->PrezzoUnitario->set($PrezzoUnitario);
+        $this->PrezzoUnitario->set($value);
 
         return $this;
     }
 
-    /**
-     * @return ScontoMaggiorazione[]
-     */
-    public function getScontoMaggiorazione(): iterable
+    public function getScontoMaggiorazione(): Collezione
     {
         return $this->ScontoMaggiorazione;
     }
 
-    /**
-     * @return Decimal
-     */
+    public function getAllScontoMaggiorazione(): array
+    {
+        return $this->ScontoMaggiorazione->toList();
+    }
+
+    public function addScontoMaggiorazione(ScontoMaggiorazione $elemento)
+    {
+        $this->ScontoMaggiorazione->add($elemento);
+
+        return $this;
+    }
+
+    public function removeScontoMaggiorazione(int $index)
+    {
+        $this->ScontoMaggiorazione->remove($index);
+
+        return $this;
+    }
+
     public function getPrezzoTotale(): ?float
     {
         return $this->PrezzoTotale->get();
     }
 
-    /**
-     * @param Decimal $PrezzoTotale
-     */
-    public function setPrezzoTotale(?float $PrezzoTotale): DettaglioLinee
+    public function setPrezzoTotale(?float $value)
     {
-        $this->PrezzoTotale->set($PrezzoTotale);
+        $this->PrezzoTotale->set($value);
 
         return $this;
     }
 
-    /**
-     * @return Decimal
-     */
     public function getAliquotaIVA(): ?float
     {
         return $this->AliquotaIVA->get();
     }
 
-    /**
-     * @param Decimal $AliquotaIVA
-     */
-    public function setAliquotaIVA(?float $AliquotaIVA): DettaglioLinee
+    public function setAliquotaIVA(?float $value)
     {
-        $this->AliquotaIVA->set($AliquotaIVA);
+        $this->AliquotaIVA->set($value);
 
         return $this;
     }
 
     public function getRitenuta(): ?string
     {
-        return $this->Ritenuta;
+        return $this->Ritenuta->get();
     }
 
-    public function setRitenuta(?string $Ritenuta): DettaglioLinee
+    public function setRitenuta(?string $value)
     {
-        $this->Ritenuta = $Ritenuta;
+        $this->Ritenuta->set($value);
 
         return $this;
     }
 
     public function getNatura(): ?string
     {
-        return $this->Natura;
+        return $this->Natura->get();
     }
 
-    public function setNatura(?string $Natura): DettaglioLinee
+    public function setNatura(?string $value)
     {
-        $this->Natura = $Natura;
+        $this->Natura->set($value);
 
         return $this;
     }
 
     public function getRiferimentoAmministrazione(): ?string
     {
-        return $this->RiferimentoAmministrazione;
+        return $this->RiferimentoAmministrazione->get();
     }
 
-    public function setRiferimentoAmministrazione(?string $RiferimentoAmministrazione): DettaglioLinee
+    public function setRiferimentoAmministrazione(?string $value)
     {
-        $this->RiferimentoAmministrazione = $RiferimentoAmministrazione;
+        $this->RiferimentoAmministrazione->set($value);
 
         return $this;
     }
 
-    /**
-     * @return AltriDatiGestionali[]
-     */
-    public function getAltriDatiGestionali(): iterable
+    public function getAltriDatiGestionali(): Collezione
     {
         return $this->AltriDatiGestionali;
     }
 
-    protected function getXmlTags(): iterable
+    public function getAllAltriDatiGestionali(): array
     {
-        if ($this->PrezzoTotale->isEmpty()) {
-            $prezzo_unitario = $this->PrezzoUnitario->get();
-            $quantita = $this->Quantita->get() ?: 1;
+        return $this->AltriDatiGestionali->toList();
+    }
 
-            $this->PrezzoTotale->set($prezzo_unitario * $quantita);
-        }
+    public function addAltriDatiGestionali(AltriDatiGestionali $elemento)
+    {
+        $this->AltriDatiGestionali->add($elemento);
 
-        return parent::getXmlTags();
+        return $this;
+    }
+
+    public function removeAltriDatiGestionali(int $index)
+    {
+        $this->AltriDatiGestionali->remove($index);
+
+        return $this;
     }
 }

@@ -2,20 +2,22 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\ElementoFattura;
+use DevCode\FatturaElettronica\Standard\Elemento;
 
-class DatiSal extends ElementoFattura
+/*
+* Blocco da valorizzare nei casi di fattura per stato di avanzamento
+*/
+class DatiSAL extends Elemento
 {
-    protected ?int $RiferimentoFase;
+    protected int $RiferimentoFase;
 
-    public static function build(
-?int $RiferimentoFase = null
-    ) {
-        $element = new static();
-
-        $element->RiferimentoFase = $RiferimentoFase;
-
-        return $element;
+    public function __construct(?int $RiferimentoFase = null)
+    {
+        parent::__construct(true);
+        $this->RiferimentoFase = 1;
+        if (!is_null($RiferimentoFase)) {
+            $this->setRiferimentoFase($RiferimentoFase);
+        }
     }
 
     public function getRiferimentoFase(): ?int
@@ -23,9 +25,9 @@ class DatiSal extends ElementoFattura
         return $this->RiferimentoFase;
     }
 
-    public function setRiferimentoFase(?int $RiferimentoFase): DatiSal
+    public function setRiferimentoFase(int $value)
     {
-        $this->RiferimentoFase = $RiferimentoFase;
+        $this->RiferimentoFase = $value;
 
         return $this;
     }

@@ -1,20 +1,16 @@
-<?php declare(strict_types=1);
-use PHPUnit\Framework\TestCase;
+<?php
 
-use DevCode\FatturaElettronica\FatturaElettronica;
+declare(strict_types=1);
 use DevCode\FatturaElettronica\FatturaOrdinaria;
-use DevCode\FatturaElettronica\FatturaSemplificata;
-
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedentePrestatore;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\DatiAnagrafici as DatiAnagraficiCessionarioCommittente;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\Sede as SedeCedentePrestatore;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\Sede as SedeCessionarioCommittente;
-
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedente;
-use DevCode\FatturaElettronica\TipoDocumento;
 use DevCode\FatturaElettronica\Ordinaria\Codifiche\RegimeFiscale;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\Sede as SedeCedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\DatiAnagrafici as DatiAnagraficiCessionarioCommittente;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\Sede as SedeCessionarioCommittente;
+use DevCode\FatturaElettronica\TipoDocumento;
+use PHPUnit\Framework\TestCase;
 
 final class WriteTest extends TestCase
 {
@@ -32,7 +28,7 @@ final class WriteTest extends TestCase
             ->getIdTrasmittente()
             ->setIdPaese('IT')
             ->setIdCodice('01234567890');
-            
+
         $fattura->getFatturaElettronicaHeader()
         ->getDatiTrasmissione()
         ->setCodiceDestinatario('ABC1234');
@@ -42,7 +38,7 @@ final class WriteTest extends TestCase
             ->setRegimeFiscale(RegimeFiscale::RF01->value);
         $anagraficaCedente->IdFiscaleIVA->setIdPaese('IT');
         $anagraficaCedente->IdFiscaleIVA->setIdCodice('12345678901');
-        
+
         $anagraficaCedente->Anagrafica
             ->setDenominazione('Acme SpA');
 
@@ -95,15 +91,14 @@ final class WriteTest extends TestCase
             ->setImposta(1.1)
             ->setEsigibilitaIVA('I');
         $fattura->getDatiBeniServizi()->addDatiRiepilogo($riepliogo);
-                
+
         $this->assertTrue($fattura->validator()->isValid());
         $this->assertSame($fattura->__toString(), file_get_contents(__DIR__.'/risorse/fattura_ordinaria.xml'));
-        $this->assertSame($fattura->getFileName(), "IT01234567890_001.xml");
+        $this->assertSame($fattura->getFileName(), 'IT01234567890_001.xml');
     }
-    
+
     public function testFatturaSemplificata(): void
     {
-        //
-        $this->assertSame("", "");
+        $this->assertSame('', '');
     }
 }

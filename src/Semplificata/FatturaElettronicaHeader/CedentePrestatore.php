@@ -2,9 +2,9 @@
 
 namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
 
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\Contatti;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\IdFiscaleIVA;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\IscrizioneREA;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\RappresentanteFiscale;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\Sede;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\StabileOrganizzazione;
 use DevCode\FatturaElettronica\Standard\Elemento;
@@ -14,25 +14,77 @@ use DevCode\FatturaElettronica\Standard\Testo;
 * Blocco sempre obbligatorio contenente dati relativi al cedente / prestatore (fornitore)
 */
 class CedentePrestatore extends Elemento {
-    protected DatiAnagrafici $DatiAnagrafici;
+    protected IdFiscaleIVA $IdFiscaleIVA;
+	protected Testo $CodiceFiscale;
+	protected Testo $Denominazione;
+	protected Testo $Nome;
+	protected Testo $Cognome;
 	protected Sede $Sede;
 	protected ?StabileOrganizzazione $StabileOrganizzazione;
+	protected ?RappresentanteFiscale $RappresentanteFiscale;
 	protected ?IscrizioneREA $IscrizioneREA;
-	protected ?Contatti $Contatti;
-	protected Testo $RiferimentoAmministrazione;
-    public function __construct(?string $RiferimentoAmministrazione = null) {
-        $this->DatiAnagrafici = new DatiAnagrafici();
+	protected Testo $RegimeFiscale;
+    public function __construct(?string $CodiceFiscale = null, ?string $Denominazione = null, ?string $Nome = null, ?string $Cognome = null, ?string $RegimeFiscale = null) {
+        $this->IdFiscaleIVA = new IdFiscaleIVA();
+		$this->CodiceFiscale = new Testo(true, 11, 16, 1);
+		$this->Denominazione = new Testo(true, 1, 80, 1);
+		$this->Nome = new Testo(true, 1, 60, 1);
+		$this->Cognome = new Testo(true, 1, 60, 1);
 		$this->Sede = new Sede();
-		$this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
-        if (!is_null($RiferimentoAmministrazione)) $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
+		$this->RegimeFiscale = new Testo(false, 4, 4, 1);
+        if (!is_null($CodiceFiscale)) $this->setCodiceFiscale($CodiceFiscale);
+		if (!is_null($Denominazione)) $this->setDenominazione($Denominazione);
+		if (!is_null($Nome)) $this->setNome($Nome);
+		if (!is_null($Cognome)) $this->setCognome($Cognome);
+		if (!is_null($RegimeFiscale)) $this->setRegimeFiscale($RegimeFiscale);
     }
     
-    public function getDatiAnagrafici() : DatiAnagrafici {
-        return $this->DatiAnagrafici;
+    public function getIdFiscaleIVA() : IdFiscaleIVA {
+        return $this->IdFiscaleIVA;
     }
 
-    public function setDatiAnagrafici(DatiAnagrafici $DatiAnagrafici) {
-        $this->DatiAnagrafici = $DatiAnagrafici;
+    public function setIdFiscaleIVA(IdFiscaleIVA $IdFiscaleIVA) {
+        $this->IdFiscaleIVA = $IdFiscaleIVA;
+
+        return $this;
+    }
+
+    public function getCodiceFiscale() : ?string {
+        return $this->CodiceFiscale->get();
+    }
+
+    public function setCodiceFiscale(?string $value) {
+        $this->CodiceFiscale->set($value);
+
+        return $this;
+    }
+
+    public function getDenominazione() : ?string {
+        return $this->Denominazione->get();
+    }
+
+    public function setDenominazione(?string $value) {
+        $this->Denominazione->set($value);
+
+        return $this;
+    }
+
+    public function getNome() : ?string {
+        return $this->Nome->get();
+    }
+
+    public function setNome(?string $value) {
+        $this->Nome->set($value);
+
+        return $this;
+    }
+
+    public function getCognome() : ?string {
+        return $this->Cognome->get();
+    }
+
+    public function setCognome(?string $value) {
+        $this->Cognome->set($value);
 
         return $this;
     }
@@ -57,6 +109,16 @@ class CedentePrestatore extends Elemento {
         return $this;
     }
 
+    public function getRappresentanteFiscale() : RappresentanteFiscale {
+        return $this->RappresentanteFiscale;
+    }
+
+    public function setRappresentanteFiscale(?RappresentanteFiscale $RappresentanteFiscale) {
+        $this->RappresentanteFiscale = $RappresentanteFiscale;
+
+        return $this;
+    }
+
     public function getIscrizioneREA() : IscrizioneREA {
         return $this->IscrizioneREA;
     }
@@ -67,22 +129,12 @@ class CedentePrestatore extends Elemento {
         return $this;
     }
 
-    public function getContatti() : Contatti {
-        return $this->Contatti;
+    public function getRegimeFiscale() : ?string {
+        return $this->RegimeFiscale->get();
     }
 
-    public function setContatti(?Contatti $Contatti) {
-        $this->Contatti = $Contatti;
-
-        return $this;
-    }
-
-    public function getRiferimentoAmministrazione() : ?string {
-        return $this->RiferimentoAmministrazione->get();
-    }
-
-    public function setRiferimentoAmministrazione(?string $value) {
-        $this->RiferimentoAmministrazione->set($value);
+    public function setRegimeFiscale(?string $value) {
+        $this->RegimeFiscale->set($value);
 
         return $this;
     }

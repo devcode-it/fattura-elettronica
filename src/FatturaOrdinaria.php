@@ -175,7 +175,7 @@ class FatturaOrdinaria extends FatturaElettronica
         $validatore = new Validatore();
         $isValid = $validatore->validate(
             $this->__toString(),
-            __DIR__.'/../xsd/Schema_VFPR12.xsd'
+            __DIR__.'/../specification/Schema_VFPR12.xsd'
         );
 
         return $validatore->getErrors();

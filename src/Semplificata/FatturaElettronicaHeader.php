@@ -5,8 +5,6 @@ namespace DevCode\FatturaElettronica\Semplificata;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\DatiTrasmissione;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\RappresentanteFiscale;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\TerzoIntermediarioOSoggettoEmittente;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
@@ -16,9 +14,7 @@ use DevCode\FatturaElettronica\Standard\Testo;
 class FatturaElettronicaHeader extends Elemento {
     protected DatiTrasmissione $DatiTrasmissione;
 	protected CedentePrestatore $CedentePrestatore;
-	protected ?RappresentanteFiscale $RappresentanteFiscale;
 	protected CessionarioCommittente $CessionarioCommittente;
-	protected ?TerzoIntermediarioOSoggettoEmittente $TerzoIntermediarioOSoggettoEmittente;
 	protected Testo $SoggettoEmittente;
     public function __construct(?string $SoggettoEmittente = null) {
         $this->DatiTrasmissione = new DatiTrasmissione();
@@ -48,32 +44,12 @@ class FatturaElettronicaHeader extends Elemento {
         return $this;
     }
 
-    public function getRappresentanteFiscale() : RappresentanteFiscale {
-        return $this->RappresentanteFiscale;
-    }
-
-    public function setRappresentanteFiscale(?RappresentanteFiscale $RappresentanteFiscale) {
-        $this->RappresentanteFiscale = $RappresentanteFiscale;
-
-        return $this;
-    }
-
     public function getCessionarioCommittente() : CessionarioCommittente {
         return $this->CessionarioCommittente;
     }
 
     public function setCessionarioCommittente(CessionarioCommittente $CessionarioCommittente) {
         $this->CessionarioCommittente = $CessionarioCommittente;
-
-        return $this;
-    }
-
-    public function getTerzoIntermediarioOSoggettoEmittente() : TerzoIntermediarioOSoggettoEmittente {
-        return $this->TerzoIntermediarioOSoggettoEmittente;
-    }
-
-    public function setTerzoIntermediarioOSoggettoEmittente(?TerzoIntermediarioOSoggettoEmittente $TerzoIntermediarioOSoggettoEmittente) {
-        $this->TerzoIntermediarioOSoggettoEmittente = $TerzoIntermediarioOSoggettoEmittente;
 
         return $this;
     }

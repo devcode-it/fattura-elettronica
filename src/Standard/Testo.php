@@ -14,14 +14,14 @@ class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
 {
     protected bool $optional;
     protected int $minLength;
-    protected int $maxLength;
+    protected ?int $maxLength;
     protected ?int $molteplicita;
     protected ?string $content;
 
     public function __construct(
         bool $optional,
         int $minLength,
-        int $maxLength,
+        ?int $maxLength,
         ?int $molteplicita = null,
         ?string $content = null
     ) {
@@ -41,10 +41,10 @@ class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
     {
         $len = strlen($value);
         if ($len >= $this->minLength) {
-            if (empty($this->molteplicita)){
+            if (empty($this->molteplicita)) {
                 $this->content = $value;
             } else {
-                $this->content = \substr($value, 0, $this->molteplicita*$this->maxLength);
+                $this->content = empty(this->maxLength) ? $value : \substr($value, 0, $this->molteplicita*$this->maxLength);
             }
 
             return;
@@ -63,7 +63,11 @@ class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
 
     public function toArray(): array
     {
-        return !$this->isEmpty() ? str_split($this->content, $this->maxLength) : [];
+        return !$this->isEmpty() ? (
+            empty(this->maxLength) ?
+            [$this->content] :
+            str_split($this->content, $this->maxLength)
+         ) : [];
     }
 
     public function getIterator(): \Traversable

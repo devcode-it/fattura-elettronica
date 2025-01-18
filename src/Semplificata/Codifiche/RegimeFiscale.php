@@ -21,7 +21,7 @@ enum RegimeFiscale : string {
         // Editoria (art.74, c.1, DPR  633/72)
         case RF07 = "RF07";
             
-        // Gestione servizi telefonia (art.74, c.1, DPR 633/72) 
+        // Gestione servizi telefonia pubblica (art.74, c.1, DPR 633/72) 
         case RF08 = "RF08";
             
         // Rivendita documenti di trasporto pubblico e di sosta (art.74, c.1, DPR  633/72) 

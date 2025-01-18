@@ -3,14 +3,17 @@ import os
 import shutil
 
 def genera_da_file(file, tipo):
-    shutil.rmtree(os.path.join(percorso_generazione, tipo))
-
+    dirpath = os.path.join(percorso_generazione, tipo)
+    if os.path.exists(dirpath) and os.path.isdir(dirpath):
+        shutil.rmtree(dirpath)
+    
     print(f"Lettura del file Excel")
-    df = pd.read_excel("build/RappresentazioneTabellareFattOrdinaria 1.8_vers 260214.xlsx")
+    df = pd.read_excel(file)
+    primo_null = df.iloc[2:, 0][df.iloc[2:, 0].isnull()].index[0]
 
-    df.columns = df.iloc[2]
+    df.columns = df.iloc[primo_null-2]
     df = (
-        df.iloc[3:]
+        df.iloc[primo_null-1:]
         .reset_index(drop=True)
         .rename(columns={df.columns[13]: "Occorrenze", df.columns[14]: "Dimensioni"})
     )
@@ -95,8 +98,9 @@ global_map = {}
 def genera_struttura(struttura_df, namespace):
     struttura_df = struttura_df.reset_index(drop=True)
     componente_primario = struttura_df.iloc[0]
-    nome = filtra_nome(componente_primario[0])
-    numero = filtra_numero(componente_primario[0])
+
+    nome = filtra_nome(componente_primario.iloc[0])
+    numero = filtra_numero(componente_primario.iloc[0])
 
     global_map[numero] = struttura_df.copy()
     sotto_namespace = f"{namespace}\\{nome}".strip("\\")
@@ -143,6 +147,9 @@ def genera_struttura(struttura_df, namespace):
             parti_dimensioni = str(dimensioni).split(" ")
             min_length = parti_dimensioni[0]
             max_length = parti_dimensioni[-1]
+
+            min_length = min_length if min_length!= "" and min_length.isdigit() else "0"
+            max_length = max_length if max_length!= "" and  max_length.isdigit() else "null"
 
             if mappa_tipi[tipo_componente] == "string":
                 importazioni.append(f"Standard\\Testo")
@@ -329,12 +336,12 @@ with open(os.path.join(percorso, "prefix.php")) as f:
 
 print(f"Generazione codice per Fattura Ordinaria")
 genera_da_file(
-    os.path.join(percorso, "RappresentazioneTabellareFattOrdinaria 1.8_vers 260214.xlsx"),
+    os.path.join(percorso, "..", "specification", "RappresentazioneTabellareFattOrdinaria 1.8_vers 260214.xlsx"),
     "Ordinaria"
 )
 
 print(f"Generazione codice per Fattura Semplificata")
 genera_da_file(
-    os.path.join(percorso, "RappresentazioneTabellareFattSemplificata"),
+    os.path.join(percorso, "..", "specification",  "RappresentazioneTabellareFattSemplificata.xlsx"),
     "Semplificata"
 )

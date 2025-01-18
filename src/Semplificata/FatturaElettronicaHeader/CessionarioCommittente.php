@@ -2,62 +2,37 @@
 
 namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
 
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\DatiAnagrafici;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\RappresentanteFiscale;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\Sede;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\StabileOrganizzazione;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\AltriDatiIdentificativi;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\IdentificativiFiscali;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
 /*
 * Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
 */
 class CessionarioCommittente extends Elemento {
-    protected DatiAnagrafici $DatiAnagrafici;
-	protected Sede $Sede;
-	protected ?StabileOrganizzazione $StabileOrganizzazione;
-	protected ?RappresentanteFiscale $RappresentanteFiscale;
+    protected IdentificativiFiscali $IdentificativiFiscali;
+	protected ?AltriDatiIdentificativi $AltriDatiIdentificativi;
     public function __construct() {
-        $this->DatiAnagrafici = new DatiAnagrafici();
-		$this->Sede = new Sede();
+        $this->IdentificativiFiscali = new IdentificativiFiscali();
         
     }
     
-    public function getDatiAnagrafici() : DatiAnagrafici {
-        return $this->DatiAnagrafici;
+    public function getIdentificativiFiscali() : IdentificativiFiscali {
+        return $this->IdentificativiFiscali;
     }
 
-    public function setDatiAnagrafici(DatiAnagrafici $DatiAnagrafici) {
-        $this->DatiAnagrafici = $DatiAnagrafici;
+    public function setIdentificativiFiscali(IdentificativiFiscali $IdentificativiFiscali) {
+        $this->IdentificativiFiscali = $IdentificativiFiscali;
 
         return $this;
     }
 
-    public function getSede() : Sede {
-        return $this->Sede;
+    public function getAltriDatiIdentificativi() : AltriDatiIdentificativi {
+        return $this->AltriDatiIdentificativi;
     }
 
-    public function setSede(Sede $Sede) {
-        $this->Sede = $Sede;
-
-        return $this;
-    }
-
-    public function getStabileOrganizzazione() : StabileOrganizzazione {
-        return $this->StabileOrganizzazione;
-    }
-
-    public function setStabileOrganizzazione(?StabileOrganizzazione $StabileOrganizzazione) {
-        $this->StabileOrganizzazione = $StabileOrganizzazione;
-
-        return $this;
-    }
-
-    public function getRappresentanteFiscale() : RappresentanteFiscale {
-        return $this->RappresentanteFiscale;
-    }
-
-    public function setRappresentanteFiscale(?RappresentanteFiscale $RappresentanteFiscale) {
-        $this->RappresentanteFiscale = $RappresentanteFiscale;
+    public function setAltriDatiIdentificativi(?AltriDatiIdentificativi $AltriDatiIdentificativi) {
+        $this->AltriDatiIdentificativi = $AltriDatiIdentificativi;
 
         return $this;
     }

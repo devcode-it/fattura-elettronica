@@ -19,7 +19,7 @@ class Allegati extends Elemento {
 		$this->AlgoritmoCompressione = new Testo(true, 1, 10, 1);
 		$this->FormatoAttachment = new Testo(true, 1, 10, 1);
 		$this->DescrizioneAttachment = new Testo(true, 1, 100, 1);
-		$this->Attachment = new Testo(false, valore, , 1);
+		$this->Attachment = new Testo(false, 0, null, 1);
         if (!is_null($NomeAttachment)) $this->setNomeAttachment($NomeAttachment);
 		if (!is_null($AlgoritmoCompressione)) $this->setAlgoritmoCompressione($AlgoritmoCompressione);
 		if (!is_null($FormatoAttachment)) $this->setFormatoAttachment($FormatoAttachment);

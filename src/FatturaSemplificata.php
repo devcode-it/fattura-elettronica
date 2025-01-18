@@ -100,7 +100,7 @@ class FatturaSemplificata extends FatturaElettronica
         $validatore = new Validatore();
         $isValid = $validatore->validate(
             $this->__toString(),
-            __DIR__.'/../xsd/Schema_VFSM10.xsd'
+            __DIR__.'/../specification/Schema_VFSM10.xsd'
         );
 
         return $validatore->getErrors();

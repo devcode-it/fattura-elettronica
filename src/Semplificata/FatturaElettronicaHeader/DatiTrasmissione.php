@@ -2,7 +2,6 @@
 
 namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
 
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\DatiTrasmissione\ContattiTrasmittente;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\DatiTrasmissione\IdTrasmittente;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
@@ -15,13 +14,12 @@ class DatiTrasmissione extends Elemento {
 	protected Testo $ProgressivoInvio;
 	protected Testo $FormatoTrasmissione;
 	protected Testo $CodiceDestinatario;
-	protected ?ContattiTrasmittente $ContattiTrasmittente;
 	protected Testo $PECDestinatario;
     public function __construct(?string $ProgressivoInvio = null, ?string $FormatoTrasmissione = null, ?string $CodiceDestinatario = null, ?string $PECDestinatario = null) {
         $this->IdTrasmittente = new IdTrasmittente();
 		$this->ProgressivoInvio = new Testo(false, 1, 10, 1);
 		$this->FormatoTrasmissione = new Testo(false, 5, 5, 1);
-		$this->CodiceDestinatario = new Testo(false, 6, 7, 1);
+		$this->CodiceDestinatario = new Testo(false, 7, 7, 1);
 		$this->PECDestinatario = new Testo(true, 7, 256, 1);
         if (!is_null($ProgressivoInvio)) $this->setProgressivoInvio($ProgressivoInvio);
 		if (!is_null($FormatoTrasmissione)) $this->setFormatoTrasmissione($FormatoTrasmissione);
@@ -65,16 +63,6 @@ class DatiTrasmissione extends Elemento {
 
     public function setCodiceDestinatario(?string $value) {
         $this->CodiceDestinatario->set($value);
-
-        return $this;
-    }
-
-    public function getContattiTrasmittente() : ContattiTrasmittente {
-        return $this->ContattiTrasmittente;
-    }
-
-    public function setContattiTrasmittente(?ContattiTrasmittente $ContattiTrasmittente) {
-        $this->ContattiTrasmittente = $ContattiTrasmittente;
 
         return $this;
     }

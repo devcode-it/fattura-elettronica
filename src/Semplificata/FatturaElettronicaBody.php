@@ -5,8 +5,6 @@ namespace DevCode\FatturaElettronica\Semplificata;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\Allegati;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiPagamento;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiVeicoli;
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
@@ -15,14 +13,11 @@ use DevCode\FatturaElettronica\Standard\Elemento;
 */
 class FatturaElettronicaBody extends Elemento {
     protected DatiGenerali $DatiGenerali;
-	protected DatiBeniServizi $DatiBeniServizi;
-	protected ?DatiVeicoli $DatiVeicoli;
-	protected Collezione $DatiPagamento;
+	protected Collezione $DatiBeniServizi;
 	protected Collezione $Allegati;
     public function __construct() {
         $this->DatiGenerali = new DatiGenerali();
-		$this->DatiBeniServizi = new DatiBeniServizi();
-		$this->DatiPagamento = new Collezione(DatiPagamento::class, 0);
+		$this->DatiBeniServizi = new Collezione(DatiBeniServizi::class, 1);
 		$this->Allegati = new Collezione(Allegati::class, 0);
         
     }
@@ -37,42 +32,22 @@ class FatturaElettronicaBody extends Elemento {
         return $this;
     }
 
-    public function getDatiBeniServizi() : DatiBeniServizi {
+    public function getDatiBeniServizi() : Collezione {
         return $this->DatiBeniServizi;
     }
 
-    public function setDatiBeniServizi(DatiBeniServizi $DatiBeniServizi) {
-        $this->DatiBeniServizi = $DatiBeniServizi;
+    public function getAllDatiBeniServizi() : array {
+        return $this->DatiBeniServizi->toList();
+    }
+
+    public function addDatiBeniServizi(DatiBeniServizi $elemento) {
+        $this->DatiBeniServizi->add($elemento);
 
         return $this;
     }
 
-    public function getDatiVeicoli() : DatiVeicoli {
-        return $this->DatiVeicoli;
-    }
-
-    public function setDatiVeicoli(?DatiVeicoli $DatiVeicoli) {
-        $this->DatiVeicoli = $DatiVeicoli;
-
-        return $this;
-    }
-
-    public function getDatiPagamento() : Collezione {
-        return $this->DatiPagamento;
-    }
-
-    public function getAllDatiPagamento() : array {
-        return $this->DatiPagamento->toList();
-    }
-
-    public function addDatiPagamento(DatiPagamento $elemento) {
-        $this->DatiPagamento->add($elemento);
-
-        return $this;
-    }
-
-    public function removeDatiPagamento(int $index) {
-        $this->DatiPagamento->remove($index);
+    public function removeDatiBeniServizi(int $index) {
+        $this->DatiBeniServizi->remove($index);
 
         return $this;
     }

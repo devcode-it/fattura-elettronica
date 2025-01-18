@@ -2,59 +2,78 @@
 
 namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody;
 
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
-use DevCode\FatturaElettronica\Standard\Collezione;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi\DatiIVA;
+use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Testo;
 
 /*
 * Blocco sempre obbligatorio. Contiene natura, qualità, quantità e gli elementi necessari a determinare il valore dei beni e/o dei servizi formanti oggetto dell'operazione
 */
 class DatiBeniServizi extends Elemento {
-    protected Collezione $DettaglioLinee;
-	protected Collezione $DatiRiepilogo;
-    public function __construct() {
-        $this->DettaglioLinee = new Collezione(DettaglioLinee::class, 1);
-		$this->DatiRiepilogo = new Collezione(DatiRiepilogo::class, 1);
-        
+    protected Testo $Descrizione;
+	protected Decimale $Importo;
+	protected DatiIVA $DatiIVA;
+	protected Testo $Natura;
+	protected Testo $RiferimentoNormativo;
+    public function __construct(?string $Descrizione = null, ?float $Importo = null, ?string $Natura = null, ?string $RiferimentoNormativo = null) {
+        $this->Descrizione = new Testo(false, 1, 1000, 1);
+		$this->Importo = new Decimale(false);
+		$this->DatiIVA = new DatiIVA();
+		$this->Natura = new Testo(true, 2, 4, 1);
+		$this->RiferimentoNormativo = new Testo(true, 1, 100, 1);
+        if (!is_null($Descrizione)) $this->setDescrizione($Descrizione);
+		if (!is_null($Importo)) $this->setImporto($Importo);
+		if (!is_null($Natura)) $this->setNatura($Natura);
+		if (!is_null($RiferimentoNormativo)) $this->setRiferimentoNormativo($RiferimentoNormativo);
     }
     
-    public function getDettaglioLinee() : Collezione {
-        return $this->DettaglioLinee;
+    public function getDescrizione() : ?string {
+        return $this->Descrizione->get();
     }
 
-    public function getAllDettaglioLinee() : array {
-        return $this->DettaglioLinee->toList();
-    }
-
-    public function addDettaglioLinee(DettaglioLinee $elemento) {
-        $this->DettaglioLinee->add($elemento);
+    public function setDescrizione(?string $value) {
+        $this->Descrizione->set($value);
 
         return $this;
     }
 
-    public function removeDettaglioLinee(int $index) {
-        $this->DettaglioLinee->remove($index);
+    public function getImporto() : ?float {
+        return $this->Importo->get();
+    }
+
+    public function setImporto(?float $value) {
+        $this->Importo->set($value);
 
         return $this;
     }
 
-    public function getDatiRiepilogo() : Collezione {
-        return $this->DatiRiepilogo;
+    public function getDatiIVA() : DatiIVA {
+        return $this->DatiIVA;
     }
 
-    public function getAllDatiRiepilogo() : array {
-        return $this->DatiRiepilogo->toList();
-    }
-
-    public function addDatiRiepilogo(DatiRiepilogo $elemento) {
-        $this->DatiRiepilogo->add($elemento);
+    public function setDatiIVA(DatiIVA $DatiIVA) {
+        $this->DatiIVA = $DatiIVA;
 
         return $this;
     }
 
-    public function removeDatiRiepilogo(int $index) {
-        $this->DatiRiepilogo->remove($index);
+    public function getNatura() : ?string {
+        return $this->Natura->get();
+    }
+
+    public function setNatura(?string $value) {
+        $this->Natura->set($value);
+
+        return $this;
+    }
+
+    public function getRiferimentoNormativo() : ?string {
+        return $this->RiferimentoNormativo->get();
+    }
+
+    public function setRiferimentoNormativo(?string $value) {
+        $this->RiferimentoNormativo->set($value);
 
         return $this;
     }

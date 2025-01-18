@@ -1,20 +1,22 @@
 <?php
 
-$finder = PhpCsFixer\Finder::create()
+$finder = (new PhpCsFixer\Finder())
     ->files()
     ->exclude('node_modules')
     ->exclude('vendor')
     ->exclude('tests')
+    ->exclude('build')
     ->ignoreDotFiles(true)
     ->ignoreVCS(true)
     ->in(__DIR__);
 
-$config = PhpCsFixer\Config::create()
+$config = (new PhpCsFixer\Config())
     ->setRules([
         '@Symfony' => true,
         'array_syntax' => ['syntax' => 'short'],
         'yoda_style' => false,
-        'no_short_echo_tag' => true,
+        'echo_tag_syntax' => ['format' => 'long'],
+        'no_alternative_syntax' => true,
         'ordered_imports' => true,
         'no_alternative_syntax' => true,
         'ordered_class_elements' => true,

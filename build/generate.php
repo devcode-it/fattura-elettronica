@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__.'/vendor/autoload.php';
+require_once __DIR__.'/../vendor/autoload.php';
 
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Path;
@@ -109,7 +109,6 @@ function parseElement(SimpleXMLElement $elemento, array $riferimento_numero, str
 
     print_r("\nGenerazione struttura $numero $nome ($namespace)");
     $doc = trim((string) $info_tipo['doc']);
-    print_r("\n\tDoc: $doc");
 
     salvaClasse($namespace, $nome, "
 {$contenuto_importazioni}
@@ -536,10 +535,10 @@ function salvaClasse(string $namespace, string $nome, string $contenuto)
 {
     global $filesystem;
 
-    $prefisso = file_get_contents(__DIR__.'/build/prefix.php');
+    $prefisso = file_get_contents(__DIR__.'/prefix.php');
     $prefisso = str_replace('{namespace}', strlen($namespace) ? '\\'.$namespace : '', $prefisso);
 
-    $percorso = __DIR__.'/src/'.$namespace;
+    $percorso = __DIR__.'/../src/'.$namespace;
     $filesystem->mkdir(
         Path::normalize($percorso),
     );
@@ -550,9 +549,9 @@ function salvaClasse(string $namespace, string $nome, string $contenuto)
 }
 
 $xml = simplexml_load_file('specification/Schema_VFSM10.xsd');
-$filesystem->remove(__DIR__.'/src/Semplificata');
+$filesystem->remove(__DIR__.'/../src/Semplificata');
 parseElement($xml->xpath('.//xs:element')[0], [1], 'Semplificata');
 
 $xml = simplexml_load_file('specification/Schema_VFPR12.xsd');
-$filesystem->remove(__DIR__.'/src/Ordinaria');
+$filesystem->remove(__DIR__.'/../src/Ordinaria');
 parseElement($xml->xpath('.//xs:element')[0], [1], 'Ordinaria');

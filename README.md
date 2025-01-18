@@ -20,8 +20,9 @@ composer require devcode/fattura-elettronica
 
 ## Aggiornamento contenuti
 
-L'aggiornamento delle classi disponibili per la fattura elettronica può essere effettuato tramite lo script `build/generate.py` in Python.
-Successivamente, eseguire `composer format` per sistemare la formattazione dei contenuti PHP.
+L'aggiornamento delle classi disponibili per la fattura elettronica può essere effettuato tramite il comando `composer generate`.
+
+Se si desidera usare la variante in Python per la generazione, eseguire manualmente il file `build/generate.py` in Python e poi eseguire `composer format` per sistemare la formattazione dei contenuti PHP.
 
 Questo script sovrascriverà i contenuti delle cartelle `src/Semplificata` e `src/Ordinaria` con classi aggiornate sulla base dei contenuti del file Excel con i dettagli dello schema.
 

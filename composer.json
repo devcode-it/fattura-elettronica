@@ -11,7 +11,8 @@
     },
     "scripts": {
         "format": "vendor/bin/php-cs-fixer fix",
-        "test": "vendor/bin/phpunit tests"
+        "test": "vendor/bin/phpunit tests",
+        "generate": "php build/generate.php && composer format"
     },
     "require": {
         "php": "^8.1",

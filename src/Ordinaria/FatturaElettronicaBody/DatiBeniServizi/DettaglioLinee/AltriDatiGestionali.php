@@ -2,39 +2,33 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
 
+use DevCode\FatturaElettronica\Carbon\Carbon;
+use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco che consente di agli utenti di inserire, con riferimento ad una linea di dettaglio, informazioni utili ai fini amministrativi, gestionali etc.
-*/
+/**
+ * @riferimento 2.2.1.16
+ *
+ * @name AltriDatiGestionali
+ *
+ * Blocco che consente di agli utenti di inserire, con riferimento ad una linea di dettaglio, informazioni utili ai fini amministrativi, gestionali etc.
+ */
 class AltriDatiGestionali extends Elemento
 {
     protected Testo $TipoDato;
     protected Testo $RiferimentoTesto;
     protected Decimale $RiferimentoNumero;
-    protected Testo $RiferimentoData;
+    protected Data $RiferimentoData;
 
-    public function __construct(?string $TipoDato = null, ?string $RiferimentoTesto = null, ?float $RiferimentoNumero = null, ?string $RiferimentoData = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->TipoDato = new Testo(false, 1, 10, 1);
         $this->RiferimentoTesto = new Testo(true, 1, 60, 1);
         $this->RiferimentoNumero = new Decimale(true);
-        $this->RiferimentoData = new Testo(true, 10, 10, 1);
-        if (!is_null($TipoDato)) {
-            $this->setTipoDato($TipoDato);
-        }
-        if (!is_null($RiferimentoTesto)) {
-            $this->setRiferimentoTesto($RiferimentoTesto);
-        }
-        if (!is_null($RiferimentoNumero)) {
-            $this->setRiferimentoNumero($RiferimentoNumero);
-        }
-        if (!is_null($RiferimentoData)) {
-            $this->setRiferimentoData($RiferimentoData);
-        }
+        $this->RiferimentoData = new Data(true, 'YYYY-MM-DD');
     }
 
     public function getTipoDato(): ?string
@@ -78,7 +72,7 @@ class AltriDatiGestionali extends Elemento
         return $this->RiferimentoData->get();
     }
 
-    public function setRiferimentoData(?string $value)
+    public function setRiferimentoData(string|Carbon|\DateTime|null $value)
     {
         $this->RiferimentoData->set($value);
 

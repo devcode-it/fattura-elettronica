@@ -5,20 +5,29 @@ namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniSe
 use DevCode\FatturaElettronica\Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\AltriDatiGestionali;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\CodiceArticolo;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\Natura;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\Ritenuta;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\ScontoMaggiorazione;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\TipoCessionePrestazione;
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Intero;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco contenente le linee di dettaglio del documento (gli elementi informativi del blocco si ripetono per ogni riga di dettaglio).
-*/
+/**
+ * @riferimento 2.2.1
+ *
+ * @name DettaglioLinee
+ *
+ * Blocco contenente le linee di dettaglio del documento (gli elementi informativi del blocco si ripetono per ogni riga di dettaglio).
+ */
 class DettaglioLinee extends Elemento
 {
-    protected int $NumeroLinea;
-    protected Testo $TipoCessionePrestazione;
+    protected Intero $NumeroLinea;
+    protected TestoEnum $TipoCessionePrestazione;
     protected Collezione $CodiceArticolo;
     protected Testo $Descrizione;
     protected Decimale $Quantita;
@@ -29,79 +38,40 @@ class DettaglioLinee extends Elemento
     protected Collezione $ScontoMaggiorazione;
     protected Decimale $PrezzoTotale;
     protected Decimale $AliquotaIVA;
-    protected Testo $Ritenuta;
-    protected Testo $Natura;
+    protected TestoEnum $Ritenuta;
+    protected TestoEnum $Natura;
     protected Testo $RiferimentoAmministrazione;
     protected Collezione $AltriDatiGestionali;
 
-    public function __construct(?int $NumeroLinea = null, ?string $TipoCessionePrestazione = null, ?string $Descrizione = null, ?float $Quantita = null, ?string $UnitaMisura = null, string|Carbon|\DateTime|null $DataInizioPeriodo = null, string|Carbon|\DateTime|null $DataFinePeriodo = null, ?float $PrezzoUnitario = null, ?float $PrezzoTotale = null, ?float $AliquotaIVA = null, ?string $Ritenuta = null, ?string $Natura = null, ?string $RiferimentoAmministrazione = null)
+    public function __construct()
     {
         parent::__construct(false);
-        $this->NumeroLinea = 1;
-        $this->TipoCessionePrestazione = new Testo(true, 2, 2, 1);
-        $this->CodiceArticolo = new Collezione(CodiceArticolo::class, 0);
+        $this->NumeroLinea = new Intero(false, 1, 9999);
+        $this->TipoCessionePrestazione = new TestoEnum(true, TipoCessionePrestazione::class);
+        $this->CodiceArticolo = new Collezione(CodiceArticolo::class, 0, null);
         $this->Descrizione = new Testo(false, 1, 1000, 1);
         $this->Quantita = new Decimale(true);
         $this->UnitaMisura = new Testo(true, 1, 10, 1);
         $this->DataInizioPeriodo = new Data(true, 'YYYY-MM-DD');
         $this->DataFinePeriodo = new Data(true, 'YYYY-MM-DD');
         $this->PrezzoUnitario = new Decimale(false);
-        $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0);
+        $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0, null);
         $this->PrezzoTotale = new Decimale(false);
         $this->AliquotaIVA = new Decimale(false);
-        $this->Ritenuta = new Testo(true, 2, 2, 1);
-        $this->Natura = new Testo(true, 2, 4, 1);
+        $this->Ritenuta = new TestoEnum(true, Ritenuta::class);
+        $this->Natura = new TestoEnum(true, Natura::class);
         $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
-        $this->AltriDatiGestionali = new Collezione(AltriDatiGestionali::class, 0);
-        if (!is_null($NumeroLinea)) {
-            $this->setNumeroLinea($NumeroLinea);
-        }
-        if (!is_null($TipoCessionePrestazione)) {
-            $this->setTipoCessionePrestazione($TipoCessionePrestazione);
-        }
-        if (!is_null($Descrizione)) {
-            $this->setDescrizione($Descrizione);
-        }
-        if (!is_null($Quantita)) {
-            $this->setQuantita($Quantita);
-        }
-        if (!is_null($UnitaMisura)) {
-            $this->setUnitaMisura($UnitaMisura);
-        }
-        if (!is_null($DataInizioPeriodo)) {
-            $this->setDataInizioPeriodo($DataInizioPeriodo);
-        }
-        if (!is_null($DataFinePeriodo)) {
-            $this->setDataFinePeriodo($DataFinePeriodo);
-        }
-        if (!is_null($PrezzoUnitario)) {
-            $this->setPrezzoUnitario($PrezzoUnitario);
-        }
-        if (!is_null($PrezzoTotale)) {
-            $this->setPrezzoTotale($PrezzoTotale);
-        }
-        if (!is_null($AliquotaIVA)) {
-            $this->setAliquotaIVA($AliquotaIVA);
-        }
-        if (!is_null($Ritenuta)) {
-            $this->setRitenuta($Ritenuta);
-        }
-        if (!is_null($Natura)) {
-            $this->setNatura($Natura);
-        }
-        if (!is_null($RiferimentoAmministrazione)) {
-            $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
-        }
+        $this->AltriDatiGestionali = new Collezione(AltriDatiGestionali::class, 0, null);
     }
 
     public function getNumeroLinea(): ?int
     {
-        return $this->NumeroLinea;
+        return $this->NumeroLinea->get();
     }
 
-    public function setNumeroLinea(int $value)
+    public function setNumeroLinea(?int $value)
     {
-        $this->NumeroLinea = $value;
+        $this->NumeroLinea->set($value);
 
         return $this;
     }
@@ -111,7 +81,7 @@ class DettaglioLinee extends Elemento
         return $this->TipoCessionePrestazione->get();
     }
 
-    public function setTipoCessionePrestazione(?string $value)
+    public function setTipoCessionePrestazione(TipoCessionePrestazione|string|null $value)
     {
         $this->TipoCessionePrestazione->set($value);
 
@@ -267,7 +237,7 @@ class DettaglioLinee extends Elemento
         return $this->Ritenuta->get();
     }
 
-    public function setRitenuta(?string $value)
+    public function setRitenuta(Ritenuta|string|null $value)
     {
         $this->Ritenuta->set($value);
 
@@ -279,7 +249,7 @@ class DettaglioLinee extends Elemento
         return $this->Natura->get();
     }
 
-    public function setNatura(?string $value)
+    public function setNatura(Natura|string|null $value)
     {
         $this->Natura->set($value);
 

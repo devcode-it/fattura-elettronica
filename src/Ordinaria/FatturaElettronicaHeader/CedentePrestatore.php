@@ -10,9 +10,15 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestat
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco sempre obbligatorio contenente dati relativi al cedente / prestatore (fornitore)
-*/
+/**
+ * @riferimento 1.2
+ *
+ * @name CedentePrestatore
+ *
+ * Blocco sempre obbligatorio contenente dati relativi al cedente / prestatore (fornitore)
+ *
+ * Blocco relativo ai dati del Cedente / Prestatore
+ */
 class CedentePrestatore extends Elemento
 {
     protected DatiAnagrafici $DatiAnagrafici;
@@ -22,7 +28,7 @@ class CedentePrestatore extends Elemento
     protected Contatti $Contatti;
     protected Testo $RiferimentoAmministrazione;
 
-    public function __construct(?string $RiferimentoAmministrazione = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->DatiAnagrafici = new DatiAnagrafici();
@@ -31,9 +37,6 @@ class CedentePrestatore extends Elemento
         $this->IscrizioneREA = new IscrizioneREA();
         $this->Contatti = new Contatti();
         $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
-        if (!is_null($RiferimentoAmministrazione)) {
-            $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
-        }
     }
 
     public function getDatiAnagrafici(): DatiAnagrafici

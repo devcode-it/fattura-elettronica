@@ -5,32 +5,28 @@ namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenera
 use DevCode\FatturaElettronica\Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Intero;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco da valorizzare nei casi di fattura "differita" per indicare il documento con cui è stato consegnato il bene (gli elementi informativi del blocco possono essere ripetuti se la fattura fa riferimento a più consegne e quindi a più documenti di trasporto)
-*/
+/**
+ * @riferimento 2.1.8
+ *
+ * @name DatiDDT
+ *
+ * Blocco da valorizzare nei casi di fattura "differita" per indicare il documento con cui è stato consegnato il bene (gli elementi informativi del blocco possono essere ripetuti se la fattura fa riferimento a più consegne e quindi a più documenti di trasporto)
+ */
 class DatiDDT extends Elemento
 {
     protected Testo $NumeroDDT;
     protected Data $DataDDT;
-    protected int $RiferimentoNumeroLinea;
+    protected Intero $RiferimentoNumeroLinea;
 
-    public function __construct(?string $NumeroDDT = null, string|Carbon|\DateTime|null $DataDDT = null, ?int $RiferimentoNumeroLinea = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->NumeroDDT = new Testo(false, 1, 20, 1);
         $this->DataDDT = new Data(false, 'YYYY-MM-DD');
-        $this->RiferimentoNumeroLinea = 1;
-        if (!is_null($NumeroDDT)) {
-            $this->setNumeroDDT($NumeroDDT);
-        }
-        if (!is_null($DataDDT)) {
-            $this->setDataDDT($DataDDT);
-        }
-        if (!is_null($RiferimentoNumeroLinea)) {
-            $this->setRiferimentoNumeroLinea($RiferimentoNumeroLinea);
-        }
+        $this->RiferimentoNumeroLinea = new Intero(true, 1, 9999);
     }
 
     public function getNumeroDDT(): ?string
@@ -59,12 +55,12 @@ class DatiDDT extends Elemento
 
     public function getRiferimentoNumeroLinea(): ?int
     {
-        return $this->RiferimentoNumeroLinea;
+        return $this->RiferimentoNumeroLinea->get();
     }
 
-    public function setRiferimentoNumeroLinea(int $value)
+    public function setRiferimentoNumeroLinea(?int $value)
     {
-        $this->RiferimentoNumeroLinea = $value;
+        $this->RiferimentoNumeroLinea->set($value);
 
         return $this;
     }

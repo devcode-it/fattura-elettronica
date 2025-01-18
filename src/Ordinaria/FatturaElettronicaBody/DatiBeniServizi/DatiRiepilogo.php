@@ -2,59 +2,42 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo\EsigibilitaIVA;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo\Natura;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco obbligatorio, gli elementi informativi che lo compongono riepilogano le informazioni di dettaglio, aggregandole per aliquota IVA distinta oppure per aliquota IVA nulla e <Natura> distinta oppure, a parità di questi elementi, per valore distinto di <Esigbilità>
-*/
+/**
+ * @riferimento 2.2.2
+ *
+ * @name DatiRiepilogo
+ *
+ * Blocco obbligatorio, gli elementi informativi che lo compongono riepilogano le informazioni di dettaglio, aggregandole per aliquota IVA distinta oppure per aliquota IVA nulla e <Natura> distinta oppure, a parità di questi elementi, per valore distinto di <Esigbilità>
+ */
 class DatiRiepilogo extends Elemento
 {
     protected Decimale $AliquotaIVA;
-    protected Testo $Natura;
+    protected TestoEnum $Natura;
     protected Decimale $SpeseAccessorie;
     protected Decimale $Arrotondamento;
     protected Decimale $ImponibileImporto;
     protected Decimale $Imposta;
-    protected Testo $EsigibilitaIVA;
+    protected TestoEnum $EsigibilitaIVA;
     protected Testo $RiferimentoNormativo;
 
-    public function __construct(?float $AliquotaIVA = null, ?string $Natura = null, ?float $SpeseAccessorie = null, ?float $Arrotondamento = null, ?float $ImponibileImporto = null, ?float $Imposta = null, ?string $EsigibilitaIVA = null, ?string $RiferimentoNormativo = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->AliquotaIVA = new Decimale(false);
-        $this->Natura = new Testo(true, 2, 4, 1);
+        $this->Natura = new TestoEnum(true, Natura::class);
         $this->SpeseAccessorie = new Decimale(true);
         $this->Arrotondamento = new Decimale(true);
         $this->ImponibileImporto = new Decimale(false);
         $this->Imposta = new Decimale(false);
-        $this->EsigibilitaIVA = new Testo(true, 1, 1, 1);
+        $this->EsigibilitaIVA = new TestoEnum(true, EsigibilitaIVA::class);
         $this->RiferimentoNormativo = new Testo(true, 1, 100, 1);
-        if (!is_null($AliquotaIVA)) {
-            $this->setAliquotaIVA($AliquotaIVA);
-        }
-        if (!is_null($Natura)) {
-            $this->setNatura($Natura);
-        }
-        if (!is_null($SpeseAccessorie)) {
-            $this->setSpeseAccessorie($SpeseAccessorie);
-        }
-        if (!is_null($Arrotondamento)) {
-            $this->setArrotondamento($Arrotondamento);
-        }
-        if (!is_null($ImponibileImporto)) {
-            $this->setImponibileImporto($ImponibileImporto);
-        }
-        if (!is_null($Imposta)) {
-            $this->setImposta($Imposta);
-        }
-        if (!is_null($EsigibilitaIVA)) {
-            $this->setEsigibilitaIVA($EsigibilitaIVA);
-        }
-        if (!is_null($RiferimentoNormativo)) {
-            $this->setRiferimentoNormativo($RiferimentoNormativo);
-        }
     }
 
     public function getAliquotaIVA(): ?float
@@ -74,7 +57,7 @@ class DatiRiepilogo extends Elemento
         return $this->Natura->get();
     }
 
-    public function setNatura(?string $value)
+    public function setNatura(Natura|string|null $value)
     {
         $this->Natura->set($value);
 
@@ -134,7 +117,7 @@ class DatiRiepilogo extends Elemento
         return $this->EsigibilitaIVA->get();
     }
 
-    public function setEsigibilitaIVA(?string $value)
+    public function setEsigibilitaIVA(EsigibilitaIVA|string|null $value)
     {
         $this->EsigibilitaIVA->set($value);
 

@@ -3,22 +3,29 @@
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
 use DevCode\FatturaElettronica\Carbon\Carbon;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\Art73;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiBollo;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiCassaPrevidenziale;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiRitenuta;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\ScontoMaggiorazione;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco sempre obbligatorio contenente i dati generali della fattura
-*/
+/**
+ * @riferimento 2.1.1
+ *
+ * @name DatiGeneraliDocumento
+ *
+ * Blocco sempre obbligatorio contenente i dati generali della fattura
+ */
 class DatiGeneraliDocumento extends Elemento
 {
-    protected Testo $TipoDocumento;
+    protected TestoEnum $TipoDocumento;
     protected Testo $Divisa;
     protected Data $Data;
     protected Testo $Numero;
@@ -29,47 +36,23 @@ class DatiGeneraliDocumento extends Elemento
     protected Decimale $ImportoTotaleDocumento;
     protected Decimale $Arrotondamento;
     protected Testo $Causale;
-    protected Testo $Art73;
+    protected TestoEnum $Art73;
 
-    public function __construct(?string $TipoDocumento = null, ?string $Divisa = null, string|Carbon|\DateTime|null $Data = null, ?string $Numero = null, ?float $ImportoTotaleDocumento = null, ?float $Arrotondamento = null, ?string $Causale = null, ?string $Art73 = null)
+    public function __construct()
     {
         parent::__construct(false);
-        $this->TipoDocumento = new Testo(false, 4, 4, 1);
+        $this->TipoDocumento = new TestoEnum(false, TipoDocumento::class);
         $this->Divisa = new Testo(false, 3, 3, 1);
         $this->Data = new Data(false, 'YYYY-MM-DD');
         $this->Numero = new Testo(false, 1, 20, 1);
-        $this->DatiRitenuta = new Collezione(DatiRitenuta::class, 0);
+        $this->DatiRitenuta = new Collezione(DatiRitenuta::class, 0, null);
         $this->DatiBollo = new DatiBollo();
-        $this->DatiCassaPrevidenziale = new Collezione(DatiCassaPrevidenziale::class, 0);
-        $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0);
+        $this->DatiCassaPrevidenziale = new Collezione(DatiCassaPrevidenziale::class, 0, null);
+        $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0, null);
         $this->ImportoTotaleDocumento = new Decimale(true);
         $this->Arrotondamento = new Decimale(true);
-        $this->Causale = new Testo(true, 1, 200);
-        $this->Art73 = new Testo(true, 2, 2, 1);
-        if (!is_null($TipoDocumento)) {
-            $this->setTipoDocumento($TipoDocumento);
-        }
-        if (!is_null($Divisa)) {
-            $this->setDivisa($Divisa);
-        }
-        if (!is_null($Data)) {
-            $this->setData($Data);
-        }
-        if (!is_null($Numero)) {
-            $this->setNumero($Numero);
-        }
-        if (!is_null($ImportoTotaleDocumento)) {
-            $this->setImportoTotaleDocumento($ImportoTotaleDocumento);
-        }
-        if (!is_null($Arrotondamento)) {
-            $this->setArrotondamento($Arrotondamento);
-        }
-        if (!is_null($Causale)) {
-            $this->setCausale($Causale);
-        }
-        if (!is_null($Art73)) {
-            $this->setArt73($Art73);
-        }
+        $this->Causale = new Testo(true, 1, 200, null);
+        $this->Art73 = new TestoEnum(true, Art73::class);
     }
 
     public function getTipoDocumento(): ?string
@@ -77,7 +60,7 @@ class DatiGeneraliDocumento extends Elemento
         return $this->TipoDocumento->get();
     }
 
-    public function setTipoDocumento(?string $value)
+    public function setTipoDocumento(TipoDocumento|string $value)
     {
         $this->TipoDocumento->set($value);
 
@@ -245,7 +228,7 @@ class DatiGeneraliDocumento extends Elemento
         return $this->Art73->get();
     }
 
-    public function setArt73(?string $value)
+    public function setArt73(Art73|string|null $value)
     {
         $this->Art73->set($value);
 

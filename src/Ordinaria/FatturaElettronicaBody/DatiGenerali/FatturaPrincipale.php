@@ -7,25 +7,23 @@ use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco da valorizzare nei casi di fatture per operazioni accessorie, emesse dagli 'autotrasportatori' per usufruire delle agevolazioni in materia di registrazione e pagamento dell' IVA
-*/
+/**
+ * @riferimento 2.1.10
+ *
+ * @name FatturaPrincipale
+ *
+ * Blocco da valorizzare nei casi di fatture per operazioni accessorie, emesse dagli 'autotrasportatori' per usufruire delle agevolazioni in materia di registrazione e pagamento dell' IVA
+ */
 class FatturaPrincipale extends Elemento
 {
     protected Testo $NumeroFatturaPrincipale;
     protected Data $DataFatturaPrincipale;
 
-    public function __construct(?string $NumeroFatturaPrincipale = null, string|Carbon|\DateTime|null $DataFatturaPrincipale = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->NumeroFatturaPrincipale = new Testo(false, 1, 20, 1);
         $this->DataFatturaPrincipale = new Data(false, 'YYYY-MM-DD');
-        if (!is_null($NumeroFatturaPrincipale)) {
-            $this->setNumeroFatturaPrincipale($NumeroFatturaPrincipale);
-        }
-        if (!is_null($DataFatturaPrincipale)) {
-            $this->setDataFatturaPrincipale($DataFatturaPrincipale);
-        }
     }
 
     public function getNumeroFatturaPrincipale(): ?string

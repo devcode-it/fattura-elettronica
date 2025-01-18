@@ -2,27 +2,31 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\CondizioniPagamento;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\DettaglioPagamento;
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco destinato a descrivere le modalità di pagamento per la cessione/prestazione rappresentata in fattura
-*/
+/**
+ * @riferimento 2.4
+ *
+ * @name DatiPagamento
+ *
+ * Blocco destinato a descrivere le modalità di pagamento per la cessione/prestazione rappresentata in fattura
+ *
+ * Blocco relativo ai dati di Pagamento della Fattura Elettronica
+ */
 class DatiPagamento extends Elemento
 {
-    protected Testo $CondizioniPagamento;
+    protected TestoEnum $CondizioniPagamento;
     protected Collezione $DettaglioPagamento;
 
-    public function __construct(?string $CondizioniPagamento = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->CondizioniPagamento = new Testo(false, 4, 4, 1);
-        $this->DettaglioPagamento = new Collezione(DettaglioPagamento::class, 1);
-        if (!is_null($CondizioniPagamento)) {
-            $this->setCondizioniPagamento($CondizioniPagamento);
-        }
+        $this->CondizioniPagamento = new TestoEnum(false, CondizioniPagamento::class);
+        $this->DettaglioPagamento = new Collezione(DettaglioPagamento::class, 1, null);
     }
 
     public function getCondizioniPagamento(): ?string
@@ -30,7 +34,7 @@ class DatiPagamento extends Elemento
         return $this->CondizioniPagamento->get();
     }
 
-    public function setCondizioniPagamento(?string $value)
+    public function setCondizioniPagamento(CondizioniPagamento|string $value)
     {
         $this->CondizioniPagamento->set($value);
 

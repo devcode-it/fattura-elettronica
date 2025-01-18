@@ -6,13 +6,18 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestat
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\RappresentanteFiscale;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\SoggettoEmittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\TerzoIntermediarioOSoggettoEmittente;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Il blocco ha molteplicità pari a 1, sia nel caso di fattura singola che nel caso di lotto di fatture
-*/
+/**
+ * @riferimento 1
+ *
+ * @name FatturaElettronicaHeader
+ *
+ * Il blocco ha molteplicità pari a 1, sia nel caso di fattura singola che nel caso di lotto di fatture
+ */
 class FatturaElettronicaHeader extends Elemento
 {
     protected DatiTrasmissione $DatiTrasmissione;
@@ -20,9 +25,9 @@ class FatturaElettronicaHeader extends Elemento
     protected RappresentanteFiscale $RappresentanteFiscale;
     protected CessionarioCommittente $CessionarioCommittente;
     protected TerzoIntermediarioOSoggettoEmittente $TerzoIntermediarioOSoggettoEmittente;
-    protected Testo $SoggettoEmittente;
+    protected TestoEnum $SoggettoEmittente;
 
-    public function __construct(?string $SoggettoEmittente = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->DatiTrasmissione = new DatiTrasmissione();
@@ -30,10 +35,7 @@ class FatturaElettronicaHeader extends Elemento
         $this->RappresentanteFiscale = new RappresentanteFiscale();
         $this->CessionarioCommittente = new CessionarioCommittente();
         $this->TerzoIntermediarioOSoggettoEmittente = new TerzoIntermediarioOSoggettoEmittente();
-        $this->SoggettoEmittente = new Testo(true, 2, 2, 1);
-        if (!is_null($SoggettoEmittente)) {
-            $this->setSoggettoEmittente($SoggettoEmittente);
-        }
+        $this->SoggettoEmittente = new TestoEnum(true, SoggettoEmittente::class);
     }
 
     public function getDatiTrasmissione(): DatiTrasmissione
@@ -101,7 +103,7 @@ class FatturaElettronicaHeader extends Elemento
         return $this->SoggettoEmittente->get();
     }
 
-    public function setSoggettoEmittente(?string $value)
+    public function setSoggettoEmittente(SoggettoEmittente|string|null $value)
     {
         $this->SoggettoEmittente->set($value);
 

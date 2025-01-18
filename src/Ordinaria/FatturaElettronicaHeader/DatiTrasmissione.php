@@ -3,43 +3,39 @@
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione\ContattiTrasmittente;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione\FormatoTrasmissione;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione\IdTrasmittente;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco sempre obbligatorio contenente informazioni che identificano univocamente il soggetto che trasmette, il documento trasmesso, il formato in cui è stato trasmesso il documento, il soggetto destinatario
-*/
+/**
+ * @riferimento 1.1
+ *
+ * @name DatiTrasmissione
+ *
+ * Blocco sempre obbligatorio contenente informazioni che identificano univocamente il soggetto che trasmette, il documento trasmesso, il formato in cui è stato trasmesso il documento, il soggetto destinatario
+ *
+ * Blocco relativo ai dati di trasmissione della Fattura Elettronica
+ */
 class DatiTrasmissione extends Elemento
 {
     protected IdTrasmittente $IdTrasmittente;
     protected Testo $ProgressivoInvio;
-    protected Testo $FormatoTrasmissione;
+    protected TestoEnum $FormatoTrasmissione;
     protected Testo $CodiceDestinatario;
     protected ContattiTrasmittente $ContattiTrasmittente;
     protected Testo $PECDestinatario;
 
-    public function __construct(?string $ProgressivoInvio = null, ?string $FormatoTrasmissione = null, ?string $CodiceDestinatario = null, ?string $PECDestinatario = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->IdTrasmittente = new IdTrasmittente();
         $this->ProgressivoInvio = new Testo(false, 1, 10, 1);
-        $this->FormatoTrasmissione = new Testo(false, 5, 5, 1);
+        $this->FormatoTrasmissione = new TestoEnum(false, FormatoTrasmissione::class);
         $this->CodiceDestinatario = new Testo(false, 6, 7, 1);
         $this->ContattiTrasmittente = new ContattiTrasmittente();
-        $this->PECDestinatario = new Testo(true, 7, 256, 1);
-        if (!is_null($ProgressivoInvio)) {
-            $this->setProgressivoInvio($ProgressivoInvio);
-        }
-        if (!is_null($FormatoTrasmissione)) {
-            $this->setFormatoTrasmissione($FormatoTrasmissione);
-        }
-        if (!is_null($CodiceDestinatario)) {
-            $this->setCodiceDestinatario($CodiceDestinatario);
-        }
-        if (!is_null($PECDestinatario)) {
-            $this->setPECDestinatario($PECDestinatario);
-        }
+        $this->PECDestinatario = new Testo(true, 0, 256, 1);
     }
 
     public function getIdTrasmittente(): IdTrasmittente
@@ -71,7 +67,7 @@ class DatiTrasmissione extends Elemento
         return $this->FormatoTrasmissione->get();
     }
 
-    public function setFormatoTrasmissione(?string $value)
+    public function setFormatoTrasmissione(FormatoTrasmissione|string $value)
     {
         $this->FormatoTrasmissione->set($value);
 

@@ -3,20 +3,27 @@
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
 
 use DevCode\FatturaElettronica\Carbon\Carbon;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\DettaglioPagamento\ModalitaPagamento;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Intero;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Dati di dettaglio del pagamento
-*/
+/**
+ * @riferimento 2.4.2
+ *
+ * @name DettaglioPagamento
+ *
+ * Dati di dettaglio del pagamento
+ */
 class DettaglioPagamento extends Elemento
 {
     protected Testo $Beneficiario;
-    protected Testo $ModalitaPagamento;
+    protected TestoEnum $ModalitaPagamento;
     protected Data $DataRiferimentoTerminiPagamento;
-    protected ?int $GiorniTerminiPagamento;
+    protected Intero $GiorniTerminiPagamento;
     protected Data $DataScadenzaPagamento;
     protected Decimale $ImportoPagamento;
     protected Testo $CodUfficioPostale;
@@ -35,12 +42,13 @@ class DettaglioPagamento extends Elemento
     protected Data $DataDecorrenzaPenale;
     protected Testo $CodicePagamento;
 
-    public function __construct(?string $Beneficiario = null, ?string $ModalitaPagamento = null, string|Carbon|\DateTime|null $DataRiferimentoTerminiPagamento = null, ?int $GiorniTerminiPagamento = null, string|Carbon|\DateTime|null $DataScadenzaPagamento = null, ?float $ImportoPagamento = null, ?string $CodUfficioPostale = null, ?string $CognomeQuietanzante = null, ?string $NomeQuietanzante = null, ?string $CFQuietanzante = null, ?string $TitoloQuietanzante = null, ?string $IstitutoFinanziario = null, ?string $IBAN = null, ?string $ABI = null, ?string $CAB = null, ?string $BIC = null, ?float $ScontoPagamentoAnticipato = null, string|Carbon|\DateTime|null $DataLimitePagamentoAnticipato = null, ?float $PenalitaPagamentiRitardati = null, string|Carbon|\DateTime|null $DataDecorrenzaPenale = null, ?string $CodicePagamento = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->Beneficiario = new Testo(true, 1, 200, 1);
-        $this->ModalitaPagamento = new Testo(false, 4, 4, 1);
+        $this->ModalitaPagamento = new TestoEnum(false, ModalitaPagamento::class);
         $this->DataRiferimentoTerminiPagamento = new Data(true, 'YYYY-MM-DD');
+        $this->GiorniTerminiPagamento = new Intero(true, 0, 999);
         $this->DataScadenzaPagamento = new Data(true, 'YYYY-MM-DD');
         $this->ImportoPagamento = new Decimale(false);
         $this->CodUfficioPostale = new Testo(true, 1, 20, 1);
@@ -49,78 +57,15 @@ class DettaglioPagamento extends Elemento
         $this->CFQuietanzante = new Testo(true, 16, 16, 1);
         $this->TitoloQuietanzante = new Testo(true, 2, 10, 1);
         $this->IstitutoFinanziario = new Testo(true, 1, 80, 1);
-        $this->IBAN = new Testo(true, 15, 34, 1);
+        $this->IBAN = new Testo(true, 11, 30, 1);
         $this->ABI = new Testo(true, 5, 5, 1);
         $this->CAB = new Testo(true, 5, 5, 1);
-        $this->BIC = new Testo(true, 8, 11, 1);
+        $this->BIC = new Testo(true, 0, 1, 1);
         $this->ScontoPagamentoAnticipato = new Decimale(true);
         $this->DataLimitePagamentoAnticipato = new Data(true, 'YYYY-MM-DD');
         $this->PenalitaPagamentiRitardati = new Decimale(true);
         $this->DataDecorrenzaPenale = new Data(true, 'YYYY-MM-DD');
         $this->CodicePagamento = new Testo(true, 1, 60, 1);
-        if (!is_null($Beneficiario)) {
-            $this->setBeneficiario($Beneficiario);
-        }
-        if (!is_null($ModalitaPagamento)) {
-            $this->setModalitaPagamento($ModalitaPagamento);
-        }
-        if (!is_null($DataRiferimentoTerminiPagamento)) {
-            $this->setDataRiferimentoTerminiPagamento($DataRiferimentoTerminiPagamento);
-        }
-        if (!is_null($GiorniTerminiPagamento)) {
-            $this->setGiorniTerminiPagamento($GiorniTerminiPagamento);
-        }
-        if (!is_null($DataScadenzaPagamento)) {
-            $this->setDataScadenzaPagamento($DataScadenzaPagamento);
-        }
-        if (!is_null($ImportoPagamento)) {
-            $this->setImportoPagamento($ImportoPagamento);
-        }
-        if (!is_null($CodUfficioPostale)) {
-            $this->setCodUfficioPostale($CodUfficioPostale);
-        }
-        if (!is_null($CognomeQuietanzante)) {
-            $this->setCognomeQuietanzante($CognomeQuietanzante);
-        }
-        if (!is_null($NomeQuietanzante)) {
-            $this->setNomeQuietanzante($NomeQuietanzante);
-        }
-        if (!is_null($CFQuietanzante)) {
-            $this->setCFQuietanzante($CFQuietanzante);
-        }
-        if (!is_null($TitoloQuietanzante)) {
-            $this->setTitoloQuietanzante($TitoloQuietanzante);
-        }
-        if (!is_null($IstitutoFinanziario)) {
-            $this->setIstitutoFinanziario($IstitutoFinanziario);
-        }
-        if (!is_null($IBAN)) {
-            $this->setIBAN($IBAN);
-        }
-        if (!is_null($ABI)) {
-            $this->setABI($ABI);
-        }
-        if (!is_null($CAB)) {
-            $this->setCAB($CAB);
-        }
-        if (!is_null($BIC)) {
-            $this->setBIC($BIC);
-        }
-        if (!is_null($ScontoPagamentoAnticipato)) {
-            $this->setScontoPagamentoAnticipato($ScontoPagamentoAnticipato);
-        }
-        if (!is_null($DataLimitePagamentoAnticipato)) {
-            $this->setDataLimitePagamentoAnticipato($DataLimitePagamentoAnticipato);
-        }
-        if (!is_null($PenalitaPagamentiRitardati)) {
-            $this->setPenalitaPagamentiRitardati($PenalitaPagamentiRitardati);
-        }
-        if (!is_null($DataDecorrenzaPenale)) {
-            $this->setDataDecorrenzaPenale($DataDecorrenzaPenale);
-        }
-        if (!is_null($CodicePagamento)) {
-            $this->setCodicePagamento($CodicePagamento);
-        }
     }
 
     public function getBeneficiario(): ?string
@@ -140,7 +85,7 @@ class DettaglioPagamento extends Elemento
         return $this->ModalitaPagamento->get();
     }
 
-    public function setModalitaPagamento(?string $value)
+    public function setModalitaPagamento(ModalitaPagamento|string $value)
     {
         $this->ModalitaPagamento->set($value);
 
@@ -161,12 +106,12 @@ class DettaglioPagamento extends Elemento
 
     public function getGiorniTerminiPagamento(): ?int
     {
-        return $this->GiorniTerminiPagamento;
+        return $this->GiorniTerminiPagamento->get();
     }
 
     public function setGiorniTerminiPagamento(?int $value)
     {
-        $this->GiorniTerminiPagamento = $value;
+        $this->GiorniTerminiPagamento->set($value);
 
         return $this;
     }

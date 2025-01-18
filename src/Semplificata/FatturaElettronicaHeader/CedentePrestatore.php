@@ -5,14 +5,22 @@ namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\IdFiscaleIVA;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\IscrizioneREA;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\RappresentanteFiscale;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\RegimeFiscale;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\Sede;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\StabileOrganizzazione;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco sempre obbligatorio contenente dati relativi al cedente / prestatore (fornitore)
-*/
+/**
+ * @riferimento 1.2
+ *
+ * @name CedentePrestatore
+ *
+ * Blocco sempre obbligatorio contenente dati relativi al cedente / prestatore (fornitore)
+ *
+ * Blocco relativo ai dati del Cedente / Prestatore
+ */
 class CedentePrestatore extends Elemento
 {
     protected IdFiscaleIVA $IdFiscaleIVA;
@@ -24,9 +32,9 @@ class CedentePrestatore extends Elemento
     protected StabileOrganizzazione $StabileOrganizzazione;
     protected RappresentanteFiscale $RappresentanteFiscale;
     protected IscrizioneREA $IscrizioneREA;
-    protected Testo $RegimeFiscale;
+    protected TestoEnum $RegimeFiscale;
 
-    public function __construct(?string $CodiceFiscale = null, ?string $Denominazione = null, ?string $Nome = null, ?string $Cognome = null, ?string $RegimeFiscale = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
@@ -38,22 +46,7 @@ class CedentePrestatore extends Elemento
         $this->StabileOrganizzazione = new StabileOrganizzazione();
         $this->RappresentanteFiscale = new RappresentanteFiscale();
         $this->IscrizioneREA = new IscrizioneREA();
-        $this->RegimeFiscale = new Testo(false, 4, 4, 1);
-        if (!is_null($CodiceFiscale)) {
-            $this->setCodiceFiscale($CodiceFiscale);
-        }
-        if (!is_null($Denominazione)) {
-            $this->setDenominazione($Denominazione);
-        }
-        if (!is_null($Nome)) {
-            $this->setNome($Nome);
-        }
-        if (!is_null($Cognome)) {
-            $this->setCognome($Cognome);
-        }
-        if (!is_null($RegimeFiscale)) {
-            $this->setRegimeFiscale($RegimeFiscale);
-        }
+        $this->RegimeFiscale = new TestoEnum(false, RegimeFiscale::class);
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA
@@ -169,7 +162,7 @@ class CedentePrestatore extends Elemento
         return $this->RegimeFiscale->get();
     }
 
-    public function setRegimeFiscale(?string $value)
+    public function setRegimeFiscale(RegimeFiscale|string $value)
     {
         $this->RegimeFiscale->set($value);
 

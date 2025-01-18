@@ -8,9 +8,15 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCom
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\StabileOrganizzazione;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
-*/
+/**
+ * @riferimento 1.4
+ *
+ * @name CessionarioCommittente
+ *
+ * Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
+ *
+ * Blocco relativo ai dati del Cessionario / Committente
+ */
 class CessionarioCommittente extends Elemento
 {
     protected DatiAnagrafici $DatiAnagrafici;

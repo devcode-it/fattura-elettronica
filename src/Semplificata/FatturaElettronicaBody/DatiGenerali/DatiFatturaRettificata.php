@@ -7,30 +7,25 @@ use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente le informazioni relative alla fattura rettificata. Vale per le fatture emesse ai sensi dell'articolo 26 DPR 633/72
-*/
+/**
+ * @riferimento 2.1.2
+ *
+ * @name DatiFatturaRettificata
+ *
+ * Blocco contenente le informazioni relative alla fattura rettificata. Vale per le fatture emesse ai sensi dell'articolo 26 DPR 633/72
+ */
 class DatiFatturaRettificata extends Elemento
 {
     protected Testo $NumeroFR;
     protected Data $DataFR;
     protected Testo $ElementiRettificati;
 
-    public function __construct(?string $NumeroFR = null, string|Carbon|\DateTime|null $DataFR = null, ?string $ElementiRettificati = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->NumeroFR = new Testo(false, 1, null, 1);
+        $this->NumeroFR = new Testo(false, 1, 20, 1);
         $this->DataFR = new Data(false, 'YYYY-MM-DD');
         $this->ElementiRettificati = new Testo(false, 1, 1000, 1);
-        if (!is_null($NumeroFR)) {
-            $this->setNumeroFR($NumeroFR);
-        }
-        if (!is_null($DataFR)) {
-            $this->setDataFR($DataFR);
-        }
-        if (!is_null($ElementiRettificati)) {
-            $this->setElementiRettificati($ElementiRettificati);
-        }
     }
 
     public function getNumeroFR(): ?string

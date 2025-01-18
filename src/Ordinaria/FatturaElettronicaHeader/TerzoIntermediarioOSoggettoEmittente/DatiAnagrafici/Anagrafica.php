@@ -5,9 +5,15 @@ namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\TerzoInt
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Dati anagrafici identificativi del terzo intermediario
-*/
+/**
+ * @riferimento 1.5.1.3
+ *
+ * @name Anagrafica
+ *
+ * Dati anagrafici identificativi del terzo intermediario
+ *
+ * Il campo Denominazione è in alternativa ai campi Nome e Cognome
+ */
 class Anagrafica extends Elemento
 {
     protected Testo $Denominazione;
@@ -16,7 +22,7 @@ class Anagrafica extends Elemento
     protected Testo $Titolo;
     protected Testo $CodEORI;
 
-    public function __construct(?string $Denominazione = null, ?string $Nome = null, ?string $Cognome = null, ?string $Titolo = null, ?string $CodEORI = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->Denominazione = new Testo(true, 1, 80, 1);
@@ -24,21 +30,6 @@ class Anagrafica extends Elemento
         $this->Cognome = new Testo(true, 1, 60, 1);
         $this->Titolo = new Testo(true, 2, 10, 1);
         $this->CodEORI = new Testo(true, 13, 17, 1);
-        if (!is_null($Denominazione)) {
-            $this->setDenominazione($Denominazione);
-        }
-        if (!is_null($Nome)) {
-            $this->setNome($Nome);
-        }
-        if (!is_null($Cognome)) {
-            $this->setCognome($Cognome);
-        }
-        if (!is_null($Titolo)) {
-            $this->setTitolo($Titolo);
-        }
-        if (!is_null($CodEORI)) {
-            $this->setCodEORI($CodEORI);
-        }
     }
 
     public function getDenominazione(): ?string

@@ -8,17 +8,22 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\Dat
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Intero;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco valorizzabile nei casi di fattura "accompagnatoria" per inserire informazioni relative al trasporto
-*/
+/**
+ * @riferimento 2.1.9
+ *
+ * @name DatiTrasporto
+ *
+ * Blocco valorizzabile nei casi di fattura "accompagnatoria" per inserire informazioni relative al trasporto
+ */
 class DatiTrasporto extends Elemento
 {
     protected DatiAnagraficiVettore $DatiAnagraficiVettore;
     protected Testo $MezzoTrasporto;
     protected Testo $CausaleTrasporto;
-    protected ?int $NumeroColli;
+    protected Intero $NumeroColli;
     protected Testo $Descrizione;
     protected Testo $UnitaMisuraPeso;
     protected Decimale $PesoLordo;
@@ -29,12 +34,13 @@ class DatiTrasporto extends Elemento
     protected IndirizzoResa $IndirizzoResa;
     protected Data $DataOraConsegna;
 
-    public function __construct(?string $MezzoTrasporto = null, ?string $CausaleTrasporto = null, ?int $NumeroColli = null, ?string $Descrizione = null, ?string $UnitaMisuraPeso = null, ?float $PesoLordo = null, ?float $PesoNetto = null, string|Carbon|\DateTime|null $DataOraRitiro = null, string|Carbon|\DateTime|null $DataInizioTrasporto = null, ?string $TipoResa = null, string|Carbon|\DateTime|null $DataOraConsegna = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->DatiAnagraficiVettore = new DatiAnagraficiVettore();
         $this->MezzoTrasporto = new Testo(true, 1, 80, 1);
         $this->CausaleTrasporto = new Testo(true, 1, 100, 1);
+        $this->NumeroColli = new Intero(true, 1, 9999);
         $this->Descrizione = new Testo(true, 1, 100, 1);
         $this->UnitaMisuraPeso = new Testo(true, 1, 10, 1);
         $this->PesoLordo = new Decimale(true);
@@ -44,39 +50,6 @@ class DatiTrasporto extends Elemento
         $this->TipoResa = new Testo(true, 3, 3, 1);
         $this->IndirizzoResa = new IndirizzoResa();
         $this->DataOraConsegna = new Data(true, 'YYYY-MM-DDTHH:MM:SS');
-        if (!is_null($MezzoTrasporto)) {
-            $this->setMezzoTrasporto($MezzoTrasporto);
-        }
-        if (!is_null($CausaleTrasporto)) {
-            $this->setCausaleTrasporto($CausaleTrasporto);
-        }
-        if (!is_null($NumeroColli)) {
-            $this->setNumeroColli($NumeroColli);
-        }
-        if (!is_null($Descrizione)) {
-            $this->setDescrizione($Descrizione);
-        }
-        if (!is_null($UnitaMisuraPeso)) {
-            $this->setUnitaMisuraPeso($UnitaMisuraPeso);
-        }
-        if (!is_null($PesoLordo)) {
-            $this->setPesoLordo($PesoLordo);
-        }
-        if (!is_null($PesoNetto)) {
-            $this->setPesoNetto($PesoNetto);
-        }
-        if (!is_null($DataOraRitiro)) {
-            $this->setDataOraRitiro($DataOraRitiro);
-        }
-        if (!is_null($DataInizioTrasporto)) {
-            $this->setDataInizioTrasporto($DataInizioTrasporto);
-        }
-        if (!is_null($TipoResa)) {
-            $this->setTipoResa($TipoResa);
-        }
-        if (!is_null($DataOraConsegna)) {
-            $this->setDataOraConsegna($DataOraConsegna);
-        }
     }
 
     public function getDatiAnagraficiVettore(): DatiAnagraficiVettore
@@ -117,12 +90,12 @@ class DatiTrasporto extends Elemento
 
     public function getNumeroColli(): ?int
     {
-        return $this->NumeroColli;
+        return $this->NumeroColli->get();
     }
 
     public function setNumeroColli(?int $value)
     {
-        $this->NumeroColli = $value;
+        $this->NumeroColli->set($value);
 
         return $this;
     }

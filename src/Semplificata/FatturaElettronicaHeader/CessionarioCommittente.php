@@ -6,9 +6,15 @@ use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\Cessionario
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente\IdentificativiFiscali;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
-*/
+/**
+ * @riferimento 1.3
+ *
+ * @name CessionarioCommittente
+ *
+ * Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
+ *
+ * Blocco relativo ai dati del Cessionario / Committente
+ */
 class CessionarioCommittente extends Elemento
 {
     protected IdentificativiFiscali $IdentificativiFiscali;

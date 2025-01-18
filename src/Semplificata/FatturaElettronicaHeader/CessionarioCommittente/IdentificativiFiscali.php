@@ -6,22 +6,23 @@ use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\Cessionario
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente gli identificativi fiscali del cessionario/committente
-*/
+/**
+ * @riferimento 1.3.1
+ *
+ * @name IdentificativiFiscali
+ *
+ * Blocco contenente gli identificativi fiscali del cessionario/committente
+ */
 class IdentificativiFiscali extends Elemento
 {
     protected IdFiscaleIVA $IdFiscaleIVA;
     protected Testo $CodiceFiscale;
 
-    public function __construct(?string $CodiceFiscale = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
         $this->CodiceFiscale = new Testo(true, 11, 16, 1);
-        if (!is_null($CodiceFiscale)) {
-            $this->setCodiceFiscale($CodiceFiscale);
-        }
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

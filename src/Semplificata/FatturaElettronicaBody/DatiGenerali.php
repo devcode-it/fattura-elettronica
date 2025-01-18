@@ -6,9 +6,15 @@ use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Blocco sempre obbligatorio contenente i dati generali della fattura e quelli degli eventuali documenti correlati
-*/
+/**
+ * @riferimento 2.1
+ *
+ * @name DatiGenerali
+ *
+ * Blocco sempre obbligatorio contenente i dati generali della fattura e quelli degli eventuali documenti correlati
+ *
+ * Blocco relativo ai Dati Generali della Fattura Elettronica
+ */
 class DatiGenerali extends Elemento
 {
     protected DatiGeneraliDocumento $DatiGeneraliDocumento;

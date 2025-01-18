@@ -8,9 +8,13 @@ use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\Cessionario
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente gli altri dati identificativi  del cessionario/committente
-*/
+/**
+ * @riferimento 1.3.2
+ *
+ * @name AltriDatiIdentificativi
+ *
+ * Blocco contenente gli altri dati identificativi  del cessionario/committente
+ */
 class AltriDatiIdentificativi extends Elemento
 {
     protected Testo $Denominazione;
@@ -20,7 +24,7 @@ class AltriDatiIdentificativi extends Elemento
     protected StabileOrganizzazione $StabileOrganizzazione;
     protected RappresentanteFiscale $RappresentanteFiscale;
 
-    public function __construct(?string $Denominazione = null, ?string $Nome = null, ?string $Cognome = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->Denominazione = new Testo(true, 1, 80, 1);
@@ -29,15 +33,6 @@ class AltriDatiIdentificativi extends Elemento
         $this->Sede = new Sede();
         $this->StabileOrganizzazione = new StabileOrganizzazione();
         $this->RappresentanteFiscale = new RappresentanteFiscale();
-        if (!is_null($Denominazione)) {
-            $this->setDenominazione($Denominazione);
-        }
-        if (!is_null($Nome)) {
-            $this->setNome($Nome);
-        }
-        if (!is_null($Cognome)) {
-            $this->setCognome($Cognome);
-        }
     }
 
     public function getDenominazione(): ?string

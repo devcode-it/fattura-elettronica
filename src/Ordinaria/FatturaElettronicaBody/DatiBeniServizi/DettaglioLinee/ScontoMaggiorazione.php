@@ -2,34 +2,30 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
 
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\ScontoMaggiorazione\Tipo;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Eventuale sconto o maggiorazione applicati al prezzo unitario (la molteplicità N del blocco consente di gestire la presenza di più sconti  o maggiorazioni a 'cascata')
-*/
+/**
+ * @riferimento 2.2.1.10
+ *
+ * @name ScontoMaggiorazione
+ *
+ * Eventuale sconto o maggiorazione applicati al prezzo unitario (la molteplicità N del blocco consente di gestire la presenza di più sconti  o maggiorazioni a 'cascata')
+ */
 class ScontoMaggiorazione extends Elemento
 {
-    protected Testo $Tipo;
+    protected TestoEnum $Tipo;
     protected Decimale $Percentuale;
     protected Decimale $Importo;
 
-    public function __construct(?string $Tipo = null, ?float $Percentuale = null, ?float $Importo = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->Tipo = new Testo(false, 2, 2, 1);
+        $this->Tipo = new TestoEnum(false, Tipo::class);
         $this->Percentuale = new Decimale(true);
         $this->Importo = new Decimale(true);
-        if (!is_null($Tipo)) {
-            $this->setTipo($Tipo);
-        }
-        if (!is_null($Percentuale)) {
-            $this->setPercentuale($Percentuale);
-        }
-        if (!is_null($Importo)) {
-            $this->setImporto($Importo);
-        }
     }
 
     public function getTipo(): ?string
@@ -37,7 +33,7 @@ class ScontoMaggiorazione extends Elemento
         return $this->Tipo->get();
     }
 
-    public function setTipo(?string $value)
+    public function setTipo(Tipo|string $value)
     {
         $this->Tipo->set($value);
 

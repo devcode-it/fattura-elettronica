@@ -5,13 +5,19 @@ namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedenteP
 use DevCode\FatturaElettronica\Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\Anagrafica;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\IdFiscaleIVA;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\RegimeFiscale;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco sempre obbligatorio contenente i dati fiscali, anagrafici e professionali del cedente / prestatore
-*/
+/**
+ * @riferimento 1.2.1
+ *
+ * @name DatiAnagrafici
+ *
+ * Blocco sempre obbligatorio contenente i dati fiscali, anagrafici e professionali del cedente / prestatore
+ */
 class DatiAnagrafici extends Elemento
 {
     protected IdFiscaleIVA $IdFiscaleIVA;
@@ -21,9 +27,9 @@ class DatiAnagrafici extends Elemento
     protected Testo $ProvinciaAlbo;
     protected Testo $NumeroIscrizioneAlbo;
     protected Data $DataIscrizioneAlbo;
-    protected Testo $RegimeFiscale;
+    protected TestoEnum $RegimeFiscale;
 
-    public function __construct(?string $CodiceFiscale = null, ?string $AlboProfessionale = null, ?string $ProvinciaAlbo = null, ?string $NumeroIscrizioneAlbo = null, string|Carbon|\DateTime|null $DataIscrizioneAlbo = null, ?string $RegimeFiscale = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
@@ -33,25 +39,7 @@ class DatiAnagrafici extends Elemento
         $this->ProvinciaAlbo = new Testo(true, 2, 2, 1);
         $this->NumeroIscrizioneAlbo = new Testo(true, 1, 60, 1);
         $this->DataIscrizioneAlbo = new Data(true, 'YYYY-MM-DD');
-        $this->RegimeFiscale = new Testo(false, 4, 4, 1);
-        if (!is_null($CodiceFiscale)) {
-            $this->setCodiceFiscale($CodiceFiscale);
-        }
-        if (!is_null($AlboProfessionale)) {
-            $this->setAlboProfessionale($AlboProfessionale);
-        }
-        if (!is_null($ProvinciaAlbo)) {
-            $this->setProvinciaAlbo($ProvinciaAlbo);
-        }
-        if (!is_null($NumeroIscrizioneAlbo)) {
-            $this->setNumeroIscrizioneAlbo($NumeroIscrizioneAlbo);
-        }
-        if (!is_null($DataIscrizioneAlbo)) {
-            $this->setDataIscrizioneAlbo($DataIscrizioneAlbo);
-        }
-        if (!is_null($RegimeFiscale)) {
-            $this->setRegimeFiscale($RegimeFiscale);
-        }
+        $this->RegimeFiscale = new TestoEnum(false, RegimeFiscale::class);
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA
@@ -143,7 +131,7 @@ class DatiAnagrafici extends Elemento
         return $this->RegimeFiscale->get();
     }
 
-    public function setRegimeFiscale(?string $value)
+    public function setRegimeFiscale(RegimeFiscale|string $value)
     {
         $this->RegimeFiscale->set($value);
 

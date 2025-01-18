@@ -5,25 +5,23 @@ namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniSe
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Eventuale codifica dell'articolo (la molteplicità N del blocco consente di gestire la presenza di più codifiche per la medesima riga)
-*/
+/**
+ * @riferimento 2.2.1.3
+ *
+ * @name CodiceArticolo
+ *
+ * Eventuale codifica dell'articolo (la molteplicità N del blocco consente di gestire la presenza di più codifiche per la medesima riga)
+ */
 class CodiceArticolo extends Elemento
 {
     protected Testo $CodiceTipo;
     protected Testo $CodiceValore;
 
-    public function __construct(?string $CodiceTipo = null, ?string $CodiceValore = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->CodiceTipo = new Testo(false, 1, 35, 1);
         $this->CodiceValore = new Testo(false, 1, 35, 1);
-        if (!is_null($CodiceTipo)) {
-            $this->setCodiceTipo($CodiceTipo);
-        }
-        if (!is_null($CodiceValore)) {
-            $this->setCodiceValore($CodiceValore);
-        }
     }
 
     public function getCodiceTipo(): ?string

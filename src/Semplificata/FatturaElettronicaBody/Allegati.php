@@ -5,9 +5,15 @@ namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Dati relativi ad eventuali allegati
-*/
+/**
+ * @riferimento 2.3
+ *
+ * @name Allegati
+ *
+ * Dati relativi ad eventuali allegati
+ *
+ * Blocco relativo ai dati di eventuali allegati
+ */
 class Allegati extends Elemento
 {
     protected Testo $NomeAttachment;
@@ -16,7 +22,7 @@ class Allegati extends Elemento
     protected Testo $DescrizioneAttachment;
     protected Testo $Attachment;
 
-    public function __construct(?string $NomeAttachment = null, ?string $AlgoritmoCompressione = null, ?string $FormatoAttachment = null, ?string $DescrizioneAttachment = null, ?string $Attachment = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->NomeAttachment = new Testo(false, 1, 60, 1);
@@ -24,21 +30,6 @@ class Allegati extends Elemento
         $this->FormatoAttachment = new Testo(true, 1, 10, 1);
         $this->DescrizioneAttachment = new Testo(true, 1, 100, 1);
         $this->Attachment = new Testo(false, 0, null, 1);
-        if (!is_null($NomeAttachment)) {
-            $this->setNomeAttachment($NomeAttachment);
-        }
-        if (!is_null($AlgoritmoCompressione)) {
-            $this->setAlgoritmoCompressione($AlgoritmoCompressione);
-        }
-        if (!is_null($FormatoAttachment)) {
-            $this->setFormatoAttachment($FormatoAttachment);
-        }
-        if (!is_null($DescrizioneAttachment)) {
-            $this->setDescrizioneAttachment($DescrizioneAttachment);
-        }
-        if (!is_null($Attachment)) {
-            $this->setAttachment($Attachment);
-        }
     }
 
     public function getNomeAttachment(): ?string

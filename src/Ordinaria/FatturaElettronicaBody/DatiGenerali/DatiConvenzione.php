@@ -5,14 +5,19 @@ namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenera
 use DevCode\FatturaElettronica\Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
+use DevCode\FatturaElettronica\Standard\Intero;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente le informazioni relative alla convenzione; contiene gli stessi elementi informativi previsti per il blocco 2.1.2
-*/
+/**
+ * @riferimento 2.1.4
+ *
+ * @name DatiConvenzione
+ *
+ * Blocco contenente le informazioni relative alla convenzione; contiene gli stessi elementi informativi previsti per il blocco 2.1.2
+ */
 class DatiConvenzione extends Elemento
 {
-    protected int $RiferimentoNumeroLinea;
+    protected Intero $RiferimentoNumeroLinea;
     protected Testo $IdDocumento;
     protected Data $Data;
     protected Testo $NumItem;
@@ -20,47 +25,26 @@ class DatiConvenzione extends Elemento
     protected Testo $CodiceCUP;
     protected Testo $CodiceCIG;
 
-    public function __construct(?int $RiferimentoNumeroLinea = null, ?string $IdDocumento = null, string|Carbon|\DateTime|null $Data = null, ?string $NumItem = null, ?string $CodiceCommessaConvenzione = null, ?string $CodiceCUP = null, ?string $CodiceCIG = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->RiferimentoNumeroLinea = 1;
+        $this->RiferimentoNumeroLinea = new Intero(true, 1, 9999);
         $this->IdDocumento = new Testo(false, 1, 20, 1);
         $this->Data = new Data(true, 'YYYY-MM-DD');
         $this->NumItem = new Testo(true, 1, 20, 1);
         $this->CodiceCommessaConvenzione = new Testo(true, 1, 100, 1);
         $this->CodiceCUP = new Testo(true, 1, 15, 1);
         $this->CodiceCIG = new Testo(true, 1, 15, 1);
-        if (!is_null($RiferimentoNumeroLinea)) {
-            $this->setRiferimentoNumeroLinea($RiferimentoNumeroLinea);
-        }
-        if (!is_null($IdDocumento)) {
-            $this->setIdDocumento($IdDocumento);
-        }
-        if (!is_null($Data)) {
-            $this->setData($Data);
-        }
-        if (!is_null($NumItem)) {
-            $this->setNumItem($NumItem);
-        }
-        if (!is_null($CodiceCommessaConvenzione)) {
-            $this->setCodiceCommessaConvenzione($CodiceCommessaConvenzione);
-        }
-        if (!is_null($CodiceCUP)) {
-            $this->setCodiceCUP($CodiceCUP);
-        }
-        if (!is_null($CodiceCIG)) {
-            $this->setCodiceCIG($CodiceCIG);
-        }
     }
 
     public function getRiferimentoNumeroLinea(): ?int
     {
-        return $this->RiferimentoNumeroLinea;
+        return $this->RiferimentoNumeroLinea->get();
     }
 
-    public function setRiferimentoNumeroLinea(int $value)
+    public function setRiferimentoNumeroLinea(?int $value)
     {
-        $this->RiferimentoNumeroLinea = $value;
+        $this->RiferimentoNumeroLinea->set($value);
 
         return $this;
     }

@@ -7,9 +7,15 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Blocco sempre obbligatorio. Contiene natura, qualità, quantità e gli elementi necessari a determinare il valore dei beni e/o dei servizi formanti oggetto dell'operazione
-*/
+/**
+ * @riferimento 2.2
+ *
+ * @name DatiBeniServizi
+ *
+ * Blocco sempre obbligatorio. Contiene natura, qualità, quantità e gli elementi necessari a determinare il valore dei beni e/o dei servizi formanti oggetto dell'operazione
+ *
+ * Blocco relativo ai dati di Beni Servizi della Fattura	Elettronica
+ */
 class DatiBeniServizi extends Elemento
 {
     protected Collezione $DettaglioLinee;
@@ -18,8 +24,8 @@ class DatiBeniServizi extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->DettaglioLinee = new Collezione(DettaglioLinee::class, 1);
-        $this->DatiRiepilogo = new Collezione(DatiRiepilogo::class, 1);
+        $this->DettaglioLinee = new Collezione(DettaglioLinee::class, 1, null);
+        $this->DatiRiepilogo = new Collezione(DatiRiepilogo::class, 1, null);
     }
 
     public function getDettaglioLinee(): Collezione

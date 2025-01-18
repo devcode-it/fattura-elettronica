@@ -5,9 +5,13 @@ namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\Ceden
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente i dati della sede del cedente / prestatore. Si tratta della sede legale per le società e del domicilio fiscale per le ditte individuali e i lavoratori autonomi.
-*/
+/**
+ * @riferimento 1.2.6
+ *
+ * @name Sede
+ *
+ * Blocco contenente i dati della sede del cedente / prestatore. Si tratta della sede legale per le società e del domicilio fiscale per le ditte individuali e i lavoratori autonomi.
+ */
 class Sede extends Elemento
 {
     protected Testo $Indirizzo;
@@ -17,7 +21,7 @@ class Sede extends Elemento
     protected Testo $Provincia;
     protected Testo $Nazione;
 
-    public function __construct(?string $Indirizzo = null, ?string $NumeroCivico = null, ?string $CAP = null, ?string $Comune = null, ?string $Provincia = null, ?string $Nazione = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->Indirizzo = new Testo(false, 1, 60, 1);
@@ -26,24 +30,6 @@ class Sede extends Elemento
         $this->Comune = new Testo(false, 1, 60, 1);
         $this->Provincia = new Testo(true, 2, 2, 1);
         $this->Nazione = new Testo(false, 2, 2, 1);
-        if (!is_null($Indirizzo)) {
-            $this->setIndirizzo($Indirizzo);
-        }
-        if (!is_null($NumeroCivico)) {
-            $this->setNumeroCivico($NumeroCivico);
-        }
-        if (!is_null($CAP)) {
-            $this->setCAP($CAP);
-        }
-        if (!is_null($Comune)) {
-            $this->setComune($Comune);
-        }
-        if (!is_null($Provincia)) {
-            $this->setProvincia($Provincia);
-        }
-        if (!is_null($Nazione)) {
-            $this->setNazione($Nazione);
-        }
     }
 
     public function getIndirizzo(): ?string

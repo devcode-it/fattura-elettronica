@@ -2,59 +2,43 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento;
 
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiCassaPrevidenziale\Natura;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiCassaPrevidenziale\Ritenuta;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiCassaPrevidenziale\TipoCassa;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco dati relativi alla cassa professionale di appartenenza
-*/
+/**
+ * @riferimento 2.1.1.7
+ *
+ * @name DatiCassaPrevidenziale
+ *
+ * Blocco dati relativi alla cassa professionale di appartenenza
+ */
 class DatiCassaPrevidenziale extends Elemento
 {
-    protected Testo $TipoCassa;
+    protected TestoEnum $TipoCassa;
     protected Decimale $AlCassa;
     protected Decimale $ImportoContributoCassa;
     protected Decimale $ImponibileCassa;
     protected Decimale $AliquotaIVA;
-    protected Testo $Ritenuta;
-    protected Testo $Natura;
+    protected TestoEnum $Ritenuta;
+    protected TestoEnum $Natura;
     protected Testo $RiferimentoAmministrazione;
 
-    public function __construct(?string $TipoCassa = null, ?float $AlCassa = null, ?float $ImportoContributoCassa = null, ?float $ImponibileCassa = null, ?float $AliquotaIVA = null, ?string $Ritenuta = null, ?string $Natura = null, ?string $RiferimentoAmministrazione = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->TipoCassa = new Testo(false, 4, 4, 1);
+        $this->TipoCassa = new TestoEnum(false, TipoCassa::class);
         $this->AlCassa = new Decimale(false);
         $this->ImportoContributoCassa = new Decimale(false);
         $this->ImponibileCassa = new Decimale(true);
         $this->AliquotaIVA = new Decimale(false);
-        $this->Ritenuta = new Testo(true, 2, 2, 1);
-        $this->Natura = new Testo(true, 2, 4, 1);
+        $this->Ritenuta = new TestoEnum(true, Ritenuta::class);
+        $this->Natura = new TestoEnum(true, Natura::class);
         $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
-        if (!is_null($TipoCassa)) {
-            $this->setTipoCassa($TipoCassa);
-        }
-        if (!is_null($AlCassa)) {
-            $this->setAlCassa($AlCassa);
-        }
-        if (!is_null($ImportoContributoCassa)) {
-            $this->setImportoContributoCassa($ImportoContributoCassa);
-        }
-        if (!is_null($ImponibileCassa)) {
-            $this->setImponibileCassa($ImponibileCassa);
-        }
-        if (!is_null($AliquotaIVA)) {
-            $this->setAliquotaIVA($AliquotaIVA);
-        }
-        if (!is_null($Ritenuta)) {
-            $this->setRitenuta($Ritenuta);
-        }
-        if (!is_null($Natura)) {
-            $this->setNatura($Natura);
-        }
-        if (!is_null($RiferimentoAmministrazione)) {
-            $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
-        }
     }
 
     public function getTipoCassa(): ?string
@@ -62,7 +46,7 @@ class DatiCassaPrevidenziale extends Elemento
         return $this->TipoCassa->get();
     }
 
-    public function setTipoCassa(?string $value)
+    public function setTipoCassa(TipoCassa|string $value)
     {
         $this->TipoCassa->set($value);
 
@@ -122,7 +106,7 @@ class DatiCassaPrevidenziale extends Elemento
         return $this->Ritenuta->get();
     }
 
-    public function setRitenuta(?string $value)
+    public function setRitenuta(Ritenuta|string|null $value)
     {
         $this->Ritenuta->set($value);
 
@@ -134,7 +118,7 @@ class DatiCassaPrevidenziale extends Elemento
         return $this->Natura->get();
     }
 
-    public function setNatura(?string $value)
+    public function setNatura(Natura|string|null $value)
     {
         $this->Natura->set($value);
 

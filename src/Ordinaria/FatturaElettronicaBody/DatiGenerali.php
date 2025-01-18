@@ -15,9 +15,15 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\Fat
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Blocco sempre obbligatorio contenente i dati generali della fattura e quelli degli eventuali documenti correlati
-*/
+/**
+ * @riferimento 2.1
+ *
+ * @name DatiGenerali
+ *
+ * Blocco sempre obbligatorio contenente i dati generali della fattura e quelli degli eventuali documenti correlati
+ *
+ * Blocco relativo ai Dati Generali della Fattura Elettronica
+ */
 class DatiGenerali extends Elemento
 {
     protected DatiGeneraliDocumento $DatiGeneraliDocumento;
@@ -35,13 +41,13 @@ class DatiGenerali extends Elemento
     {
         parent::__construct(false);
         $this->DatiGeneraliDocumento = new DatiGeneraliDocumento();
-        $this->DatiOrdineAcquisto = new Collezione(DatiOrdineAcquisto::class, 0);
-        $this->DatiContratto = new Collezione(DatiContratto::class, 0);
-        $this->DatiConvenzione = new Collezione(DatiConvenzione::class, 0);
-        $this->DatiRicezione = new Collezione(DatiRicezione::class, 0);
-        $this->DatiFattureCollegate = new Collezione(DatiFattureCollegate::class, 0);
-        $this->DatiSAL = new Collezione(DatiSAL::class, 0);
-        $this->DatiDDT = new Collezione(DatiDDT::class, 0);
+        $this->DatiOrdineAcquisto = new Collezione(DatiOrdineAcquisto::class, 0, null);
+        $this->DatiContratto = new Collezione(DatiContratto::class, 0, null);
+        $this->DatiConvenzione = new Collezione(DatiConvenzione::class, 0, null);
+        $this->DatiRicezione = new Collezione(DatiRicezione::class, 0, null);
+        $this->DatiFattureCollegate = new Collezione(DatiFattureCollegate::class, 0, null);
+        $this->DatiSAL = new Collezione(DatiSAL::class, 0, null);
+        $this->DatiDDT = new Collezione(DatiDDT::class, 0, null);
         $this->DatiTrasporto = new DatiTrasporto();
         $this->FatturaPrincipale = new FatturaPrincipale();
     }

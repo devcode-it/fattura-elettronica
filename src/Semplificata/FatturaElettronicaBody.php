@@ -8,9 +8,13 @@ use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali;
 use DevCode\FatturaElettronica\Standard\Collezione;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Il blocco ha molteplicità pari a 1 nel caso di fattura singola; nel caso di lotto di fatture, si ripete per ogni fattura componente il lotto stesso
-*/
+/**
+ * @riferimento 2
+ *
+ * @name FatturaElettronicaBody
+ *
+ * Il blocco ha molteplicità pari a 1 nel caso di fattura singola; nel caso di lotto di fatture, si ripete per ogni fattura componente il lotto stesso
+ */
 class FatturaElettronicaBody extends Elemento
 {
     protected DatiGenerali $DatiGenerali;
@@ -21,8 +25,8 @@ class FatturaElettronicaBody extends Elemento
     {
         parent::__construct(false);
         $this->DatiGenerali = new DatiGenerali();
-        $this->DatiBeniServizi = new Collezione(DatiBeniServizi::class, 1);
-        $this->Allegati = new Collezione(Allegati::class, 0);
+        $this->DatiBeniServizi = new Collezione(DatiBeniServizi::class, 1, null);
+        $this->Allegati = new Collezione(Allegati::class, 0, null);
     }
 
     public function getDatiGenerali(): DatiGenerali

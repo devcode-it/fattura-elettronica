@@ -7,24 +7,25 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\TerzoIntermedi
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente i dati fiscali e anagrafici del terzo intermediario
-*/
+/**
+ * @riferimento 1.5.1
+ *
+ * @name DatiAnagrafici
+ *
+ * Blocco contenente i dati fiscali e anagrafici del terzo intermediario
+ */
 class DatiAnagrafici extends Elemento
 {
     protected IdFiscaleIVA $IdFiscaleIVA;
     protected Testo $CodiceFiscale;
     protected Anagrafica $Anagrafica;
 
-    public function __construct(?string $CodiceFiscale = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
         $this->CodiceFiscale = new Testo(true, 11, 16, 1);
         $this->Anagrafica = new Anagrafica();
-        if (!is_null($CodiceFiscale)) {
-            $this->setCodiceFiscale($CodiceFiscale);
-        }
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

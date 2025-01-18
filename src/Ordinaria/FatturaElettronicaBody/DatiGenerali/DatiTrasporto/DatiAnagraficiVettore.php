@@ -7,9 +7,13 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\Dat
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco contenente i dati fiscali e anagrafici del vettore
-*/
+/**
+ * @riferimento 2.1.9.1
+ *
+ * @name DatiAnagraficiVettore
+ *
+ * Blocco contenente i dati fiscali e anagrafici del vettore
+ */
 class DatiAnagraficiVettore extends Elemento
 {
     protected IdFiscaleIVA $IdFiscaleIVA;
@@ -17,19 +21,13 @@ class DatiAnagraficiVettore extends Elemento
     protected Anagrafica $Anagrafica;
     protected Testo $NumeroLicenzaGuida;
 
-    public function __construct(?string $CodiceFiscale = null, ?string $NumeroLicenzaGuida = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
         $this->CodiceFiscale = new Testo(true, 11, 16, 1);
         $this->Anagrafica = new Anagrafica();
         $this->NumeroLicenzaGuida = new Testo(true, 1, 20, 1);
-        if (!is_null($CodiceFiscale)) {
-            $this->setCodiceFiscale($CodiceFiscale);
-        }
-        if (!is_null($NumeroLicenzaGuida)) {
-            $this->setNumeroLicenzaGuida($NumeroLicenzaGuida);
-        }
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

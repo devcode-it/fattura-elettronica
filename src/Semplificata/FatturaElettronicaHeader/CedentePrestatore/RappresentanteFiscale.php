@@ -6,9 +6,15 @@ use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePres
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Blocco da valorizzare nei casi in cui il cedente / prestatore si avvalga di un rappresentante fiscale in Italia.
-*/
+/**
+ * @riferimento 1.2.8
+ *
+ * @name RappresentanteFiscale
+ *
+ * Blocco da valorizzare nei casi in cui il cedente / prestatore si avvalga di un rappresentante fiscale in Italia.
+ *
+ * Blocco relativo ai dati del Rappresentante Fiscale
+ */
 class RappresentanteFiscale extends Elemento
 {
     protected IdFiscaleIVA $IdFiscaleIVA;
@@ -16,22 +22,13 @@ class RappresentanteFiscale extends Elemento
     protected Testo $Nome;
     protected Testo $Cognome;
 
-    public function __construct(?string $Denominazione = null, ?string $Nome = null, ?string $Cognome = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
         $this->Denominazione = new Testo(true, 1, 80, 1);
         $this->Nome = new Testo(true, 1, 60, 1);
         $this->Cognome = new Testo(true, 1, 60, 1);
-        if (!is_null($Denominazione)) {
-            $this->setDenominazione($Denominazione);
-        }
-        if (!is_null($Nome)) {
-            $this->setNome($Nome);
-        }
-        if (!is_null($Cognome)) {
-            $this->setCognome($Cognome);
-        }
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

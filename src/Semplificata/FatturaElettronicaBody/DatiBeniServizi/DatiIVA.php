@@ -5,25 +5,23 @@ namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBen
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
 
-/*
-* Dati relativi all'imposta sul valore aggiunto
-*/
+/**
+ * @riferimento 2.2.3
+ *
+ * @name DatiIVA
+ *
+ * Dati relativi all'imposta sul valore aggiunto
+ */
 class DatiIVA extends Elemento
 {
     protected Decimale $Imposta;
     protected Decimale $Aliquota;
 
-    public function __construct(?float $Imposta = null, ?float $Aliquota = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->Imposta = new Decimale(true);
         $this->Aliquota = new Decimale(true);
-        if (!is_null($Imposta)) {
-            $this->setImposta($Imposta);
-        }
-        if (!is_null($Aliquota)) {
-            $this->setAliquota($Aliquota);
-        }
     }
 
     public function getImposta(): ?float

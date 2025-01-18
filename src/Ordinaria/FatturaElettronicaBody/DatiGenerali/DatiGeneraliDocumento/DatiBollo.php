@@ -2,29 +2,28 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento;
 
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiBollo\BolloVirtuale;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco dati relativi al bollo
-*/
+/**
+ * @riferimento 2.1.1.6
+ *
+ * @name DatiBollo
+ *
+ * Blocco dati relativi al bollo
+ */
 class DatiBollo extends Elemento
 {
-    protected Testo $BolloVirtuale;
+    protected TestoEnum $BolloVirtuale;
     protected Decimale $ImportoBollo;
 
-    public function __construct(?string $BolloVirtuale = null, ?float $ImportoBollo = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->BolloVirtuale = new Testo(false, 2, 2, 1);
+        $this->BolloVirtuale = new TestoEnum(false, BolloVirtuale::class);
         $this->ImportoBollo = new Decimale(true);
-        if (!is_null($BolloVirtuale)) {
-            $this->setBolloVirtuale($BolloVirtuale);
-        }
-        if (!is_null($ImportoBollo)) {
-            $this->setImportoBollo($ImportoBollo);
-        }
     }
 
     public function getBolloVirtuale(): ?string
@@ -32,7 +31,7 @@ class DatiBollo extends Elemento
         return $this->BolloVirtuale->get();
     }
 
-    public function setBolloVirtuale(?string $value)
+    public function setBolloVirtuale(BolloVirtuale|string $value)
     {
         $this->BolloVirtuale->set($value);
 

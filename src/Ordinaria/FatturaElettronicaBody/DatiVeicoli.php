@@ -7,25 +7,26 @@ use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
 
-/*
-* Dati relativi ai veicoli di cui all'art. 38, comma 4 del dl 331 del 1993
-*/
+/**
+ * @riferimento 2.3
+ *
+ * @name DatiVeicoli
+ *
+ * Dati relativi ai veicoli di cui all'art. 38, comma 4 del dl 331 del 1993
+ *
+ * Blocco relativo ai dati dei Veicoli della Fattura Elettronica (da indicare nei casi di cessioni tra Paesi
+ * membri di mezzi di trasporto nuovi, in base all'art. 38, comma 4 del dl 331 del 1993)
+ */
 class DatiVeicoli extends Elemento
 {
     protected Data $Data;
     protected Testo $TotalePercorso;
 
-    public function __construct(string|Carbon|\DateTime|null $Data = null, ?string $TotalePercorso = null)
+    public function __construct()
     {
         parent::__construct(true);
         $this->Data = new Data(false, 'YYYY-MM-DD');
         $this->TotalePercorso = new Testo(false, 1, 15, 1);
-        if (!is_null($Data)) {
-            $this->setData($Data);
-        }
-        if (!is_null($TotalePercorso)) {
-            $this->setTotalePercorso($TotalePercorso);
-        }
     }
 
     public function getData(): ?string

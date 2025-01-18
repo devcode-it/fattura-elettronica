@@ -5,29 +5,31 @@ namespace DevCode\FatturaElettronica\Semplificata;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\DatiTrasmissione;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\SoggettoEmittente;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Il blocco ha molteplicità pari a 1, sia nel caso di fattura singola che nel caso di lotto di fatture
-*/
+/**
+ * @riferimento 1
+ *
+ * @name FatturaElettronicaHeader
+ *
+ * Il blocco ha molteplicità pari a 1, sia nel caso di fattura singola che nel caso di lotto di fatture
+ */
 class FatturaElettronicaHeader extends Elemento
 {
     protected DatiTrasmissione $DatiTrasmissione;
     protected CedentePrestatore $CedentePrestatore;
     protected CessionarioCommittente $CessionarioCommittente;
-    protected Testo $SoggettoEmittente;
+    protected TestoEnum $SoggettoEmittente;
 
-    public function __construct(?string $SoggettoEmittente = null)
+    public function __construct()
     {
         parent::__construct(false);
         $this->DatiTrasmissione = new DatiTrasmissione();
         $this->CedentePrestatore = new CedentePrestatore();
         $this->CessionarioCommittente = new CessionarioCommittente();
-        $this->SoggettoEmittente = new Testo(true, 2, 2, 1);
-        if (!is_null($SoggettoEmittente)) {
-            $this->setSoggettoEmittente($SoggettoEmittente);
-        }
+        $this->SoggettoEmittente = new TestoEnum(true, SoggettoEmittente::class);
     }
 
     public function getDatiTrasmissione(): DatiTrasmissione
@@ -71,7 +73,7 @@ class FatturaElettronicaHeader extends Elemento
         return $this->SoggettoEmittente->get();
     }
 
-    public function setSoggettoEmittente(?string $value)
+    public function setSoggettoEmittente(SoggettoEmittente|string|null $value)
     {
         $this->SoggettoEmittente->set($value);
 

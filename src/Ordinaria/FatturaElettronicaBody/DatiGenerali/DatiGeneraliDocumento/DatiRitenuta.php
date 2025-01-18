@@ -2,39 +2,33 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento;
 
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiRitenuta\CausalePagamento;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiRitenuta\TipoRitenuta;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\Standard\Testo;
+use DevCode\FatturaElettronica\Standard\TestoEnum;
 
-/*
-* Blocco dati relativi alla ritenuta
-*/
+/**
+ * @riferimento 2.1.1.5
+ *
+ * @name DatiRitenuta
+ *
+ * Blocco dati relativi alla ritenuta
+ */
 class DatiRitenuta extends Elemento
 {
-    protected Testo $TipoRitenuta;
+    protected TestoEnum $TipoRitenuta;
     protected Decimale $ImportoRitenuta;
     protected Decimale $AliquotaRitenuta;
-    protected Testo $CausalePagamento;
+    protected TestoEnum $CausalePagamento;
 
-    public function __construct(?string $TipoRitenuta = null, ?float $ImportoRitenuta = null, ?float $AliquotaRitenuta = null, ?string $CausalePagamento = null)
+    public function __construct()
     {
         parent::__construct(true);
-        $this->TipoRitenuta = new Testo(false, 4, 4, 1);
+        $this->TipoRitenuta = new TestoEnum(false, TipoRitenuta::class);
         $this->ImportoRitenuta = new Decimale(false);
         $this->AliquotaRitenuta = new Decimale(false);
-        $this->CausalePagamento = new Testo(false, 1, 2, 1);
-        if (!is_null($TipoRitenuta)) {
-            $this->setTipoRitenuta($TipoRitenuta);
-        }
-        if (!is_null($ImportoRitenuta)) {
-            $this->setImportoRitenuta($ImportoRitenuta);
-        }
-        if (!is_null($AliquotaRitenuta)) {
-            $this->setAliquotaRitenuta($AliquotaRitenuta);
-        }
-        if (!is_null($CausalePagamento)) {
-            $this->setCausalePagamento($CausalePagamento);
-        }
+        $this->CausalePagamento = new TestoEnum(false, CausalePagamento::class);
     }
 
     public function getTipoRitenuta(): ?string
@@ -42,7 +36,7 @@ class DatiRitenuta extends Elemento
         return $this->TipoRitenuta->get();
     }
 
-    public function setTipoRitenuta(?string $value)
+    public function setTipoRitenuta(TipoRitenuta|string $value)
     {
         $this->TipoRitenuta->set($value);
 
@@ -78,7 +72,7 @@ class DatiRitenuta extends Elemento
         return $this->CausalePagamento->get();
     }
 
-    public function setCausalePagamento(?string $value)
+    public function setCausalePagamento(CausalePagamento|string $value)
     {
         $this->CausalePagamento->set($value);
 

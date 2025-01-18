@@ -10,40 +10,52 @@ use DevCode\FatturaElettronica\Standard\Testo;
 /*
 * Blocco destinato a descrivere le modalità di pagamento per la cessione/prestazione rappresentata in fattura
 */
-class DatiPagamento extends Elemento {
+class DatiPagamento extends Elemento
+{
     protected Testo $CondizioniPagamento;
-	protected Collezione $DettaglioPagamento;
-    public function __construct(?string $CondizioniPagamento = null) {
+    protected Collezione $DettaglioPagamento;
+
+    public function __construct(?string $CondizioniPagamento = null)
+    {
+        parent::__construct(true);
         $this->CondizioniPagamento = new Testo(false, 4, 4, 1);
-		$this->DettaglioPagamento = new Collezione(DettaglioPagamento::class, 1);
-        if (!is_null($CondizioniPagamento)) $this->setCondizioniPagamento($CondizioniPagamento);
+        $this->DettaglioPagamento = new Collezione(DettaglioPagamento::class, 1);
+        if (!is_null($CondizioniPagamento)) {
+            $this->setCondizioniPagamento($CondizioniPagamento);
+        }
     }
-    
-    public function getCondizioniPagamento() : ?string {
+
+    public function getCondizioniPagamento(): ?string
+    {
         return $this->CondizioniPagamento->get();
     }
 
-    public function setCondizioniPagamento(?string $value) {
+    public function setCondizioniPagamento(?string $value)
+    {
         $this->CondizioniPagamento->set($value);
 
         return $this;
     }
 
-    public function getDettaglioPagamento() : Collezione {
+    public function getDettaglioPagamento(): Collezione
+    {
         return $this->DettaglioPagamento;
     }
 
-    public function getAllDettaglioPagamento() : array {
+    public function getAllDettaglioPagamento(): array
+    {
         return $this->DettaglioPagamento->toList();
     }
 
-    public function addDettaglioPagamento(DettaglioPagamento $elemento) {
+    public function addDettaglioPagamento(DettaglioPagamento $elemento)
+    {
         $this->DettaglioPagamento->add($elemento);
 
         return $this;
     }
 
-    public function removeDettaglioPagamento(int $index) {
+    public function removeDettaglioPagamento(int $index)
+    {
         $this->DettaglioPagamento->remove($index);
 
         return $this;

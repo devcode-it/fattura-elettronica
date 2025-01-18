@@ -2,6 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Standard;
 
+use DevCode\FatturaElettronica\Interfaces\EmptyInterface;
 use DevCode\FatturaElettronica\Interfaces\FieldInterface;
 use DevCode\FatturaElettronica\Interfaces\SerializeInterface;
 use DevCode\FatturaElettronica\Interfaces\StringInterface;
@@ -9,12 +10,21 @@ use DevCode\FatturaElettronica\Interfaces\UnserializeInterface;
 
 abstract class Elemento implements SerializeInterface, UnserializeInterface
 {
-    public function __construct()
-    {
+    protected bool $optional;
+
+    public function __construct(
+        bool $optional = false,
+    ) {
+        $this->optional = $optional;
     }
 
     public function __get($name)
     {
+        if (!property_exists($this, $name)) {
+            $class = get_class($this);
+            throw new \InvalidArgumentException("Property {$name} does not exist in {$class}");
+        }
+
         if (method_exists($this, 'get'.$name)) {
             return $this->{'get'.$name}();
         } elseif ($this->{$name} instanceof FieldInterface) {
@@ -25,9 +35,10 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
     }
 
     public function __set($name, $value)
-    {   
+    {
         if (!property_exists($this, $name)) {
-            throw new \InvalidArgumentException("Property {$name} does not exist");
+            $class = get_class($this);
+            throw new \InvalidArgumentException("Property {$name} does not exist in {$class}");
         }
 
         if (method_exists($this, 'set'.$name)) {
@@ -54,40 +65,44 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
         return $writer->outputMemory(true);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isOptional(): bool
     {
-        return true;
+        return $this->optional;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEmpty(): bool
     {
         $vars = $this->getXmlTags();
 
-        foreach ($vars as $var) {
+        foreach ($vars as $key => $var) {
             if (is_scalar($var) && isset($var)) {
                 return false;
             } else {
-                if (is_iterable($var)) {
-                    $elements = $var;
+                if (!is_null($var) && $var instanceof Elemento) {
+                    if (!$var->isEmpty()) {
+                        return false;
+                    }
+                } elseif (!is_null($var) && $var instanceof EmptyInterface) {
+                    if (!$var->isEmpty()) {
+                        return false;
+                    }
                 } else {
-                    $elements = [$var];
-                }
-
-                foreach ($elements as $element) {
-                    if (!isset($element)) {
-                        continue;
+                    if (is_iterable($var)) {
+                        $elements = $var;
+                    } else {
+                        $elements = [$var];
                     }
 
-                    if (is_scalar($element)) {
-                        return false;
-                    } elseif (!$element->isEmpty()) {
-                        return false;
+                    foreach ($elements as $element) {
+                        if (!isset($element)) {
+                            continue;
+                        }
+
+                        if (is_scalar($element)) {
+                            return false;
+                        } elseif (!$element->isEmpty()) {
+                            return false;
+                        }
                     }
                 }
             }
@@ -96,9 +111,6 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
         return true;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(\XMLWriter $writer): void
     {
         $vars = $this->getXmlTags();
@@ -108,16 +120,13 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
         }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize(array $content): void
     {
         foreach ($content as $key => $var) {
             if ($key == '@attributes') {
                 continue;
             }
-        
+
             if (is_scalar($var)) {
                 if (isset($this->{$key}) && $this->{$key} instanceof FieldInterface) {
                     $this->{$key}->set($var);
@@ -139,18 +148,18 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
      */
     protected function getXmlTags(): iterable
     {
-        return get_object_vars($this);
+        $tags = get_object_vars($this);
+        unset($tags['optional']);
+
+        return $tags;
     }
 
     /**
      * Scrive un elemento composto.
-     *
-     * @param $key
-     * @param $element
      */
     protected static function writeXml(\XMLWriter $writer, $key, $element): void
     {
-        if (!isset($element)) {
+        if (!isset($element) || $key == 'optional') {
             return;
         }
 
@@ -171,7 +180,7 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
                 foreach ($element as $i => $var) {
                     self::writeXml($writer, $key, $var);
                 }
-            } elseif ( !$element->isOptional()){
+            } elseif (!$element->isOptional()) {
                 $writer->startElement($key);
                 $writer->endElement();
             }

@@ -2,9 +2,6 @@
 
 namespace DevCode\FatturaElettronica\Standard;
 
-use ArrayIterator;
-use DevCode\FatturaElettronica\Standard\Testo;
-use IteratorAggregate;
 use Carbon\Carbon;
 
 /**
@@ -12,26 +9,29 @@ use Carbon\Carbon;
  */
 class Data extends Testo
 {
+    protected string $format;
+
     public function __construct(
         bool $optional,
-        ?string $content = null
+        string $format,
+        ?string $content = null,
     ) {
-        parent::__construct($optional, 10, 10, 1);
-        
-        $this->content = $content;
+        $this->format = $format;
+        parent::__construct($optional, \strlen($format), \strlen($format), 1);
+
+        if (!empty($content)) {
+            $this->set($content);
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($value): void
     {
-        if ($value instanceof \DateTime){
+        if ($value instanceof \DateTime) {
             $value = Carbon::instance($value);
         }
 
-        if ($value instanceof Carbon){
-            $value = $value->toDateString();
+        if ($value instanceof Carbon) {
+            $value = $value->isoFormat($this->format);
         }
 
         parent::set($value);

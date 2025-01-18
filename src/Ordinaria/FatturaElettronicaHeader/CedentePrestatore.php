@@ -13,75 +13,96 @@ use DevCode\FatturaElettronica\Standard\Testo;
 /*
 * Blocco sempre obbligatorio contenente dati relativi al cedente / prestatore (fornitore)
 */
-class CedentePrestatore extends Elemento {
+class CedentePrestatore extends Elemento
+{
     protected DatiAnagrafici $DatiAnagrafici;
-	protected Sede $Sede;
-	protected ?StabileOrganizzazione $StabileOrganizzazione;
-	protected ?IscrizioneREA $IscrizioneREA;
-	protected ?Contatti $Contatti;
-	protected Testo $RiferimentoAmministrazione;
-    public function __construct(?string $RiferimentoAmministrazione = null) {
+    protected Sede $Sede;
+    protected StabileOrganizzazione $StabileOrganizzazione;
+    protected IscrizioneREA $IscrizioneREA;
+    protected Contatti $Contatti;
+    protected Testo $RiferimentoAmministrazione;
+
+    public function __construct(?string $RiferimentoAmministrazione = null)
+    {
+        parent::__construct(false);
         $this->DatiAnagrafici = new DatiAnagrafici();
-		$this->Sede = new Sede();
-		$this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
-        if (!is_null($RiferimentoAmministrazione)) $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
+        $this->Sede = new Sede();
+        $this->StabileOrganizzazione = new StabileOrganizzazione();
+        $this->IscrizioneREA = new IscrizioneREA();
+        $this->Contatti = new Contatti();
+        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
+        if (!is_null($RiferimentoAmministrazione)) {
+            $this->setRiferimentoAmministrazione($RiferimentoAmministrazione);
+        }
     }
-    
-    public function getDatiAnagrafici() : DatiAnagrafici {
+
+    public function getDatiAnagrafici(): DatiAnagrafici
+    {
         return $this->DatiAnagrafici;
     }
 
-    public function setDatiAnagrafici(DatiAnagrafici $DatiAnagrafici) {
+    public function setDatiAnagrafici(DatiAnagrafici $DatiAnagrafici)
+    {
         $this->DatiAnagrafici = $DatiAnagrafici;
 
         return $this;
     }
 
-    public function getSede() : Sede {
+    public function getSede(): Sede
+    {
         return $this->Sede;
     }
 
-    public function setSede(Sede $Sede) {
+    public function setSede(Sede $Sede)
+    {
         $this->Sede = $Sede;
 
         return $this;
     }
 
-    public function getStabileOrganizzazione() : StabileOrganizzazione {
+    public function getStabileOrganizzazione(): StabileOrganizzazione
+    {
         return $this->StabileOrganizzazione;
     }
 
-    public function setStabileOrganizzazione(?StabileOrganizzazione $StabileOrganizzazione) {
+    public function setStabileOrganizzazione(StabileOrganizzazione $StabileOrganizzazione)
+    {
         $this->StabileOrganizzazione = $StabileOrganizzazione;
 
         return $this;
     }
 
-    public function getIscrizioneREA() : IscrizioneREA {
+    public function getIscrizioneREA(): IscrizioneREA
+    {
         return $this->IscrizioneREA;
     }
 
-    public function setIscrizioneREA(?IscrizioneREA $IscrizioneREA) {
+    public function setIscrizioneREA(IscrizioneREA $IscrizioneREA)
+    {
         $this->IscrizioneREA = $IscrizioneREA;
 
         return $this;
     }
 
-    public function getContatti() : Contatti {
+    public function getContatti(): Contatti
+    {
         return $this->Contatti;
     }
 
-    public function setContatti(?Contatti $Contatti) {
+    public function setContatti(Contatti $Contatti)
+    {
         $this->Contatti = $Contatti;
 
         return $this;
     }
 
-    public function getRiferimentoAmministrazione() : ?string {
+    public function getRiferimentoAmministrazione(): ?string
+    {
         return $this->RiferimentoAmministrazione->get();
     }
 
-    public function setRiferimentoAmministrazione(?string $value) {
+    public function setRiferimentoAmministrazione(?string $value)
+    {
         $this->RiferimentoAmministrazione->set($value);
 
         return $this;

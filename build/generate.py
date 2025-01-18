@@ -179,9 +179,11 @@ def genera_struttura(struttura_df, namespace):
                     f"protected Data ${nome_variabile};"
                 )
                 variabili.append(("null|string|Carbon|\DateTime", nome_variabile))
+
+                formato = componente["Formato e valori ammessi"].split("precisione seguente:")[-1].strip()
                 initializzatione.append((
                     nome_variabile,
-                    f"Data({'true' if min_numerosita == '0' else 'false'})"
+                    f"Data({'true' if min_numerosita == '0' else 'false'}, '{formato}')"
                 ))
                 corpo.append(f"""
     public function get{nome_variabile}() : ?string {{
@@ -223,7 +225,7 @@ def genera_struttura(struttura_df, namespace):
                 if occorrenze != '<0.1>':
                     initializzatione.append((
                         nome_variabile,
-                        f"0"
+                        f"1"
                     ))
 
                 variabili.append((tipo, nome_variabile))
@@ -242,15 +244,14 @@ def genera_struttura(struttura_df, namespace):
             importazioni.append(f"{sotto_namespace}\\{nome_componente}")
 
             if max_numerosita == "1":
-                tipo = f"{'?' if occorrenze == '<0.1>' else ''}{nome_componente}"
+                tipo = nome_componente
                 proprieta.append(
                     f"protected {tipo} ${nome_variabile};"
                 )
-                if occorrenze != '<0.1>':
-                    initializzatione.append((
-                        nome_variabile,
-                        f"{nome_componente}()"
-                    ))
+                initializzatione.append((
+                    nome_variabile,
+                    f"{nome_componente}()"
+                ))
                 corpo.append(f"""
     public function get{nome_variabile}() : {nome_componente} {{
         return $this->{nome_variabile};
@@ -302,11 +303,17 @@ def genera_struttura(struttura_df, namespace):
         )
         contenuto_corpo = "\n".join(corpo)
 
+        occorrenze = componente_primario["Occorrenze"]
+        max_numerosita = occorrenze.split(".")[-1].strip("<>")
+        min_numerosita = occorrenze.split(".")[0].strip("<>")
+
         costruttore = "" if len(initializzatione) == 0 else """public function __construct({vars}) {{
+        parent::__construct({optional});
         {init}
         {values}
     }}""".format(
-        init="\n\t\t".join(f"$this->{k} = {'new ' if v != '0' else ''}{v};" for (k, v) in initializzatione),
+        optional='true' if min_numerosita == '0' else 'false',
+        init="\n\t\t".join(f"$this->{k} = {'new ' if not v.isdigit() else ''}{v};" for (k, v) in initializzatione),
         vars=", ".join(f"{('' if '?' in k or 'null' in k else '?') + k } ${v} = null" for (k, v) in variabili),
         values="\n\t\t".join(f"if (!is_null(${v})) $this->set{v}(${v});" for (k, v) in variabili),
     )

@@ -9,29 +9,37 @@ use DevCode\FatturaElettronica\Standard\Elemento;
 /*
 * Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
 */
-class CessionarioCommittente extends Elemento {
+class CessionarioCommittente extends Elemento
+{
     protected IdentificativiFiscali $IdentificativiFiscali;
-	protected ?AltriDatiIdentificativi $AltriDatiIdentificativi;
-    public function __construct() {
+    protected AltriDatiIdentificativi $AltriDatiIdentificativi;
+
+    public function __construct()
+    {
+        parent::__construct(false);
         $this->IdentificativiFiscali = new IdentificativiFiscali();
-        
+        $this->AltriDatiIdentificativi = new AltriDatiIdentificativi();
     }
-    
-    public function getIdentificativiFiscali() : IdentificativiFiscali {
+
+    public function getIdentificativiFiscali(): IdentificativiFiscali
+    {
         return $this->IdentificativiFiscali;
     }
 
-    public function setIdentificativiFiscali(IdentificativiFiscali $IdentificativiFiscali) {
+    public function setIdentificativiFiscali(IdentificativiFiscali $IdentificativiFiscali)
+    {
         $this->IdentificativiFiscali = $IdentificativiFiscali;
 
         return $this;
     }
 
-    public function getAltriDatiIdentificativi() : AltriDatiIdentificativi {
+    public function getAltriDatiIdentificativi(): AltriDatiIdentificativi
+    {
         return $this->AltriDatiIdentificativi;
     }
 
-    public function setAltriDatiIdentificativi(?AltriDatiIdentificativi $AltriDatiIdentificativi) {
+    public function setAltriDatiIdentificativi(AltriDatiIdentificativi $AltriDatiIdentificativi)
+    {
         $this->AltriDatiIdentificativi = $AltriDatiIdentificativi;
 
         return $this;

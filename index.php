@@ -73,7 +73,7 @@ $fattura->getDatiBeniServizi()->addDettaglioLinee($linea);
 // Generazione
 $xml = $fattura->__toString();
 $filename = $fattura->getFileName();
-$errors = $fattura->validate();
+$errors = $fattura->validator();
 /*
 use DevCode\FatturaElettronica\FatturaElettronica;
 use DevCode\FatturaElettronica\FatturaOrdinaria;

@@ -2,15 +2,13 @@
 
 namespace DevCode\FatturaElettronica\Standard;
 
-use ArrayIterator;
 use DevCode\FatturaElettronica\Interfaces\FieldInterface;
 use DevCode\FatturaElettronica\Interfaces\UnserializeInterface;
-use IteratorAggregate;
 
 /**
  * Classe per la gestione virtuale di stringhe che hanno lunghezza massima e possono essere separate in più elementi.
  */
-class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
+class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
 {
     protected bool $optional;
     protected int $minLength;
@@ -23,20 +21,19 @@ class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
         int $minLength,
         ?int $maxLength,
         ?int $molteplicita = null,
-        ?string $content = null
+        ?string $content = null,
     ) {
         $this->optional = $optional;
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
         $this->molteplicita = $molteplicita;
-    
+
         $this->content = null;
-        if (!is_null($content)) $this->set($content);
+        if (!is_null($content)) {
+            $this->set($content);
+        }
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($value): void
     {
         $len = strlen($value);
@@ -44,18 +41,21 @@ class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
             if (empty($this->molteplicita)) {
                 $this->content = $value;
             } else {
-                $this->content = empty(this->maxLength) ? $value : \substr($value, 0, $this->molteplicita*$this->maxLength);
+                $this->content = empty($this->maxLength) ? $value : \substr($value, 0, $this->molteplicita * $this->maxLength);
             }
 
             return;
         }
 
-        throw new \InvalidArgumentException("Text value length must be within {$this->minLength} and {$this->maxLength} (repeated by {$this->molteplicita})");
+        if ($len == 0 && $this->optional) {
+            $this->content = null;
+
+            return;
+        }
+
+        throw new \InvalidArgumentException("Text value length must be within {$this->minLength} and {$this->maxLength} (repeated by {$this->molteplicita}, not optional) - \"{$value}\" has length {$len}");
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get()
     {
         return $this->content;
@@ -64,36 +64,27 @@ class Testo implements IteratorAggregate, FieldInterface, UnserializeInterface
     public function toArray(): array
     {
         return !$this->isEmpty() ? (
-            empty(this->maxLength) ?
+            empty($this->maxLength) ?
             [$this->content] :
             str_split($this->content, $this->maxLength)
-         ) : [];
+        ) : [];
     }
 
     public function getIterator(): \Traversable
     {
-        return new ArrayIterator($this->toArray());
+        return new \ArrayIterator($this->toArray());
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEmpty(): bool
     {
         return empty($this->content);
     }
-    
-    /**
-     * {@inheritdoc}
-     */
+
     public function isOptional(): bool
     {
         return $this->optional;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize(array $content): void
     {
         if (!isset($content[0])) {

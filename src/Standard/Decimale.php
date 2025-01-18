@@ -17,7 +17,7 @@ class Decimale implements FieldInterface, StringInterface
     public function __construct(
         bool $optional,
         int $decimals = 2,
-        $value = null
+        $value = null,
     ) {
         $this->optional = $optional;
         $this->decimals = $decimals;
@@ -47,17 +47,11 @@ class Decimale implements FieldInterface, StringInterface
         return $this->value;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isEmpty(): bool
     {
         return !isset($this->value);
     }
-    
-    /**
-     * {@inheritdoc}
-     */
+
     public function isOptional(): bool
     {
         return $this->optional;

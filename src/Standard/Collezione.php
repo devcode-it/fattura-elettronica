@@ -2,20 +2,18 @@
 
 namespace DevCode\FatturaElettronica\Standard;
 
-use ArrayIterator;
 use DevCode\FatturaElettronica\Interfaces\FieldInterface;
 use DevCode\FatturaElettronica\Interfaces\UnserializeInterface;
-use IteratorAggregate;
 
 /**
  * Classe per la gestione virtuale di elementi che possono essere presenti più volte in una stessa sezione.
  */
-class Collezione implements IteratorAggregate, FieldInterface, UnserializeInterface
+class Collezione implements \IteratorAggregate, FieldInterface, UnserializeInterface
 {
     protected string $class;
     protected int $min;
     protected ?int $max;
-    
+
     protected $values;
 
     public function __construct(string $class, int $min, ?int $max = null)
@@ -29,8 +27,6 @@ class Collezione implements IteratorAggregate, FieldInterface, UnserializeInterf
 
     /**
      * Aggiunge un elemento alla collezione.
-     *
-     * @param $value
      */
     public function add($value): ?int
     {
@@ -38,7 +34,7 @@ class Collezione implements IteratorAggregate, FieldInterface, UnserializeInterf
         if (!is_null($this->max) && count($this->values) + 1 > $this->max) {
             throw new \InvalidArgumentException("Too many elements added to collection of {$this->class} (min: {$this->min}, max: {$this->max})");
         }
-        
+
         if ($value instanceof $this->class) {
             $this->values[] = $value;
 
@@ -70,17 +66,11 @@ class Collezione implements IteratorAggregate, FieldInterface, UnserializeInterf
         return null;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function set($value): void
     {
         // TODO: Implement set() method.
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function get()
     {
         return $this->toArray();
@@ -93,7 +83,7 @@ class Collezione implements IteratorAggregate, FieldInterface, UnserializeInterf
 
     public function getIterator(): \Traversable
     {
-        return new ArrayIterator($this->values);
+        return new \ArrayIterator($this->values);
     }
 
     public function isEmpty(): bool
@@ -101,17 +91,11 @@ class Collezione implements IteratorAggregate, FieldInterface, UnserializeInterf
         return empty($this->values);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function isOptional(): bool
     {
         return $this->min == 0;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function unserialize(array $content): void
     {
         if (!isset($content[0])) {

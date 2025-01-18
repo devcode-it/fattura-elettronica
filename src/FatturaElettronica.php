@@ -4,16 +4,11 @@ namespace DevCode\FatturaElettronica;
 
 use DevCode\FatturaElettronica\Interfaces\SerializeInterface;
 use DevCode\FatturaElettronica\Standard\Elemento;
-use DevCode\FatturaElettronica\FatturaOrdinaria;
-use DevCode\FatturaElettronica\FatturaSemplificata;
-use DevCode\FatturaElettronica\FormatoTrasmissione;
-use Exception;
 
 abstract class FatturaElettronica extends Elemento implements SerializeInterface
 {
-    /**
-     * {@inheritdoc}
-     */
+    protected ?string $schema = null;
+
     public function isEmpty(): bool
     {
         return false;
@@ -41,20 +36,34 @@ abstract class FatturaElettronica extends Elemento implements SerializeInterface
         if ($xml === false) {
             $message = libxml_get_last_error()->message;
 
-            throw new Exception($message);
+            throw new \Exception($message);
         }
 
         $versione = (string) $xml['versione'];
-        $content = json_decode(json_encode($xml), true);
-
-        if ($versione == FormatoTrasmissione::Semplificata) {
+        if ($versione == FormatoTrasmissione::Semplificata->value) {
             $result = new FatturaSemplificata();
         } else {
-            $result = new FatturaOrdinaria();
+            $result = new FatturaOrdinaria($versione);
         }
 
+        $content = json_decode(json_encode($xml), true);
         $result->unserialize($content);
 
         return $result;
+    }
+
+    /**
+     * Valida il contenuto XML della fattura contro il formato XSD disponibile.
+     */
+    public function validator(): Validatore
+    {
+        $validatore = new Validatore();
+
+        $validatore->validator(
+            $this->__toString(),
+            __DIR__.'/../specification/'.$this->schema
+        );
+
+        return $validatore;
     }
 }

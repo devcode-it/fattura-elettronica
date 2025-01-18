@@ -2,56 +2,57 @@
 
 namespace DevCode\FatturaElettronica;
 
-use DevCode\FatturaElettronica\FatturaElettronicaHeader\TerzoIntermediarioOSoggettoEmittente;
-use DevCode\FatturaElettronica\FatturaElettronica;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
-use DevCode\FatturaElettronica\Validatore;
+use DevCode\FatturaElettronica\Standard\Collezione;
 
 class FatturaOrdinaria extends FatturaElettronica
 {
-    protected FatturaElettronicaHeader $FatturaElettronicaHeader;
-    protected FatturaElettronicaBody $FatturaElettronicaBody;
+    protected ?string $schema = 'Schema_VFPR12.xsd';
 
-    public function __construct()
+    protected FatturaElettronicaHeader $FatturaElettronicaHeader;
+    protected Collezione $FatturaElettronicaBody;
+
+    public function __construct(?string $versione = null)
     {
         parent::__construct();
 
         $this->FatturaElettronicaHeader = new FatturaElettronicaHeader();
-        $this->FatturaElettronicaBody = new FatturaElettronicaBody();
+        $this->FatturaElettronicaHeader->DatiTrasmissione->FormatoTrasmissione = empty($this->versione) ? FormatoTrasmissione::OrdinariaPrivati->value : $this->versione;
+        $this->FatturaElettronicaBody = new Collezione(FatturaElettronicaBody::class, 1);
     }
 
     public static function build(
         string $TipoDocumento,
         string $Data,
         string $Numero,
-        string $ProgressivoInvio
+        string $ProgressivoInvio,
     ) {
         $element = new static();
 
         $element->FatturaElettronicaHeader->DatiTrasmissione->ProgressivoInvio = $ProgressivoInvio;
-        $element->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->TipoDocumento = $TipoDocumento;
-        $element->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Data = $Data;
-        $element->FatturaElettronicaBody->DatiGenerali->DatiGeneraliDocumento->Numero = $Numero;
+
+        $body = new FatturaElettronicaBody();
+        $body->DatiGenerali->DatiGeneraliDocumento->TipoDocumento = $TipoDocumento;
+        $body->DatiGenerali->DatiGeneraliDocumento->Data = $Data;
+        $body->DatiGenerali->DatiGeneraliDocumento->Numero = $Numero;
+        $element->FatturaElettronicaBody->add($body);
 
         return $element;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function serialize(\XMLWriter $writer): void
     {
-        $writer->writePi('xml-stylesheet', 'type="text/xsl" encoding="UTF-8" indent="yes" href="http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2.1/fatturaPA_v1.2.1.xsl"');
+        // $writer->writePi('xml-stylesheet', 'type="text/xsl" encoding="UTF-8" indent="yes" href="http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2.1/fatturaPA_v1.2.1.xsl"');
 
         $writer->startElementNS('p', 'FatturaElettronica', null);
-        $writer->writeAttribute('versione', 'FPR12');
+        $writer->writeAttribute('versione', $this->getFatturaElettronicaHeader()->getDatiTrasmissione()->getFormatoTrasmissione());
         $writer->writeAttributeNS('xmlns', 'ds', null, 'http://www.w3.org/2000/09/xmldsig#');
         $writer->writeAttributeNS('xmlns', 'p', null, 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2');
         $writer->writeAttributeNS('xmlns', 'xsi', null, 'http://www.w3.org/2001/XMLSchema-instance');
@@ -63,9 +64,11 @@ class FatturaOrdinaria extends FatturaElettronica
         $writer->endElement();
 
         // FatturaElettronicaBody
-        $writer->startElement('FatturaElettronicaBody');
-        $this->FatturaElettronicaBody->serialize($writer);
-        $writer->endElement();
+        foreach ($this->FatturaElettronicaBody as $i => $var) {
+            $writer->startElement('FatturaElettronicaBody');
+            $var->serialize($writer);
+            $writer->endElement();
+        }
 
         $writer->endElement();
     }
@@ -82,102 +85,62 @@ class FatturaOrdinaria extends FatturaElettronica
         return $this;
     }
 
-    public function getFatturaElettronicaBody(): FatturaElettronicaBody
+    public function getFatturaElettronicaBody(): Collezione
     {
         return $this->FatturaElettronicaBody;
     }
 
-    public function setFatturaElettronicaBody(FatturaElettronicaBody $FatturaElettronicaBody): FatturaOrdinaria
+    public function addFatturaElettronicaBody(FatturaElettronicaBody $FatturaElettronicaBody): FatturaOrdinaria
     {
-        $this->FatturaElettronicaBody = $FatturaElettronicaBody;
+        $this->FatturaElettronicaBody->add($FatturaElettronicaBody);
 
         return $this;
     }
 
-    /**
-     * {@inheritdoc}
-     */
+    public function removeFatturaElettronicaBody(int $index): FatturaOrdinaria
+    {
+        $this->FatturaElettronicaBody->remove($index);
+
+        return $this;
+    }
+
     public function getCedentePrestatore(): CedentePrestatore
     {
         return $this->getFatturaElettronicaHeader()->getCedentePrestatore();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getCessionarioCommittente(): CessionarioCommittente
     {
         return $this->getFatturaElettronicaHeader()->getCessionarioCommittente();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatiTrasmissione(): DatiTrasmissione
     {
         return $this->getFatturaElettronicaHeader()->getDatiTrasmissione();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTerzoIntermediarioOSoggettoEmittente(): DatiAnagrafici
     {
         return $this->getFatturaElettronicaHeader()->getTerzoIntermediarioOSoggettoEmittente();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatiGenerali(): DatiGenerali
     {
-        return $this->getFatturaElettronicaBody()->getDatiGenerali();
+        return $this->getFatturaElettronicaBody()->getElement(0)->getDatiGenerali();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatiPagamento(): DatiPagamento
     {
-        return $this->getFatturaElettronicaBody()->getDatiPagamento();
+        return $this->getFatturaElettronicaBody()->getElement(0)->getDatiPagamento();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getDatiBeniServizi(): DatiBeniServizi
     {
-        return $this->getFatturaElettronicaBody()->getDatiBeniServizi();
+        return $this->getFatturaElettronicaBody()->getElement(0)->getDatiBeniServizi();
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function getTipoDocumento(): string
     {
         return $this->getDatiGenerali()->getDatiGeneraliDocumento()->getTipoDocumento();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getModalitaPagamento(): string
-    {
-        //return $this->getFatturaElettronicaBody()->getDatiPagamento();
-    }
-
-    /**
-     * Verifica l'xml della fattura.
-     **.
-     */
-    public function validate(): iterable
-    {
-        $validatore = new Validatore();
-        $isValid = $validatore->validate(
-            $this->__toString(),
-            __DIR__.'/../specification/Schema_VFPR12.xsd'
-        );
-
-        return $validatore->getErrors();
     }
 }

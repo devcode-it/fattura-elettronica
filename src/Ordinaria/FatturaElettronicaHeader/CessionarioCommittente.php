@@ -11,52 +11,65 @@ use DevCode\FatturaElettronica\Standard\Elemento;
 /*
 * Blocco sempre obbligatorio contenente dati relativi al cessionario / committente (cliente)
 */
-class CessionarioCommittente extends Elemento {
+class CessionarioCommittente extends Elemento
+{
     protected DatiAnagrafici $DatiAnagrafici;
-	protected Sede $Sede;
-	protected ?StabileOrganizzazione $StabileOrganizzazione;
-	protected ?RappresentanteFiscale $RappresentanteFiscale;
-    public function __construct() {
+    protected Sede $Sede;
+    protected StabileOrganizzazione $StabileOrganizzazione;
+    protected RappresentanteFiscale $RappresentanteFiscale;
+
+    public function __construct()
+    {
+        parent::__construct(false);
         $this->DatiAnagrafici = new DatiAnagrafici();
-		$this->Sede = new Sede();
-        
+        $this->Sede = new Sede();
+        $this->StabileOrganizzazione = new StabileOrganizzazione();
+        $this->RappresentanteFiscale = new RappresentanteFiscale();
     }
-    
-    public function getDatiAnagrafici() : DatiAnagrafici {
+
+    public function getDatiAnagrafici(): DatiAnagrafici
+    {
         return $this->DatiAnagrafici;
     }
 
-    public function setDatiAnagrafici(DatiAnagrafici $DatiAnagrafici) {
+    public function setDatiAnagrafici(DatiAnagrafici $DatiAnagrafici)
+    {
         $this->DatiAnagrafici = $DatiAnagrafici;
 
         return $this;
     }
 
-    public function getSede() : Sede {
+    public function getSede(): Sede
+    {
         return $this->Sede;
     }
 
-    public function setSede(Sede $Sede) {
+    public function setSede(Sede $Sede)
+    {
         $this->Sede = $Sede;
 
         return $this;
     }
 
-    public function getStabileOrganizzazione() : StabileOrganizzazione {
+    public function getStabileOrganizzazione(): StabileOrganizzazione
+    {
         return $this->StabileOrganizzazione;
     }
 
-    public function setStabileOrganizzazione(?StabileOrganizzazione $StabileOrganizzazione) {
+    public function setStabileOrganizzazione(StabileOrganizzazione $StabileOrganizzazione)
+    {
         $this->StabileOrganizzazione = $StabileOrganizzazione;
 
         return $this;
     }
 
-    public function getRappresentanteFiscale() : RappresentanteFiscale {
+    public function getRappresentanteFiscale(): RappresentanteFiscale
+    {
         return $this->RappresentanteFiscale;
     }
 
-    public function setRappresentanteFiscale(?RappresentanteFiscale $RappresentanteFiscale) {
+    public function setRappresentanteFiscale(RappresentanteFiscale $RappresentanteFiscale)
+    {
         $this->RappresentanteFiscale = $RappresentanteFiscale;
 
         return $this;

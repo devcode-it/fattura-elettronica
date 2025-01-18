@@ -8,44 +8,60 @@ use DevCode\FatturaElettronica\Standard\Testo;
 /*
 * Dati relativi ai contatti del cedente / prestatore
 */
-class Contatti extends Elemento {
+class Contatti extends Elemento
+{
     protected Testo $Telefono;
-	protected Testo $Fax;
-	protected Testo $Email;
-    public function __construct(?string $Telefono = null, ?string $Fax = null, ?string $Email = null) {
+    protected Testo $Fax;
+    protected Testo $Email;
+
+    public function __construct(?string $Telefono = null, ?string $Fax = null, ?string $Email = null)
+    {
+        parent::__construct(true);
         $this->Telefono = new Testo(true, 5, 12, 1);
-		$this->Fax = new Testo(true, 5, 12, 1);
-		$this->Email = new Testo(true, 7, 256, 1);
-        if (!is_null($Telefono)) $this->setTelefono($Telefono);
-		if (!is_null($Fax)) $this->setFax($Fax);
-		if (!is_null($Email)) $this->setEmail($Email);
+        $this->Fax = new Testo(true, 5, 12, 1);
+        $this->Email = new Testo(true, 7, 256, 1);
+        if (!is_null($Telefono)) {
+            $this->setTelefono($Telefono);
+        }
+        if (!is_null($Fax)) {
+            $this->setFax($Fax);
+        }
+        if (!is_null($Email)) {
+            $this->setEmail($Email);
+        }
     }
-    
-    public function getTelefono() : ?string {
+
+    public function getTelefono(): ?string
+    {
         return $this->Telefono->get();
     }
 
-    public function setTelefono(?string $value) {
+    public function setTelefono(?string $value)
+    {
         $this->Telefono->set($value);
 
         return $this;
     }
 
-    public function getFax() : ?string {
+    public function getFax(): ?string
+    {
         return $this->Fax->get();
     }
 
-    public function setFax(?string $value) {
+    public function setFax(?string $value)
+    {
         $this->Fax->set($value);
 
         return $this;
     }
 
-    public function getEmail() : ?string {
+    public function getEmail(): ?string
+    {
         return $this->Email->get();
     }
 
-    public function setEmail(?string $value) {
+    public function setEmail(?string $value)
+    {
         $this->Email->set($value);
 
         return $this;

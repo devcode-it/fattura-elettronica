@@ -13,85 +13,103 @@ use DevCode\FatturaElettronica\Standard\Elemento;
 /*
 * Il blocco ha molteplicità pari a 1 nel caso di fattura singola; nel caso di lotto di fatture, si ripete per ogni fattura componente il lotto stesso
 */
-class FatturaElettronicaBody extends Elemento {
+class FatturaElettronicaBody extends Elemento
+{
     protected DatiGenerali $DatiGenerali;
-	protected DatiBeniServizi $DatiBeniServizi;
-	protected ?DatiVeicoli $DatiVeicoli;
-	protected Collezione $DatiPagamento;
-	protected Collezione $Allegati;
-    public function __construct() {
+    protected DatiBeniServizi $DatiBeniServizi;
+    protected DatiVeicoli $DatiVeicoli;
+    protected Collezione $DatiPagamento;
+    protected Collezione $Allegati;
+
+    public function __construct()
+    {
+        parent::__construct(false);
         $this->DatiGenerali = new DatiGenerali();
-		$this->DatiBeniServizi = new DatiBeniServizi();
-		$this->DatiPagamento = new Collezione(DatiPagamento::class, 0);
-		$this->Allegati = new Collezione(Allegati::class, 0);
-        
+        $this->DatiBeniServizi = new DatiBeniServizi();
+        $this->DatiVeicoli = new DatiVeicoli();
+        $this->DatiPagamento = new Collezione(DatiPagamento::class, 0);
+        $this->Allegati = new Collezione(Allegati::class, 0);
     }
-    
-    public function getDatiGenerali() : DatiGenerali {
+
+    public function getDatiGenerali(): DatiGenerali
+    {
         return $this->DatiGenerali;
     }
 
-    public function setDatiGenerali(DatiGenerali $DatiGenerali) {
+    public function setDatiGenerali(DatiGenerali $DatiGenerali)
+    {
         $this->DatiGenerali = $DatiGenerali;
 
         return $this;
     }
 
-    public function getDatiBeniServizi() : DatiBeniServizi {
+    public function getDatiBeniServizi(): DatiBeniServizi
+    {
         return $this->DatiBeniServizi;
     }
 
-    public function setDatiBeniServizi(DatiBeniServizi $DatiBeniServizi) {
+    public function setDatiBeniServizi(DatiBeniServizi $DatiBeniServizi)
+    {
         $this->DatiBeniServizi = $DatiBeniServizi;
 
         return $this;
     }
 
-    public function getDatiVeicoli() : DatiVeicoli {
+    public function getDatiVeicoli(): DatiVeicoli
+    {
         return $this->DatiVeicoli;
     }
 
-    public function setDatiVeicoli(?DatiVeicoli $DatiVeicoli) {
+    public function setDatiVeicoli(DatiVeicoli $DatiVeicoli)
+    {
         $this->DatiVeicoli = $DatiVeicoli;
 
         return $this;
     }
 
-    public function getDatiPagamento() : Collezione {
+    public function getDatiPagamento(): Collezione
+    {
         return $this->DatiPagamento;
     }
 
-    public function getAllDatiPagamento() : array {
+    public function getAllDatiPagamento(): array
+    {
         return $this->DatiPagamento->toList();
     }
 
-    public function addDatiPagamento(DatiPagamento $elemento) {
+    public function addDatiPagamento(DatiPagamento $elemento)
+    {
         $this->DatiPagamento->add($elemento);
 
         return $this;
     }
 
-    public function removeDatiPagamento(int $index) {
+    public function removeDatiPagamento(int $index)
+    {
         $this->DatiPagamento->remove($index);
 
         return $this;
     }
 
-    public function getAllegati() : Collezione {
+    public function getAllegati(): Collezione
+    {
         return $this->Allegati;
     }
 
-    public function getAllAllegati() : array {
+    public function getAllAllegati(): array
+    {
         return $this->Allegati->toList();
     }
 
-    public function addAllegati(Allegati $elemento) {
+    public function addAllegati(Allegati $elemento)
+    {
         $this->Allegati->add($elemento);
 
         return $this;
     }
 
-    public function removeAllegati(int $index) {
+    public function removeAllegati(int $index)
+    {
         $this->Allegati->remove($index);
 
         return $this;

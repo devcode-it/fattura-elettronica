@@ -5,7 +5,7 @@ namespace DevCode\FatturaElettronica;
 /**
  * Tabella contenente le informazioni per i campi di tipo TipoDocumento.
  */
-enum TipoDocumento : string
+enum TipoDocumento: string
 {
     case Fattura = 'TD01';
     case AccontoSuFattura = 'TD02';

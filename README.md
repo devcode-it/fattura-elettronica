@@ -102,7 +102,7 @@ $fattura->getDatiBeniServizi()->addDettaglioLinee($linea);
 // Generazione
 $xml = $fattura->__toString();
 $filename = $fattura->getFileName();
-$errors = $fattura->validate();
+$errors = $fattura->validator();
 ```
 
 ## Lettura fattura elettronica

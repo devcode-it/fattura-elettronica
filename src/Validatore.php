@@ -4,40 +4,33 @@ namespace DevCode\FatturaElettronica;
 
 class Validatore
 {
-    /**
-     * @var array
-     */
-    public $errors;
+    public array $errors;
 
-    /**
-     * @return mixed
-     */
-    public function getErrors()
+    public function __construct()
+    {
+        $this->errors = [];
+    }
+
+    public function getErrors(): array
     {
         return $this->errors;
     }
 
-    /**
-     * @param $xml
-     * @param $schema
-     *
-     * @return bool
-     */
-    public function validate($xml, $schema)
+    public function validator($xml, $schema): bool
     {
         if ('' === trim($xml)) {
             throw new \InvalidArgumentException(sprintf('File %s does not contain valid XML, it is empty.', $xml));
         }
 
         $internalErrors = libxml_use_internal_errors(true);
-        
-        //$disableEntities = libxml_disable_entity_loader(true);
+
+        // $disableEntities = libxml_disable_entity_loader(true);
         libxml_clear_errors();
 
         $dom = new \DOMDocument();
         $dom->validateOnParse = true;
         if (!$dom->loadXML($xml, LIBXML_NONET | (defined('LIBXML_COMPACT') ? LIBXML_COMPACT : 0))) {
-            //libxml_disable_entity_loader($disableEntities);
+            // libxml_disable_entity_loader($disableEntities);
             $this->errors = $this->getXmlErrors($internalErrors);
 
             return false;
@@ -46,7 +39,7 @@ class Validatore
         $dom->normalizeDocument();
 
         libxml_use_internal_errors($internalErrors);
-        //libxml_disable_entity_loader($disableEntities);
+        // libxml_disable_entity_loader($disableEntities);
 
         foreach ($dom->childNodes as $child) {
             if ($child->nodeType === XML_DOCUMENT_TYPE_NODE) {

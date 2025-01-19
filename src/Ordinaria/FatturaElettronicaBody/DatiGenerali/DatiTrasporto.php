@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiTrasporto\DatiAnagraficiVettore;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiTrasporto\IndirizzoResa;
 use DevCode\FatturaElettronica\Standard\Data;
@@ -43,13 +43,13 @@ class DatiTrasporto extends Elemento
         $this->NumeroColli = new Intero(true, 1, 9999);
         $this->Descrizione = new Testo(true, 1, 100, 1);
         $this->UnitaMisuraPeso = new Testo(true, 1, 10, 1);
-        $this->PesoLordo = new Decimale(true);
-        $this->PesoNetto = new Decimale(true);
-        $this->DataOraRitiro = new Data(true, 'YYYY-MM-DDTHH:MM:SS');
-        $this->DataInizioTrasporto = new Data(true, 'YYYY-MM-DD');
+        $this->PesoLordo = new Decimale(true, 1, 1, 2);
+        $this->PesoNetto = new Decimale(true, 1, 1, 2);
+        $this->DataOraRitiro = new Data(true, "Y-m-d\TH:i:s");
+        $this->DataInizioTrasporto = new Data(true, 'Y-m-d');
         $this->TipoResa = new Testo(true, 3, 3, 1);
         $this->IndirizzoResa = new IndirizzoResa();
-        $this->DataOraConsegna = new Data(true, 'YYYY-MM-DDTHH:MM:SS');
+        $this->DataOraConsegna = new Data(true, "Y-m-d\TH:i:s");
     }
 
     public function getDatiAnagraficiVettore(): DatiAnagraficiVettore

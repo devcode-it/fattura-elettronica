@@ -32,10 +32,10 @@ class DatiCassaPrevidenziale extends Elemento
     {
         parent::__construct(true);
         $this->TipoCassa = new TestoEnum(false, TipoCassa::class);
-        $this->AlCassa = new Decimale(false);
-        $this->ImportoContributoCassa = new Decimale(false);
-        $this->ImponibileCassa = new Decimale(true);
-        $this->AliquotaIVA = new Decimale(false);
+        $this->AlCassa = new Decimale(false, 2, 2, 2);
+        $this->ImportoContributoCassa = new Decimale(false, 2, 2, 2);
+        $this->ImponibileCassa = new Decimale(true, 2, 2, 2);
+        $this->AliquotaIVA = new Decimale(false, 2, 2, 2);
         $this->Ritenuta = new TestoEnum(true, Ritenuta::class);
         $this->Natura = new TestoEnum(true, Natura::class);
         $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);

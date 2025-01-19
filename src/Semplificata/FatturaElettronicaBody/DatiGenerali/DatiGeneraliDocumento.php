@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\BolloVirtuale;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Standard\Data;
@@ -30,7 +30,7 @@ class DatiGeneraliDocumento extends Elemento
         parent::__construct(false);
         $this->TipoDocumento = new TestoEnum(false, TipoDocumento::class);
         $this->Divisa = new Testo(false, 3, 3, 1);
-        $this->Data = new Data(false, 'YYYY-MM-DD');
+        $this->Data = new Data(false, 'Y-m-d');
         $this->Numero = new Testo(false, 1, 20, 1);
         $this->BolloVirtuale = new TestoEnum(true, BolloVirtuale::class);
     }

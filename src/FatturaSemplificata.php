@@ -4,6 +4,13 @@ namespace DevCode\FatturaElettronica;
 
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiPagamento;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\DatiTrasmissione;
 use DevCode\FatturaElettronica\Standard\Collezione;
 
 class FatturaSemplificata extends FatturaElettronica
@@ -23,7 +30,7 @@ class FatturaSemplificata extends FatturaElettronica
     }
 
     public static function build(
-        string $TipoDocumento,
+        string|TipoDocumento $TipoDocumento,
         string $Data,
         string $Numero,
         string $ProgressivoInvio,
@@ -52,31 +59,27 @@ class FatturaSemplificata extends FatturaElettronica
         $writer->writeAttributeNS('xmlns', 'xsi', null, 'http://www.w3.org/2001/XMLSchema-instance');
         $writer->writeAttributeNS('xsi', 'schemaLocation', null, 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.0/Schema_del_file_xml_FatturaPA_versione_1.0.xsd');
 
-        // FatturaElettronicaHeader
-        $writer->startElement('FatturaElettronicaHeader');
-        $this->FatturaElettronicaHeader->serialize($writer);
-        $writer->endElement();
-
-        // FatturaElettronicaBody
-        foreach ($this->FatturaElettronicaBody as $i => $var) {
-            $writer->startElement('FatturaElettronicaBody');
-            $var->serialize($writer);
-            $writer->endElement();
-        }
+        parent::serialize($writer);
 
         $writer->endElement();
     }
 
+    
     public function getFatturaElettronicaHeader(): FatturaElettronicaHeader
     {
         return $this->FatturaElettronicaHeader;
     }
 
-    public function setFatturaElettronicaHeader(FatturaElettronicaHeader $FatturaElettronicaHeader): FatturaSemplificata
+    public function setFatturaElettronicaHeader(FatturaElettronicaHeader $FatturaElettronicaHeader): FatturaOrdinaria
     {
         $this->FatturaElettronicaHeader = $FatturaElettronicaHeader;
 
         return $this;
+    }
+
+    public function getFatturaElettronicaBody(): Collezione
+    {
+        return $this->FatturaElettronicaBody;
     }
 
     public function addFatturaElettronicaBody(FatturaElettronicaBody $FatturaElettronicaBody): FatturaOrdinaria
@@ -91,5 +94,40 @@ class FatturaSemplificata extends FatturaElettronica
         $this->FatturaElettronicaBody->remove($index);
 
         return $this;
+    }
+    
+    public function getCedentePrestatore(): CedentePrestatore
+    {
+        return $this->getFatturaElettronicaHeader()->getCedentePrestatore();
+    }
+
+    public function getCessionarioCommittente(): CessionarioCommittente
+    {
+        return $this->getFatturaElettronicaHeader()->getCessionarioCommittente();
+    }
+
+    public function getDatiTrasmissione(): DatiTrasmissione
+    {
+        return $this->getFatturaElettronicaHeader()->getDatiTrasmissione();
+    }
+
+    public function getDatiGenerali(): DatiGenerali
+    {
+        return $this->getFatturaElettronicaBody()->getElement(0)->getDatiGenerali();
+    }
+
+    public function getDatiPagamento(): DatiPagamento
+    {
+        return $this->getFatturaElettronicaBody()->getElement(0)->getDatiPagamento();
+    }
+
+    public function getDatiBeniServizi(): DatiBeniServizi
+    {
+        return $this->getFatturaElettronicaBody()->getElement(0)->getDatiBeniServizi();
+    }
+
+    public function getTipoDocumento(): string
+    {
+        return $this->getDatiGenerali()->getDatiGeneraliDocumento()->getTipoDocumento();
     }
 }

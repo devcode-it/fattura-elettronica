@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\Art73;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiBollo;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\DatiCassaPrevidenziale;
@@ -43,14 +43,14 @@ class DatiGeneraliDocumento extends Elemento
         parent::__construct(false);
         $this->TipoDocumento = new TestoEnum(false, TipoDocumento::class);
         $this->Divisa = new Testo(false, 3, 3, 1);
-        $this->Data = new Data(false, 'YYYY-MM-DD');
+        $this->Data = new Data(false, 'Y-m-d');
         $this->Numero = new Testo(false, 1, 20, 1);
         $this->DatiRitenuta = new Collezione(DatiRitenuta::class, 0, null);
         $this->DatiBollo = new DatiBollo();
         $this->DatiCassaPrevidenziale = new Collezione(DatiCassaPrevidenziale::class, 0, null);
         $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0, null);
-        $this->ImportoTotaleDocumento = new Decimale(true);
-        $this->Arrotondamento = new Decimale(true);
+        $this->ImportoTotaleDocumento = new Decimale(true, 2, 2, 2);
+        $this->Arrotondamento = new Decimale(true, 2, 2, 2);
         $this->Causale = new Testo(true, 1, 200, null);
         $this->Art73 = new TestoEnum(true, Art73::class);
     }

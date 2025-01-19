@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Intero;
@@ -30,7 +30,7 @@ class DatiFattureCollegate extends Elemento
         parent::__construct(true);
         $this->RiferimentoNumeroLinea = new Intero(true, 1, 9999);
         $this->IdDocumento = new Testo(false, 1, 20, 1);
-        $this->Data = new Data(true, 'YYYY-MM-DD');
+        $this->Data = new Data(true, 'Y-m-d');
         $this->NumItem = new Testo(true, 1, 20, 1);
         $this->CodiceCommessaConvenzione = new Testo(true, 1, 100, 1);
         $this->CodiceCUP = new Testo(true, 1, 15, 1);

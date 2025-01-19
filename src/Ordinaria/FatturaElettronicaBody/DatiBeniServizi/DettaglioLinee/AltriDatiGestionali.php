@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
 use DevCode\FatturaElettronica\Standard\Elemento;
@@ -27,8 +27,8 @@ class AltriDatiGestionali extends Elemento
         parent::__construct(true);
         $this->TipoDato = new Testo(false, 1, 10, 1);
         $this->RiferimentoTesto = new Testo(true, 1, 60, 1);
-        $this->RiferimentoNumero = new Decimale(true);
-        $this->RiferimentoData = new Data(true, 'YYYY-MM-DD');
+        $this->RiferimentoNumero = new Decimale(true, 2, 2, 8);
+        $this->RiferimentoData = new Data(true, 'Y-m-d');
     }
 
     public function getTipoDato(): ?string

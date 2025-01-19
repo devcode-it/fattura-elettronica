@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
@@ -23,7 +23,7 @@ class FatturaPrincipale extends Elemento
     {
         parent::__construct(true);
         $this->NumeroFatturaPrincipale = new Testo(false, 1, 20, 1);
-        $this->DataFatturaPrincipale = new Data(false, 'YYYY-MM-DD');
+        $this->DataFatturaPrincipale = new Data(false, 'Y-m-d');
     }
 
     public function getNumeroFatturaPrincipale(): ?string

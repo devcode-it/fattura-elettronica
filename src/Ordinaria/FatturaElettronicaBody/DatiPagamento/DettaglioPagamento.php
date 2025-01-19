@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento\DettaglioPagamento\ModalitaPagamento;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Decimale;
@@ -47,10 +47,10 @@ class DettaglioPagamento extends Elemento
         parent::__construct(false);
         $this->Beneficiario = new Testo(true, 1, 200, 1);
         $this->ModalitaPagamento = new TestoEnum(false, ModalitaPagamento::class);
-        $this->DataRiferimentoTerminiPagamento = new Data(true, 'YYYY-MM-DD');
+        $this->DataRiferimentoTerminiPagamento = new Data(true, 'Y-m-d');
         $this->GiorniTerminiPagamento = new Intero(true, 0, 999);
-        $this->DataScadenzaPagamento = new Data(true, 'YYYY-MM-DD');
-        $this->ImportoPagamento = new Decimale(false);
+        $this->DataScadenzaPagamento = new Data(true, 'Y-m-d');
+        $this->ImportoPagamento = new Decimale(false, 2, 2, 2);
         $this->CodUfficioPostale = new Testo(true, 1, 20, 1);
         $this->CognomeQuietanzante = new Testo(true, 1, 60, 1);
         $this->NomeQuietanzante = new Testo(true, 1, 60, 1);
@@ -61,10 +61,10 @@ class DettaglioPagamento extends Elemento
         $this->ABI = new Testo(true, 5, 5, 1);
         $this->CAB = new Testo(true, 5, 5, 1);
         $this->BIC = new Testo(true, 0, 1, 1);
-        $this->ScontoPagamentoAnticipato = new Decimale(true);
-        $this->DataLimitePagamentoAnticipato = new Data(true, 'YYYY-MM-DD');
-        $this->PenalitaPagamentiRitardati = new Decimale(true);
-        $this->DataDecorrenzaPenale = new Data(true, 'YYYY-MM-DD');
+        $this->ScontoPagamentoAnticipato = new Decimale(true, 2, 2, 2);
+        $this->DataLimitePagamentoAnticipato = new Data(true, 'Y-m-d');
+        $this->PenalitaPagamentiRitardati = new Decimale(true, 2, 2, 2);
+        $this->DataDecorrenzaPenale = new Data(true, 'Y-m-d');
         $this->CodicePagamento = new Testo(true, 1, 60, 1);
     }
 

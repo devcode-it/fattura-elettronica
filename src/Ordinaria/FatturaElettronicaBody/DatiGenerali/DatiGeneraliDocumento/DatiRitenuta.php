@@ -26,8 +26,8 @@ class DatiRitenuta extends Elemento
     {
         parent::__construct(true);
         $this->TipoRitenuta = new TestoEnum(false, TipoRitenuta::class);
-        $this->ImportoRitenuta = new Decimale(false);
-        $this->AliquotaRitenuta = new Decimale(false);
+        $this->ImportoRitenuta = new Decimale(false, 2, 2, 2);
+        $this->AliquotaRitenuta = new Decimale(false, 2, 2, 2);
         $this->CausalePagamento = new TestoEnum(false, CausalePagamento::class);
     }
 

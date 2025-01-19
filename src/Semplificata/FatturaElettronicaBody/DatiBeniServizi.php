@@ -30,7 +30,7 @@ class DatiBeniServizi extends Elemento
     {
         parent::__construct(false);
         $this->Descrizione = new Testo(false, 1, 1000, 1);
-        $this->Importo = new Decimale(false);
+        $this->Importo = new Decimale(false, 2, 2, 2);
         $this->DatiIVA = new DatiIVA();
         $this->Natura = new TestoEnum(true, Natura::class);
         $this->RiferimentoNormativo = new Testo(true, 1, 100, 1);

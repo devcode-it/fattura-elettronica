@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\AltriDatiGestionali;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\CodiceArticolo;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee\Natura;
@@ -50,14 +50,14 @@ class DettaglioLinee extends Elemento
         $this->TipoCessionePrestazione = new TestoEnum(true, TipoCessionePrestazione::class);
         $this->CodiceArticolo = new Collezione(CodiceArticolo::class, 0, null);
         $this->Descrizione = new Testo(false, 1, 1000, 1);
-        $this->Quantita = new Decimale(true);
+        $this->Quantita = new Decimale(true, 2, 2, 8);
         $this->UnitaMisura = new Testo(true, 1, 10, 1);
-        $this->DataInizioPeriodo = new Data(true, 'YYYY-MM-DD');
-        $this->DataFinePeriodo = new Data(true, 'YYYY-MM-DD');
-        $this->PrezzoUnitario = new Decimale(false);
+        $this->DataInizioPeriodo = new Data(true, 'Y-m-d');
+        $this->DataFinePeriodo = new Data(true, 'Y-m-d');
+        $this->PrezzoUnitario = new Decimale(false, 2, 2, 8);
         $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0, null);
-        $this->PrezzoTotale = new Decimale(false);
-        $this->AliquotaIVA = new Decimale(false);
+        $this->PrezzoTotale = new Decimale(false, 2, 2, 8);
+        $this->AliquotaIVA = new Decimale(false, 2, 2, 2);
         $this->Ritenuta = new TestoEnum(true, Ritenuta::class);
         $this->Natura = new TestoEnum(true, Natura::class);
         $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);

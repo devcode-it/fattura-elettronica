@@ -29,7 +29,7 @@ class IscrizioneREA extends Elemento
         parent::__construct(true);
         $this->Ufficio = new Testo(false, 2, 2, 1);
         $this->NumeroREA = new Testo(false, 1, 20, 1);
-        $this->CapitaleSociale = new Decimale(true);
+        $this->CapitaleSociale = new Decimale(true, 2, 2, 2);
         $this->SocioUnico = new TestoEnum(true, SocioUnico::class);
         $this->StatoLiquidazione = new TestoEnum(false, StatoLiquidazione::class);
     }

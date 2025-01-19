@@ -11,6 +11,7 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestat
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
 use DevCode\FatturaElettronica\Standard\Collezione;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 
 class FatturaOrdinaria extends FatturaElettronica
 {
@@ -29,7 +30,7 @@ class FatturaOrdinaria extends FatturaElettronica
     }
 
     public static function build(
-        string $TipoDocumento,
+        string|TipoDocumento $TipoDocumento,
         string $Data,
         string $Numero,
         string $ProgressivoInvio,
@@ -58,17 +59,7 @@ class FatturaOrdinaria extends FatturaElettronica
         $writer->writeAttributeNS('xmlns', 'xsi', null, 'http://www.w3.org/2001/XMLSchema-instance');
         $writer->writeAttributeNS('xsi', 'schemaLocation', null, 'http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.2 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.2/Schema_del_file_xml_FatturaPA_versione_1.2.xsd');
 
-        // FatturaElettronicaHeader
-        $writer->startElement('FatturaElettronicaHeader');
-        $this->FatturaElettronicaHeader->serialize($writer);
-        $writer->endElement();
-
-        // FatturaElettronicaBody
-        foreach ($this->FatturaElettronicaBody as $i => $var) {
-            $writer->startElement('FatturaElettronicaBody');
-            $var->serialize($writer);
-            $writer->endElement();
-        }
+        parent::serialize($writer);
 
         $writer->endElement();
     }

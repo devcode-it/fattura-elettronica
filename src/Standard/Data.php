@@ -17,7 +17,7 @@ class Data extends Testo
         ?string $content = null,
     ) {
         $this->format = $format;
-        parent::__construct($optional, \strlen($format), \strlen($format), 1);
+        parent::__construct($optional, 0, 19, 1);
 
         if (!empty($content)) {
             $this->set($content);
@@ -30,8 +30,12 @@ class Data extends Testo
             $value = Carbon::instance($value);
         }
 
+        if (is_string($value)) {
+            $value = Carbon::parse($value);
+        }
+
         if ($value instanceof Carbon) {
-            $value = $value->isoFormat($this->format);
+            $value = $value->format($this->format);
         }
 
         parent::set($value);

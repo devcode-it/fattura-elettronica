@@ -23,7 +23,7 @@ class DatiBollo extends Elemento
     {
         parent::__construct(true);
         $this->BolloVirtuale = new TestoEnum(false, BolloVirtuale::class);
-        $this->ImportoBollo = new Decimale(true);
+        $this->ImportoBollo = new Decimale(true, 2, 2, 2);
     }
 
     public function getBolloVirtuale(): ?string

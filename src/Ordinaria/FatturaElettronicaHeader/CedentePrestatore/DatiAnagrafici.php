@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\Anagrafica;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\IdFiscaleIVA;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\RegimeFiscale;
@@ -38,7 +38,7 @@ class DatiAnagrafici extends Elemento
         $this->AlboProfessionale = new Testo(true, 1, 60, 1);
         $this->ProvinciaAlbo = new Testo(true, 2, 2, 1);
         $this->NumeroIscrizioneAlbo = new Testo(true, 1, 60, 1);
-        $this->DataIscrizioneAlbo = new Data(true, 'YYYY-MM-DD');
+        $this->DataIscrizioneAlbo = new Data(true, 'Y-m-d');
         $this->RegimeFiscale = new TestoEnum(false, RegimeFiscale::class);
     }
 

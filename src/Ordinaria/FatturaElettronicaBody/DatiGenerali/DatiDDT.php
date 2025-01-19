@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Intero;
@@ -25,7 +25,7 @@ class DatiDDT extends Elemento
     {
         parent::__construct(true);
         $this->NumeroDDT = new Testo(false, 1, 20, 1);
-        $this->DataDDT = new Data(false, 'YYYY-MM-DD');
+        $this->DataDDT = new Data(false, 'Y-m-d');
         $this->RiferimentoNumeroLinea = new Intero(true, 1, 9999);
     }
 

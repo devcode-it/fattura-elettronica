@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
@@ -24,7 +24,7 @@ class DatiFatturaRettificata extends Elemento
     {
         parent::__construct(true);
         $this->NumeroFR = new Testo(false, 1, 20, 1);
-        $this->DataFR = new Data(false, 'YYYY-MM-DD');
+        $this->DataFR = new Data(false, 'Y-m-d');
         $this->ElementiRettificati = new Testo(false, 1, 1000, 1);
     }
 

@@ -44,7 +44,7 @@ use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCom
 use DevCode\FatturaElettronica\TipoDocumento;
 
 $fattura = FatturaOrdinaria::build(
-    TipoDocumento::Fattura->value,
+    TipoDocumento::TD01,
     '2018-11-22',
     '2018221111',
     '001'

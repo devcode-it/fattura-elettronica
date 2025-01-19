@@ -102,7 +102,7 @@ function parseElement(SimpleXMLElement $elemento, array $riferimento_numero, str
     $array_importazioni = estraiLista($contenuti, 'import');
     $importazioni = ['use DevCode\\FatturaElettronica\\Standard\\Elemento;'];
     foreach ($array_importazioni as $i) {
-        $importazioni[] = "use DevCode\\FatturaElettronica\\{$i};";
+        $importazioni[] = str_starts_with($i, '\\') ? "use $i;" : "use DevCode\\FatturaElettronica\\{$i};";
     }
     $contenuto_importazioni = implode("\n", array_unique($importazioni));
     $contenuto_corpo = implode("\n", estraiLista($contenuti, 'body'));
@@ -240,14 +240,14 @@ function parseSimpleType(SimpleXMLElement $elemento, string $nome, string $tipo,
 
     if (!is_null($regex)) {
         // Match per regex con dimensioni variabili definite
-        preg_match('/(.+?)\{([0-9]+),\s*([0-9]+)\}\)?/', $regex, $match);
+        preg_match('/(.+?)\{([0-9]+),\s*([0-9]+)\}\)?$/', $regex, $match);
 
         if (!empty($match)) {
             $minimo_lunghezza = $match[2];
             $massimo_lunghezza = $match[3];
         } else {
             // Match per regex con dimensioni statiche definite
-            preg_match('/(.+?)\{([0-9]+)\}\)?/', $regex, $match);
+            preg_match('/(.+?)\{([0-9]+)\}\)?$/', $regex, $match);
 
             if (!empty($match)) {
                 $minimo_lunghezza = $massimo_lunghezza = $match[2];
@@ -343,7 +343,7 @@ function generaSimpleType(SimpleXMLElement $elemento, string $namespace, array $
     } elseif ($mappa_tipi[$info_tipo['tipo']] == 'date') {
         return generaData($elemento, $namespace, $info_tipo);
     } elseif ($mappa_tipi[$info_tipo['tipo']] == 'datetime') {
-        return generaData($elemento, $namespace, $info_tipo, 'YYYY-MM-DDTHH:MM:SS');
+        return generaData($elemento, $namespace, $info_tipo, 'Y-m-d\TH:i:s');
     } elseif ($mappa_tipi[$info_tipo['tipo']] == 'float') {
         return generaDecimale($elemento, $namespace, $info_tipo);
     } else {
@@ -387,10 +387,12 @@ function generaDecimale(SimpleXMLElement $elemento, string $namespace, array $in
     $massimo_occorrenze = $info_tipo['occorrenze'][1] ?? 'null';
 
     $opzionale = $minimo_occorrenze == 1 ? 'false' : 'true';
+    $minimo_lunghezza = $info_tipo['lunghezza'][0] ?? 'null';
+    $massimo_lunghezza = $info_tipo['lunghezza'][1] ?? 'null';
 
     return [
         'import' => ['Standard\\Decimale'],
-        'init' => ["\$this->{$nome} = new Decimale({$opzionale});"],
+        'init' => ["\$this->{$nome} = new Decimale({$opzionale}, {$minimo_lunghezza}, {$minimo_lunghezza}, {$massimo_lunghezza});"],
         'constructor' => [['?float', $nome]],
         'properties' => ["protected Decimale \${$nome};"],
         'body' => ["
@@ -464,7 +466,7 @@ function generaEnum(SimpleXMLElement $elemento, string $namespace, array $info_t
     ];
 }
 
-function generaData(SimpleXMLElement $elemento, string $namespace, array $info_tipo, string $formato = 'YYYY-MM-DD')
+function generaData(SimpleXMLElement $elemento, string $namespace, array $info_tipo, string $formato = 'Y-m-d')
 {
     $nome = $info_tipo['nome'];
     $minimo_occorrenze = $info_tipo['occorrenze'][0];
@@ -476,7 +478,7 @@ function generaData(SimpleXMLElement $elemento, string $namespace, array $info_t
     $massimo_lunghezza = $info_tipo['lunghezza'][1] ?? 'null';
 
     return [
-        'import' => ['Standard\\Data', 'Carbon\\Carbon'],
+        'import' => ['Standard\\Data', '\\Carbon\\Carbon'],
         'init' => ["\$this->{$nome} = new Data({$opzionale}, \"{$formato}\");"],
         'constructor' => [["null|string|Carbon|\DateTime", $nome]],
         'properties' => ["protected Data \${$nome};"],

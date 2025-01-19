@@ -2,7 +2,7 @@
 
 namespace DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 
-use DevCode\FatturaElettronica\Carbon\Carbon;
+use Carbon\Carbon;
 use DevCode\FatturaElettronica\Standard\Data;
 use DevCode\FatturaElettronica\Standard\Elemento;
 use DevCode\FatturaElettronica\Standard\Testo;
@@ -25,7 +25,7 @@ class DatiVeicoli extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->Data = new Data(false, 'YYYY-MM-DD');
+        $this->Data = new Data(false, 'Y-m-d');
         $this->TotalePercorso = new Testo(false, 1, 15, 1);
     }
 

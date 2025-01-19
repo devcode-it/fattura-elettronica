@@ -20,8 +20,8 @@ class DatiIVA extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->Imposta = new Decimale(true);
-        $this->Aliquota = new Decimale(true);
+        $this->Imposta = new Decimale(true, 2, 2, 2);
+        $this->Aliquota = new Decimale(true, 2, 2, 2);
     }
 
     public function getImposta(): ?float

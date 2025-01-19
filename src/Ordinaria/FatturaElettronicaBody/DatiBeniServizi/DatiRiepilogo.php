@@ -30,12 +30,12 @@ class DatiRiepilogo extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->AliquotaIVA = new Decimale(false);
+        $this->AliquotaIVA = new Decimale(false, 2, 2, 2);
         $this->Natura = new TestoEnum(true, Natura::class);
-        $this->SpeseAccessorie = new Decimale(true);
-        $this->Arrotondamento = new Decimale(true);
-        $this->ImponibileImporto = new Decimale(false);
-        $this->Imposta = new Decimale(false);
+        $this->SpeseAccessorie = new Decimale(true, 2, 2, 2);
+        $this->Arrotondamento = new Decimale(true, 2, 2, 8);
+        $this->ImponibileImporto = new Decimale(false, 2, 2, 2);
+        $this->Imposta = new Decimale(false, 2, 2, 2);
         $this->EsigibilitaIVA = new TestoEnum(true, EsigibilitaIVA::class);
         $this->RiferimentoNormativo = new Testo(true, 1, 100, 1);
     }

@@ -66,4 +66,15 @@ abstract class FatturaElettronica extends Elemento implements SerializeInterface
 
         return $validatore;
     }
+
+    /**
+     * Restituisce gli elementi da inserire nell'XML.
+     */
+    protected function getXmlTags(): iterable
+    {
+        $tags = get_object_vars($this);
+        unset($tags['schema']);
+
+        return $tags;
+    }
 }

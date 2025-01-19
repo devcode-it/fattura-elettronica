@@ -24,8 +24,8 @@ class ScontoMaggiorazione extends Elemento
     {
         parent::__construct(true);
         $this->Tipo = new TestoEnum(false, Tipo::class);
-        $this->Percentuale = new Decimale(true);
-        $this->Importo = new Decimale(true);
+        $this->Percentuale = new Decimale(true, 2, 2, 2);
+        $this->Importo = new Decimale(true, 2, 2, 8);
     }
 
     public function getTipo(): ?string

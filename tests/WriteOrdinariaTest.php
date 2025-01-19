@@ -4,20 +4,20 @@ declare(strict_types=1);
 use DevCode\FatturaElettronica\FatturaOrdinaria;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedentePrestatore;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\RegimeFiscale;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\Sede as SedeCedentePrestatore;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\DatiAnagrafici as DatiAnagraficiCessionarioCommittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\Sede as SedeCessionarioCommittente;
-use DevCode\FatturaElettronica\TipoDocumento;
 use PHPUnit\Framework\TestCase;
 
-final class WriteTest extends TestCase
+final class WriteOrdinariaTest extends TestCase
 {
     public function testFatturaOrdinaria(): void
     {
         $fattura = FatturaOrdinaria::build(
-            TipoDocumento::Fattura->value,
+            TipoDocumento::TD01,
             '2018-11-22',
             '2018221111',
             '001'
@@ -91,10 +91,5 @@ final class WriteTest extends TestCase
         $this->assertTrue($fattura->validator()->isValid());
         $this->assertSame($fattura->__toString(), file_get_contents(__DIR__.'/risorse/fattura_ordinaria.xml'));
         $this->assertSame($fattura->getFileName(), 'IT01234567890_001.xml');
-    }
-
-    public function testFatturaSemplificata(): void
-    {
-        $this->assertSame('', '');
     }
 }

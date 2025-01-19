@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<p:FatturaElettronicaSemplificata versione="FSM10" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:p="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://ivaservizi.agenziaentrate.gov.it/docs/xsd/fatture/v1.0 http://www.fatturapa.gov.it/export/fatturazione/sdi/fatturapa/v1.0/Schema_del_file_xml_FatturaPA_versione_1.0.xsd">
+ <FatturaElettronicaHeader>
+  <DatiTrasmissione>
+   <IdTrasmittente>
+    <IdPaese>IT</IdPaese>
+    <IdCodice>01234567890</IdCodice>
+   </IdTrasmittente>
+   <ProgressivoInvio>001</ProgressivoInvio>
+   <FormatoTrasmissione>FSM10</FormatoTrasmissione>
+   <CodiceDestinatario>ABC1234</CodiceDestinatario>
+  </DatiTrasmissione>
+  <CedentePrestatore>
+   <IdFiscaleIVA>
+    <IdPaese>IT</IdPaese>
+    <IdCodice>12345678901</IdCodice>
+   </IdFiscaleIVA>
+   <Denominazione>Acme SpA</Denominazione>
+   <Sede>
+    <Indirizzo>Via Roma 10</Indirizzo>
+    <CAP>33018</CAP>
+    <Comune>Tarvisio</Comune>
+    <Provincia>UD</Provincia>
+    <Nazione>IT</Nazione>
+   </Sede>
+   <RegimeFiscale>RF01</RegimeFiscale>
+  </CedentePrestatore>
+  <CessionarioCommittente>
+   <IdentificativiFiscali/>
+  </CessionarioCommittente>
+ </FatturaElettronicaHeader>
+ <FatturaElettronicaBody>
+  <DatiGenerali>
+   <DatiGeneraliDocumento>
+    <TipoDocumento>TD07</TipoDocumento>
+    <Divisa>EUR</Divisa>
+    <Data>2018-11-22</Data>
+    <Numero>2018221111</Numero>
+   </DatiGeneraliDocumento>
+  </DatiGenerali>
+  <DatiBeniServizi>
+   <Descrizione>Articolo1</Descrizione>
+   <Importo>60.00</Importo>
+   <DatiIVA>
+    <Imposta>6.00</Imposta>
+    <Aliquota>10.00</Aliquota>
+   </DatiIVA>
+  </DatiBeniServizi>
+ </FatturaElettronicaBody>
+</p:FatturaElettronicaSemplificata>

@@ -50,7 +50,11 @@ class Collezione implements \IteratorAggregate, FieldInterface, UnserializeInter
     public function remove(int $index): void
     {
         if (isset($this->values[$index])) {
-            unset($this->values[$index]);
+            array_splice(
+                $this->values,
+                $index,
+                1
+            );
         }
     }
 

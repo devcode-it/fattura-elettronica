@@ -40,11 +40,19 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
         if ($len >= $this->minLength) {
             if (empty($this->molteplicita)) {
                 $this->content = $value;
-            } else {
-                $this->content = empty($this->maxLength) ? $value : \substr($value, 0, $this->molteplicita * $this->maxLength);
-            }
 
-            return;
+                return;
+            } else {
+                if (empty($this->maxLength) || empty($this->molteplicita)) {
+                    $this->content = $value;
+
+                    return;
+                } elseif (!empty($this->molteplicita) && $len <= $this->molteplicita * $this->maxLength) {
+                    $this->content = $value;
+
+                    return;
+                }
+            }
         }
 
         if ($len == 0 && $this->optional) {

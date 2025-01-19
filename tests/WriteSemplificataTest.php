@@ -2,13 +2,11 @@
 
 declare(strict_types=1);
 use DevCode\FatturaElettronica\FatturaSemplificata;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServiz;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi\DatiIVA;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\RegimeFiscale;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore\Sede as SedeCedentePrestatore;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi\DatiIVA;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi;
-
 use PHPUnit\Framework\TestCase;
 
 final class WriteSemplificataTest extends TestCase

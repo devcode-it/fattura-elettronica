@@ -25,9 +25,11 @@ class Intero implements FieldInterface, StringInterface
         $this->min = $min;
         $this->max = $max;
 
-        $this->value = $optional ? null : $min;
+        $this->value = null;
         if (!is_null($value)) {
             $this->set($value);
+        } elseif (!$optional) {
+            $this->set($min);
         }
     }
 
@@ -60,7 +62,7 @@ class Intero implements FieldInterface, StringInterface
         throw new \InvalidArgumentException('Value not allowed');
     }
 
-    public function get(): ?float
+    public function get(): ?int
     {
         return $this->value;
     }

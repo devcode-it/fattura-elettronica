@@ -3,11 +3,11 @@
 namespace DevCode\FatturaElettronica;
 
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
-use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiBeniServizi;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaBody\DatiPagamento;
+use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CedentePrestatore;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Semplificata\FatturaElettronicaHeader\DatiTrasmissione;
@@ -64,7 +64,6 @@ class FatturaSemplificata extends FatturaElettronica
         $writer->endElement();
     }
 
-    
     public function getFatturaElettronicaHeader(): FatturaElettronicaHeader
     {
         return $this->FatturaElettronicaHeader;
@@ -95,7 +94,7 @@ class FatturaSemplificata extends FatturaElettronica
 
         return $this;
     }
-    
+
     public function getCedentePrestatore(): CedentePrestatore
     {
         return $this->getFatturaElettronicaHeader()->getCedentePrestatore();

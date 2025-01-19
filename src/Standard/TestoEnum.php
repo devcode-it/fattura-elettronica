@@ -42,6 +42,6 @@ class TestoEnum extends Testo
             return;
         }
 
-        throw new \InvalidArgumentException("Value must match one of {$class} values");
+        throw new \InvalidArgumentException("Value must match one of {$this->class} values");
     }
 }

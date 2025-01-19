@@ -5,13 +5,13 @@ namespace DevCode\FatturaElettronica;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiPagamento;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\DatiTrasmissione;
 use DevCode\FatturaElettronica\Standard\Collezione;
-use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 
 class FatturaOrdinaria extends FatturaElettronica
 {

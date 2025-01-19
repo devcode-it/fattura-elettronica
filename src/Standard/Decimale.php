@@ -67,7 +67,7 @@ class Decimale implements FieldInterface, StringInterface
                 throw new \InvalidArgumentException("Value exceeds maximum allowed ($max)");
             }
 
-            $this->decimals = $decimals;
+            $this->decimals = $value;
 
             return;
         }

@@ -29,12 +29,12 @@ class DatiFattureCollegate extends Elemento
     {
         parent::__construct(true);
         $this->RiferimentoNumeroLinea = new Intero(true, 1, 9999);
-        $this->IdDocumento = new Testo(false, 1, 20, 1);
+        $this->IdDocumento = new Testo(false, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->Data = new Data(true, 'Y-m-d');
-        $this->NumItem = new Testo(true, 1, 20, 1);
-        $this->CodiceCommessaConvenzione = new Testo(true, 1, 100, 1);
-        $this->CodiceCUP = new Testo(true, 1, 15, 1);
-        $this->CodiceCIG = new Testo(true, 1, 15, 1);
+        $this->NumItem = new Testo(true, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
+        $this->CodiceCommessaConvenzione = new Testo(true, 1, 100, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,100}");
+        $this->CodiceCUP = new Testo(true, 1, 15, 1, "(\p{IsBasicLatin}{1,15})");
+        $this->CodiceCIG = new Testo(true, 1, 15, 1, "(\p{IsBasicLatin}{1,15})");
     }
 
     public function getRiferimentoNumeroLinea(): ?int

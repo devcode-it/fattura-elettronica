@@ -22,7 +22,7 @@ class FatturaPrincipale extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->NumeroFatturaPrincipale = new Testo(false, 1, 20, 1);
+        $this->NumeroFatturaPrincipale = new Testo(false, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->DataFatturaPrincipale = new Data(false, 'Y-m-d');
     }
 

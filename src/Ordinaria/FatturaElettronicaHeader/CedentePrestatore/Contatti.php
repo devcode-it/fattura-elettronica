@@ -21,9 +21,9 @@ class Contatti extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->Telefono = new Testo(true, 5, 12, 1);
-        $this->Fax = new Testo(true, 5, 12, 1);
-        $this->Email = new Testo(true, 7, 256, 1);
+        $this->Telefono = new Testo(true, 5, 12, 1, "(\p{IsBasicLatin}{5,12})");
+        $this->Fax = new Testo(true, 5, 12, 1, "(\p{IsBasicLatin}{5,12})");
+        $this->Email = new Testo(true, 7, 256, 1, '.+@.+[.]+.+');
     }
 
     public function getTelefono(): ?string

@@ -186,7 +186,6 @@ final class ReadTest extends TestCase
                 $name
             );
 
-
             $this->assertSame($fattura->validator()->getErrors(), []);
             $this->assertTrue($fattura->validator()->isValid());
         }
@@ -217,7 +216,6 @@ final class ReadTest extends TestCase
                 $fattura->__toString(),
                 $name
             );
-
 
             $this->assertSame($fattura->validator()->getErrors(), []);
             $this->assertTrue($fattura->validator()->isValid());

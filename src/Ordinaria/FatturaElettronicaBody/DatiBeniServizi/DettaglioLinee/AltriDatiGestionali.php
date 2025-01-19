@@ -25,8 +25,8 @@ class AltriDatiGestionali extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->TipoDato = new Testo(false, 1, 10, 1);
-        $this->RiferimentoTesto = new Testo(true, 1, 60, 1);
+        $this->TipoDato = new Testo(false, 1, 10, 1, "(\p{IsBasicLatin}{1,10})");
+        $this->RiferimentoTesto = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
         $this->RiferimentoNumero = new Decimale(true, 2, 2, 8);
         $this->RiferimentoData = new Data(true, 'Y-m-d');
     }

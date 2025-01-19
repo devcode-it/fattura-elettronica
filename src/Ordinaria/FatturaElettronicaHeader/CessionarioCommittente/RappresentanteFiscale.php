@@ -24,9 +24,9 @@ class RappresentanteFiscale extends Elemento
     {
         parent::__construct(true);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
-        $this->Denominazione = new Testo(true, 1, 80, 1);
-        $this->Nome = new Testo(true, 1, 60, 1);
-        $this->Cognome = new Testo(true, 1, 60, 1);
+        $this->Denominazione = new Testo(true, 1, 80, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,80}");
+        $this->Nome = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->Cognome = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

@@ -23,9 +23,9 @@ class DatiFatturaRettificata extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->NumeroFR = new Testo(false, 1, 20, 1);
+        $this->NumeroFR = new Testo(false, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->DataFR = new Data(false, 'Y-m-d');
-        $this->ElementiRettificati = new Testo(false, 1, 1000, 1);
+        $this->ElementiRettificati = new Testo(false, 1, 1000, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,1000}");
     }
 
     public function getNumeroFR(): ?string

@@ -45,27 +45,27 @@ class DettaglioPagamento extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->Beneficiario = new Testo(true, 1, 200, 1);
+        $this->Beneficiario = new Testo(true, 1, 200, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,200}");
         $this->ModalitaPagamento = new TestoEnum(false, ModalitaPagamento::class);
         $this->DataRiferimentoTerminiPagamento = new Data(true, 'Y-m-d');
         $this->GiorniTerminiPagamento = new Intero(true, 0, 999);
         $this->DataScadenzaPagamento = new Data(true, 'Y-m-d');
         $this->ImportoPagamento = new Decimale(false, 2, 2, 2);
-        $this->CodUfficioPostale = new Testo(true, 1, 20, 1);
-        $this->CognomeQuietanzante = new Testo(true, 1, 60, 1);
-        $this->NomeQuietanzante = new Testo(true, 1, 60, 1);
-        $this->CFQuietanzante = new Testo(true, 16, 16, 1);
-        $this->TitoloQuietanzante = new Testo(true, 2, 10, 1);
-        $this->IstitutoFinanziario = new Testo(true, 1, 80, 1);
-        $this->IBAN = new Testo(true, 11, 30, 1);
-        $this->ABI = new Testo(true, 5, 5, 1);
-        $this->CAB = new Testo(true, 5, 5, 1);
-        $this->BIC = new Testo(true, 0, 1, 1);
+        $this->CodUfficioPostale = new Testo(true, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
+        $this->CognomeQuietanzante = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->NomeQuietanzante = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->CFQuietanzante = new Testo(true, 16, 16, 1, '[A-Z0-9]{16}');
+        $this->TitoloQuietanzante = new Testo(true, 2, 10, 1, "(\p{IsBasicLatin}{2,10})");
+        $this->IstitutoFinanziario = new Testo(true, 1, 80, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,80}");
+        $this->IBAN = new Testo(true, 11, 30, 1, '[a-zA-Z]{2}[0-9]{2}[a-zA-Z0-9]{11,30}');
+        $this->ABI = new Testo(true, 5, 5, 1, '[0-9][0-9][0-9][0-9][0-9]');
+        $this->CAB = new Testo(true, 5, 5, 1, '[0-9][0-9][0-9][0-9][0-9]');
+        $this->BIC = new Testo(true, 0, 1, 1, '[A-Z]{6}[A-Z2-9][A-NP-Z0-9]([A-Z0-9]{3}){0,1}');
         $this->ScontoPagamentoAnticipato = new Decimale(true, 2, 2, 2);
         $this->DataLimitePagamentoAnticipato = new Data(true, 'Y-m-d');
         $this->PenalitaPagamentiRitardati = new Decimale(true, 2, 2, 2);
         $this->DataDecorrenzaPenale = new Data(true, 'Y-m-d');
-        $this->CodicePagamento = new Testo(true, 1, 60, 1);
+        $this->CodicePagamento = new Testo(true, 1, 60, 1, "(\p{IsBasicLatin}{1,60})");
     }
 
     public function getBeneficiario(): ?string

@@ -25,11 +25,11 @@ class Anagrafica extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->Denominazione = new Testo(true, 1, 80, 1);
-        $this->Nome = new Testo(true, 1, 60, 1);
-        $this->Cognome = new Testo(true, 1, 60, 1);
-        $this->Titolo = new Testo(true, 2, 10, 1);
-        $this->CodEORI = new Testo(true, 13, 17, 1);
+        $this->Denominazione = new Testo(true, 1, 80, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,80}");
+        $this->Nome = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->Cognome = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->Titolo = new Testo(true, 2, 10, 1, "(\p{IsBasicLatin}{2,10})");
+        $this->CodEORI = new Testo(true, 13, 17, 1, null);
     }
 
     public function getDenominazione(): ?string

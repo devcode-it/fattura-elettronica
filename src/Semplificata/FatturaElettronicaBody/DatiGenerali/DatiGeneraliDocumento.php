@@ -29,9 +29,9 @@ class DatiGeneraliDocumento extends Elemento
     {
         parent::__construct(false);
         $this->TipoDocumento = new TestoEnum(false, TipoDocumento::class);
-        $this->Divisa = new Testo(false, 3, 3, 1);
+        $this->Divisa = new Testo(false, 3, 3, 1, '[A-Z]{3}');
         $this->Data = new Data(false, 'Y-m-d');
-        $this->Numero = new Testo(false, 1, 20, 1);
+        $this->Numero = new Testo(false, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->BolloVirtuale = new TestoEnum(true, BolloVirtuale::class);
     }
 

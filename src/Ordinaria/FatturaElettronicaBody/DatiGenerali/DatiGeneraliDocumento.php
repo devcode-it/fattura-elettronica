@@ -42,16 +42,16 @@ class DatiGeneraliDocumento extends Elemento
     {
         parent::__construct(false);
         $this->TipoDocumento = new TestoEnum(false, TipoDocumento::class);
-        $this->Divisa = new Testo(false, 3, 3, 1);
+        $this->Divisa = new Testo(false, 3, 3, 1, '[A-Z]{3}');
         $this->Data = new Data(false, 'Y-m-d');
-        $this->Numero = new Testo(false, 1, 20, 1);
+        $this->Numero = new Testo(false, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->DatiRitenuta = new Collezione(DatiRitenuta::class, 0, null);
         $this->DatiBollo = new DatiBollo();
         $this->DatiCassaPrevidenziale = new Collezione(DatiCassaPrevidenziale::class, 0, null);
         $this->ScontoMaggiorazione = new Collezione(ScontoMaggiorazione::class, 0, null);
         $this->ImportoTotaleDocumento = new Decimale(true, 2, 2, 2);
         $this->Arrotondamento = new Decimale(true, 2, 2, 2);
-        $this->Causale = new Testo(true, 1, 200, null);
+        $this->Causale = new Testo(true, 1, 200, null, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,200}");
         $this->Art73 = new TestoEnum(true, Art73::class);
     }
 

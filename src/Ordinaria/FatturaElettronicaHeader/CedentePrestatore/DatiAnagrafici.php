@@ -33,11 +33,11 @@ class DatiAnagrafici extends Elemento
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
-        $this->CodiceFiscale = new Testo(true, 11, 16, 1);
+        $this->CodiceFiscale = new Testo(true, 11, 16, 1, '[A-Z0-9]{11,16}');
         $this->Anagrafica = new Anagrafica();
-        $this->AlboProfessionale = new Testo(true, 1, 60, 1);
-        $this->ProvinciaAlbo = new Testo(true, 2, 2, 1);
-        $this->NumeroIscrizioneAlbo = new Testo(true, 1, 60, 1);
+        $this->AlboProfessionale = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->ProvinciaAlbo = new Testo(true, 2, 2, 1, '[A-Z]{2}');
+        $this->NumeroIscrizioneAlbo = new Testo(true, 1, 60, 1, "(\p{IsBasicLatin}{1,60})");
         $this->DataIscrizioneAlbo = new Data(true, 'Y-m-d');
         $this->RegimeFiscale = new TestoEnum(false, RegimeFiscale::class);
     }

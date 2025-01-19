@@ -49,9 +49,9 @@ class DettaglioLinee extends Elemento
         $this->NumeroLinea = new Intero(false, 1, 9999);
         $this->TipoCessionePrestazione = new TestoEnum(true, TipoCessionePrestazione::class);
         $this->CodiceArticolo = new Collezione(CodiceArticolo::class, 0, null);
-        $this->Descrizione = new Testo(false, 1, 1000, 1);
+        $this->Descrizione = new Testo(false, 1, 1000, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,1000}");
         $this->Quantita = new Decimale(true, 2, 2, 8);
-        $this->UnitaMisura = new Testo(true, 1, 10, 1);
+        $this->UnitaMisura = new Testo(true, 1, 10, 1, "(\p{IsBasicLatin}{1,10})");
         $this->DataInizioPeriodo = new Data(true, 'Y-m-d');
         $this->DataFinePeriodo = new Data(true, 'Y-m-d');
         $this->PrezzoUnitario = new Decimale(false, 2, 2, 8);
@@ -60,7 +60,7 @@ class DettaglioLinee extends Elemento
         $this->AliquotaIVA = new Decimale(false, 2, 2, 2);
         $this->Ritenuta = new TestoEnum(true, Ritenuta::class);
         $this->Natura = new TestoEnum(true, Natura::class);
-        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
+        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->AltriDatiGestionali = new Collezione(AltriDatiGestionali::class, 0, null);
     }
 

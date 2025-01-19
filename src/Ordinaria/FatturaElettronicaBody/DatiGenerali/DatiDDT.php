@@ -24,7 +24,7 @@ class DatiDDT extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->NumeroDDT = new Testo(false, 1, 20, 1);
+        $this->NumeroDDT = new Testo(false, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
         $this->DataDDT = new Data(false, 'Y-m-d');
         $this->RiferimentoNumeroLinea = new Intero(true, 1, 9999);
     }

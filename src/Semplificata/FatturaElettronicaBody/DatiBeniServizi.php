@@ -29,11 +29,11 @@ class DatiBeniServizi extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->Descrizione = new Testo(false, 1, 1000, 1);
+        $this->Descrizione = new Testo(false, 1, 1000, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,1000}");
         $this->Importo = new Decimale(false, 2, 2, 2);
         $this->DatiIVA = new DatiIVA();
         $this->Natura = new TestoEnum(true, Natura::class);
-        $this->RiferimentoNormativo = new Testo(true, 1, 100, 1);
+        $this->RiferimentoNormativo = new Testo(true, 1, 100, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,100}");
     }
 
     public function getDescrizione(): ?string

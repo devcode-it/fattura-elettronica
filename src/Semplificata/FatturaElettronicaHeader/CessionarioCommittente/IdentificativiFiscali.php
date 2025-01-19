@@ -22,7 +22,7 @@ class IdentificativiFiscali extends Elemento
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
-        $this->CodiceFiscale = new Testo(true, 11, 16, 1);
+        $this->CodiceFiscale = new Testo(true, 11, 16, 1, '[A-Z0-9]{11,16}');
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

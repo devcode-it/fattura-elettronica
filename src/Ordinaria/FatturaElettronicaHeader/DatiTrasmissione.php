@@ -31,11 +31,11 @@ class DatiTrasmissione extends Elemento
     {
         parent::__construct(false);
         $this->IdTrasmittente = new IdTrasmittente();
-        $this->ProgressivoInvio = new Testo(false, 1, 10, 1);
+        $this->ProgressivoInvio = new Testo(false, 1, 10, 1, "(\p{IsBasicLatin}{1,10})");
         $this->FormatoTrasmissione = new TestoEnum(false, FormatoTrasmissione::class);
-        $this->CodiceDestinatario = new Testo(false, 6, 7, 1);
+        $this->CodiceDestinatario = new Testo(false, 6, 7, 1, '[A-Z0-9]{6,7}');
         $this->ContattiTrasmittente = new ContattiTrasmittente();
-        $this->PECDestinatario = new Testo(true, 0, 256, 1);
+        $this->PECDestinatario = new Testo(true, 0, 256, 1, null);
     }
 
     public function getIdTrasmittente(): IdTrasmittente

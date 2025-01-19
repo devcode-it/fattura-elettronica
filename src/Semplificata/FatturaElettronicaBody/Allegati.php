@@ -25,11 +25,11 @@ class Allegati extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->NomeAttachment = new Testo(false, 1, 60, 1);
-        $this->AlgoritmoCompressione = new Testo(true, 1, 10, 1);
-        $this->FormatoAttachment = new Testo(true, 1, 10, 1);
-        $this->DescrizioneAttachment = new Testo(true, 1, 100, 1);
-        $this->Attachment = new Testo(false, 0, null, 1);
+        $this->NomeAttachment = new Testo(false, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->AlgoritmoCompressione = new Testo(true, 1, 10, 1, "(\p{IsBasicLatin}{1,10})");
+        $this->FormatoAttachment = new Testo(true, 1, 10, 1, "(\p{IsBasicLatin}{1,10})");
+        $this->DescrizioneAttachment = new Testo(true, 1, 100, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,100}");
+        $this->Attachment = new Testo(false, 0, null, 1, null);
     }
 
     public function getNomeAttachment(): ?string

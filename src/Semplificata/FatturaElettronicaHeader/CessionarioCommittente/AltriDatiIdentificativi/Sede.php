@@ -24,12 +24,12 @@ class Sede extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->Indirizzo = new Testo(false, 1, 60, 1);
-        $this->NumeroCivico = new Testo(true, 1, 8, 1);
-        $this->CAP = new Testo(false, 5, 5, 1);
-        $this->Comune = new Testo(false, 1, 60, 1);
-        $this->Provincia = new Testo(true, 2, 2, 1);
-        $this->Nazione = new Testo(false, 2, 2, 1);
+        $this->Indirizzo = new Testo(false, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->NumeroCivico = new Testo(true, 1, 8, 1, "(\p{IsBasicLatin}{1,8})");
+        $this->CAP = new Testo(false, 5, 5, 1, '[0-9][0-9][0-9][0-9][0-9]');
+        $this->Comune = new Testo(false, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->Provincia = new Testo(true, 2, 2, 1, '[A-Z]{2}');
+        $this->Nazione = new Testo(false, 2, 2, 1, '[A-Z]{2}');
     }
 
     public function getIndirizzo(): ?string

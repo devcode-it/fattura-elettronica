@@ -38,7 +38,7 @@ class DatiCassaPrevidenziale extends Elemento
         $this->AliquotaIVA = new Decimale(false, 2, 2, 2);
         $this->Ritenuta = new TestoEnum(true, Ritenuta::class);
         $this->Natura = new TestoEnum(true, Natura::class);
-        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
+        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
     }
 
     public function getTipoCassa(): ?string

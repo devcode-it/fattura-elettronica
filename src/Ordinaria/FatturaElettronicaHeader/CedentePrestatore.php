@@ -36,7 +36,7 @@ class CedentePrestatore extends Elemento
         $this->StabileOrganizzazione = new StabileOrganizzazione();
         $this->IscrizioneREA = new IscrizioneREA();
         $this->Contatti = new Contatti();
-        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1);
+        $this->RiferimentoAmministrazione = new Testo(true, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
     }
 
     public function getDatiAnagrafici(): DatiAnagrafici

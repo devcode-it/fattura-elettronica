@@ -25,9 +25,9 @@ class DatiAnagraficiVettore extends Elemento
     {
         parent::__construct(true);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
-        $this->CodiceFiscale = new Testo(true, 11, 16, 1);
+        $this->CodiceFiscale = new Testo(true, 11, 16, 1, '[A-Z0-9]{11,16}');
         $this->Anagrafica = new Anagrafica();
-        $this->NumeroLicenzaGuida = new Testo(true, 1, 20, 1);
+        $this->NumeroLicenzaGuida = new Testo(true, 1, 20, 1, "(\p{IsBasicLatin}{1,20})");
     }
 
     public function getIdFiscaleIVA(): IdFiscaleIVA

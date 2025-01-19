@@ -20,8 +20,8 @@ class CodiceArticolo extends Elemento
     public function __construct()
     {
         parent::__construct(true);
-        $this->CodiceTipo = new Testo(false, 1, 35, 1);
-        $this->CodiceValore = new Testo(false, 1, 35, 1);
+        $this->CodiceTipo = new Testo(false, 1, 35, 1, "(\p{IsBasicLatin}{1,35})");
+        $this->CodiceValore = new Testo(false, 1, 35, 1, null);
     }
 
     public function getCodiceTipo(): ?string

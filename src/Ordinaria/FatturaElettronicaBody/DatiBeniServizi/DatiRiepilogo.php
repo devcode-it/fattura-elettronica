@@ -37,7 +37,7 @@ class DatiRiepilogo extends Elemento
         $this->ImponibileImporto = new Decimale(false, 2, 2, 2);
         $this->Imposta = new Decimale(false, 2, 2, 2);
         $this->EsigibilitaIVA = new TestoEnum(true, EsigibilitaIVA::class);
-        $this->RiferimentoNormativo = new Testo(true, 1, 100, 1);
+        $this->RiferimentoNormativo = new Testo(true, 1, 100, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,100}");
     }
 
     public function getAliquotaIVA(): ?float

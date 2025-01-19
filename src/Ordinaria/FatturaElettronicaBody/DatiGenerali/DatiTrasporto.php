@@ -38,16 +38,16 @@ class DatiTrasporto extends Elemento
     {
         parent::__construct(true);
         $this->DatiAnagraficiVettore = new DatiAnagraficiVettore();
-        $this->MezzoTrasporto = new Testo(true, 1, 80, 1);
-        $this->CausaleTrasporto = new Testo(true, 1, 100, 1);
+        $this->MezzoTrasporto = new Testo(true, 1, 80, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,80}");
+        $this->CausaleTrasporto = new Testo(true, 1, 100, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,100}");
         $this->NumeroColli = new Intero(true, 1, 9999);
-        $this->Descrizione = new Testo(true, 1, 100, 1);
-        $this->UnitaMisuraPeso = new Testo(true, 1, 10, 1);
+        $this->Descrizione = new Testo(true, 1, 100, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,100}");
+        $this->UnitaMisuraPeso = new Testo(true, 1, 10, 1, "(\p{IsBasicLatin}{1,10})");
         $this->PesoLordo = new Decimale(true, 1, 1, 2);
         $this->PesoNetto = new Decimale(true, 1, 1, 2);
         $this->DataOraRitiro = new Data(true, "Y-m-d\TH:i:s");
         $this->DataInizioTrasporto = new Data(true, 'Y-m-d');
-        $this->TipoResa = new Testo(true, 3, 3, 1);
+        $this->TipoResa = new Testo(true, 3, 3, 1, '[A-Z]{3}');
         $this->IndirizzoResa = new IndirizzoResa();
         $this->DataOraConsegna = new Data(true, "Y-m-d\TH:i:s");
     }

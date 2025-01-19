@@ -26,7 +26,7 @@ class DatiVeicoli extends Elemento
     {
         parent::__construct(true);
         $this->Data = new Data(false, 'Y-m-d');
-        $this->TotalePercorso = new Testo(false, 1, 15, 1);
+        $this->TotalePercorso = new Testo(false, 1, 15, 1, "(\p{IsBasicLatin}{1,15})");
     }
 
     public function getData(): ?string

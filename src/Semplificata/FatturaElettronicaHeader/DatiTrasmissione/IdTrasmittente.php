@@ -20,8 +20,8 @@ class IdTrasmittente extends Elemento
     public function __construct()
     {
         parent::__construct(false);
-        $this->IdPaese = new Testo(false, 2, 2, 1);
-        $this->IdCodice = new Testo(false, 1, 28, 1);
+        $this->IdPaese = new Testo(false, 2, 2, 1, '[A-Z]{2}');
+        $this->IdCodice = new Testo(false, 1, 28, 1, null);
     }
 
     public function getIdPaese(): ?string

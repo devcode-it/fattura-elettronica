@@ -38,10 +38,10 @@ class CedentePrestatore extends Elemento
     {
         parent::__construct(false);
         $this->IdFiscaleIVA = new IdFiscaleIVA();
-        $this->CodiceFiscale = new Testo(true, 11, 16, 1);
-        $this->Denominazione = new Testo(true, 1, 80, 1);
-        $this->Nome = new Testo(true, 1, 60, 1);
-        $this->Cognome = new Testo(true, 1, 60, 1);
+        $this->CodiceFiscale = new Testo(true, 11, 16, 1, '[A-Z0-9]{11,16}');
+        $this->Denominazione = new Testo(true, 1, 80, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,80}");
+        $this->Nome = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
+        $this->Cognome = new Testo(true, 1, 60, 1, "[\p{IsBasicLatin}\p{IsLatin-1Supplement}]{1,60}");
         $this->Sede = new Sede();
         $this->StabileOrganizzazione = new StabileOrganizzazione();
         $this->RappresentanteFiscale = new RappresentanteFiscale();

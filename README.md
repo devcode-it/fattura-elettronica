@@ -5,18 +5,17 @@
 
 # Libreria Fattura Elettronica
 
-Libreria per la gestione della Fatturazione elettronica per la creazione delle fatture elettroniche italiane, testata e mantenuta.
+Libreria per la gestione della Fatturazione elettronica per la creazione delle fatture elettroniche italiane.
 
-La libreria nasce originalmente come fork della versione 1.1.12 di [deved-it/fattura-elettronica](https://github.com/deved-it/fattura-elettronica), ma integra molte funzionalità aggiuntive rispetto alla versione originale.
+La libreria nasce originalmente come fork della versione 1.1.12 di [deved-it/fattura-elettronica](https://github.com/deved-it/fattura-elettronica), ma presenta una logica distinta.
+- Generazione automatica delle strutture rilevanti sulla base del tracciato ufficiale
+- Gestione automatica delle tipologie di campi e le rispettive caratteristiche
+- Validazione tecnica sulla base dello schema ufficiale
+- Supporto a Fattura Ordinaria e Fattura Semplificata
 
 ## Installazione
 
 Per ora non è disponibile un pacchetto registrato tramite Composer.
-
-Per installare la libreria deved-it/fattura-elettronica:
-```bash
-composer require devcode/fattura-elettronica
-```
 
 ## Aggiornamento contenuti
 
@@ -31,17 +30,19 @@ Riferimento per lo schema ufficiale: https://www.agenziaentrate.gov.it/portale/w
 ## Generazione fattura
 
 ```php
+<?php
+
 require_once __DIR__.'/vendor/autoload.php';
 
 use DevCode\FatturaElettronica\FatturaOrdinaria;
-use DevCode\FatturaElettronica\Ordinaria\Codifiche\RegimeFiscale;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DatiRiepilogo;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiBeniServizi\DettaglioLinee;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaBody\DatiGenerali\DatiGeneraliDocumento\TipoDocumento;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici as DatiAnagraficiCedentePrestatore;
+use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\DatiAnagrafici\RegimeFiscale;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CedentePrestatore\Sede as SedeCedentePrestatore;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\DatiAnagrafici as DatiAnagraficiCessionarioCommittente;
 use DevCode\FatturaElettronica\Ordinaria\FatturaElettronicaHeader\CessionarioCommittente\Sede as SedeCessionarioCommittente;
-use DevCode\FatturaElettronica\TipoDocumento;
 
 $fattura = FatturaOrdinaria::build(
     TipoDocumento::TD01,

@@ -178,7 +178,7 @@ final class ReadTest extends TestCase
             }
 
             $this->assertInstanceOf(FatturaOrdinaria::class, $fattura);
-            // file_put_contents(__DIR__.'/risorse/'.$name, $fattura->__toString());
+            // file_put_contents(__DIR__.'/output/'.$name, $fattura->__toString());
 
             $this->matchXML(
                 file_get_contents($prefix.$name),
@@ -186,6 +186,8 @@ final class ReadTest extends TestCase
                 $name
             );
 
+
+            $this->assertSame($fattura->validator()->getErrors(), []);
             $this->assertTrue($fattura->validator()->isValid());
         }
     }
@@ -208,7 +210,7 @@ final class ReadTest extends TestCase
             }
 
             $this->assertInstanceOf(FatturaOrdinaria::class, $fattura);
-            // file_put_contents(__DIR__.'/risorse/'.$name, $fattura->__toString());
+            // file_put_contents(__DIR__.'/output/'.$name, $fattura->__toString());
 
             $this->matchXML(
                 file_get_contents($prefix.$name),
@@ -216,6 +218,8 @@ final class ReadTest extends TestCase
                 $name
             );
 
+
+            $this->assertSame($fattura->validator()->getErrors(), []);
             $this->assertTrue($fattura->validator()->isValid());
         }
     }
@@ -231,7 +235,7 @@ final class ReadTest extends TestCase
         }
 
         $this->assertInstanceOf(FatturaSemplificata::class, $fattura);
-        // file_put_contents(__DIR__.'/risorse/'.$name, $fattura->__toString());
+        // file_put_contents(__DIR__.'/output/'.$name, $fattura->__toString());
 
         $this->matchXML(
             file_get_contents($prefix.$name),
@@ -239,8 +243,8 @@ final class ReadTest extends TestCase
             $name
         );
 
-        // $this->assertTrue($fattura->validator()->isValid());
         $this->assertSame($fattura->validator()->getErrors(), []);
+        $this->assertTrue($fattura->validator()->isValid());
     }
 
     protected function matchXML($xml1, $xml2, $name)

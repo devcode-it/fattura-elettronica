@@ -57,4 +57,31 @@ final class TestoTest extends TestCase
 
         $this->assertSame(['testtesttesttesttest', 'testtest'], $campo->toArray());
     }
+
+    public function testTestoCharset(): void
+    {
+        $campo = new Testo(true, 1, 25, 1, "(\p{IsBasicLatin}{1,25})");
+        $this->assertSame(null, $campo->get());
+
+        $campo->set('testÇŞĞIİÖÜ/#€');
+        $this->assertSame('testI/#', $campo->get());
+    }
+
+    public function testTestoCharsetDifferent(): void
+    {
+        $campo = new Testo(true, 1, 25, 1, "(\p{IsBasicLatin}\p{IsLatin-1Supplement}{1,25})");
+        $this->assertSame(null, $campo->get());
+
+        $campo->set('testÇŞĞIİÖÜ/#€');
+        $this->assertSame('testÇIÖÜ/#', $campo->get());
+    }
+
+    public function testTestoNoCharset(): void
+    {
+        $campo = new Testo(true, 2, 5, 1, '[A-Z]{2,5}');
+        $this->assertSame(null, $campo->get());
+
+        $campo->set('£%');
+        $this->assertSame('£%', $campo->get());
+    }
 }

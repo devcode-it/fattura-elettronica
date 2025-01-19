@@ -14,6 +14,7 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
     protected int $minLength;
     protected ?int $maxLength;
     protected ?int $molteplicita;
+    protected ?string $regex;
     protected ?string $content;
 
     public function __construct(
@@ -21,12 +22,14 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
         int $minLength,
         ?int $maxLength,
         ?int $molteplicita = null,
+        ?string $regex = null,
         ?string $content = null,
     ) {
         $this->optional = $optional;
         $this->minLength = $minLength;
         $this->maxLength = $maxLength;
         $this->molteplicita = $molteplicita;
+        $this->regex = $regex;
 
         $this->content = null;
         if (!is_null($content)) {
@@ -39,16 +42,16 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
         $len = strlen($value);
         if ($len >= $this->minLength) {
             if (empty($this->molteplicita)) {
-                $this->content = $value;
+                $this->content = $this->cleanup($value);
 
                 return;
             } else {
                 if (empty($this->maxLength) || empty($this->molteplicita)) {
-                    $this->content = $value;
+                    $this->content = $this->cleanup($value);
 
                     return;
                 } elseif (!empty($this->molteplicita) && $len <= $this->molteplicita * $this->maxLength) {
-                    $this->content = $value;
+                    $this->content = $this->cleanup($value);
 
                     return;
                 }
@@ -105,5 +108,32 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
         }
 
         $this->content = $result;
+    }
+
+    protected function cleanup($value)
+    {
+        if (empty($this->regex)) {
+            return $value;
+        }
+
+        preg_match_all('/(\\\p\{(.+?)\})/', $this->regex, $match);
+        if (empty($match[0])) {
+            return $value;
+        }
+
+        // http://www.unicode.org/reports/tr44/#Code_Point_Ranges
+        $mappa_charset = [
+            'IsBasicLatin' => '\x00-\x7F',
+            'IsLatin-1Supplement' => '\x80-\xFF',
+        ];
+        $match_regex = [];
+        foreach ($match[2] as $charset) {
+            if (isset($mappa_charset[$charset])) {
+                $match_regex[] = $mappa_charset[$charset];
+            }
+        }
+        $match_replace = implode('', $match_regex);
+
+        return preg_replace('/[^'.$match_replace.']+/u', '', $value);
     }
 }

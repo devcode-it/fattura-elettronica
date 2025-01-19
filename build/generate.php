@@ -362,9 +362,16 @@ function generaTesto(SimpleXMLElement $elemento, string $namespace, array $info_
     $minimo_lunghezza = $info_tipo['lunghezza'][0] ?? 'null';
     $massimo_lunghezza = $info_tipo['lunghezza'][1] ?? 'null';
 
+    $regex = $info_tipo['regex'] ?? '';
+    if (empty($regex) || str_contains($regex, '"')) {
+        $regex = 'null';
+    } else {
+        $regex = '"'.$regex.'"';
+    }
+
     return [
         'import' => ['Standard\\Testo'],
-        'init' => ["\$this->{$nome} = new Testo({$opzionale}, {$minimo_lunghezza}, {$massimo_lunghezza}, {$massimo_occorrenze});"],
+        'init' => ["\$this->{$nome} = new Testo({$opzionale}, {$minimo_lunghezza}, {$massimo_lunghezza}, {$massimo_occorrenze},  {$regex});"],
         'constructor' => [['?string', $nome]],
         'properties' => ["protected Testo \${$nome};"],
         'body' => ["

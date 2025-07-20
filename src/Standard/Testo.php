@@ -17,6 +17,8 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
     protected ?string $regex;
     protected ?string $content;
 
+    public static $REPLACEMENTS = [];
+
     public function __construct(
         bool $optional,
         int $minLength,
@@ -39,19 +41,21 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
 
     public function set($value): void
     {
+        $value = $this->cleanup($value);
+        
         $len = strlen($value);
         if ($len >= $this->minLength) {
             if (empty($this->molteplicita)) {
-                $this->content = $this->cleanup($value);
+                $this->content = $value;
 
                 return;
             } else {
                 if (empty($this->maxLength) || empty($this->molteplicita)) {
-                    $this->content = $this->cleanup($value);
+                    $this->content = $value;
 
                     return;
                 } elseif (!empty($this->molteplicita) && $len <= $this->molteplicita * $this->maxLength) {
-                    $this->content = $this->cleanup($value);
+                    $this->content = $value;
 
                     return;
                 }
@@ -112,6 +116,10 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
 
     protected function cleanup($value)
     {
+        if (!empty(self::$REPLACEMENTS)) {
+            $value = str_replace(array_keys(self::$REPLACEMENTS), array_values(self::$REPLACEMENTS), (string) $value);
+        }
+
         if (empty($this->regex)) {
             return $value;
         }

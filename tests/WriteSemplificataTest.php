@@ -63,7 +63,14 @@ final class WriteSemplificataTest extends TestCase
 
         $this->assertSame($fattura->validator()->getErrors(), []);
         $this->assertTrue($fattura->validator()->isValid());
-        $this->assertSame($fattura->__toString(), file_get_contents(__DIR__.'/risorse/fattura_semplificata.xml'));
+        $this->assertSame(
+            $this->normalizeNewlines($fattura->__toString()),
+            $this->normalizeNewlines(file_get_contents(__DIR__.'/risorse/fattura_semplificata.xml'))
+        );
         $this->assertSame($fattura->getFileName(), 'IT01234567890_001.xml');
+    }
+
+    private function normalizeNewlines(string $string):string {
+        return preg_replace('/\r\n|\r|\n/', "\n", $string);
     }
 }

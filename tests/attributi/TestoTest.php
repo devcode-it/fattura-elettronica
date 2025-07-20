@@ -84,4 +84,23 @@ final class TestoTest extends TestCase
         $campo->set('£%');
         $this->assertSame('£%', $campo->get());
     }
+
+    public function testReplacementsAreApplied(): void
+    {
+        $campo = new Testo(true, 0, 100);
+        $input = "Hello\tWorld\nTest\rEnd";
+        $campo->set($input);
+        $this->assertSame("Hello\tWorld\nTest\rEnd", $campo->get());
+    }
+
+    public function testReplacementsCanBeUpdated(): void
+    {
+        $campo = new Testo(true, 0, 100);
+        Testo::$REPLACEMENTS = [
+            "e" => "E",
+            "\n" => '',
+        ];
+        $campo->set("one\ntwo");
+        $this->assertSame('onEtwo', $campo->get());
+    }
 }

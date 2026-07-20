@@ -79,3 +79,5 @@ tmp/
 
 test.php
 index.php
+src/Ordinaria/FatturaElettronica.php
+src/Semplificata/FatturaElettronicaSemplificata.php

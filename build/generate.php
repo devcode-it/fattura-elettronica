@@ -346,9 +346,9 @@ function generaSimpleType(SimpleXMLElement $elemento, string $namespace, array $
         return generaData($elemento, $namespace, $info_tipo, 'Y-m-d\TH:i:s');
     } elseif ($mappa_tipi[$info_tipo['tipo']] == 'float') {
         return generaDecimale($elemento, $namespace, $info_tipo);
-    } else {
-        return generaIntero($elemento, $namespace, $info_tipo);
     }
+
+    return generaIntero($elemento, $namespace, $info_tipo);
 }
 
 function generaTesto(SimpleXMLElement $elemento, string $namespace, array $info_tipo)
@@ -582,12 +582,12 @@ function salvaClasse(string $namespace, string $nome, string $contenuto)
 namespace DevCode\FatturaElettronica{namespace};";
     $prefisso = str_replace('{namespace}', strlen($namespace) ? '\\'.$namespace : '', $prefisso);
 
-    $percorso = __DIR__.'/../src/'.$namespace;
+    $percorso = __DIR__.'/../src/'.str_replace('\\', '/', $namespace);
     $filesystem->mkdir(
         Path::normalize($percorso),
     );
     file_put_contents(
-        $percorso.'/'.$nome.'.php',
+        Path::normalize($percorso.'/'.$nome.'.php'),
         $prefisso.$contenuto,
     );
 }
@@ -599,7 +599,7 @@ function estraiDescrizioniDaCSV($filename)
     } catch (Exception $e) {
         return [];
     }
-    $csv->setDelimiter(';');
+    $csv->setDelimiter(',');
 
     $records = $csv->getRecords();
     $descrizioni = [];
@@ -619,7 +619,9 @@ function estraiDescrizioniDaCSV($filename)
         if (empty($numero)) {
             continue;
         }
-        $descrizioni[$numero] = $record[11];
+        // In base al CSV, i campi possono variare
+        $desc = is_numeric(trim($record[11], '<>.N')) ? (empty($record[9]) ? $record[10] : $record[9]) : $record[11];
+        $descrizioni[$numero] = str_replace('…..', '...', $desc);
     }
 
     return $descrizioni;
@@ -648,7 +650,7 @@ print_r("\n\n------------------------------------\n\n");
 print_r("Generazione per Fattura Ordinaria\n\n");
 generaDaSchema(
     'Schema_VFPR12.xsd',
-    estraiDescrizioniDaCSV('RappresentazioneTabellareFattOrdinaria 1.8_vers 260214.csv'),
+    estraiDescrizioniDaCSV('RappresentazioneTabellareFattOrdinaria.csv'),
     'Ordinaria'
 );
 

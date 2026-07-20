@@ -19,13 +19,13 @@ Per ora non è disponibile un pacchetto registrato tramite Composer.
 
 ## Aggiornamento contenuti
 
-L'aggiornamento delle classi disponibili per la fattura elettronica può essere effettuato tramite il comando `composer generate`.
+- Scaricare il formato su `specification` disponibile da https://www.agenziaentrate.gov.it/portale/fatturazione-elettronica-e-dati-fatture-transfrontaliere-new, mantenendo i nomi relativi
+- Esportare in CSV i file XLSX forniti
+- Da terminale, eseguire `composer install && composer generate && composer test`
 
 Se si desidera usare la variante in Python per la generazione, eseguire manualmente il file `build/generate.py` in Python e poi eseguire `composer format` per sistemare la formattazione dei contenuti PHP.
 
 Questo script sovrascriverà i contenuti delle cartelle `src/Semplificata` e `src/Ordinaria` con classi aggiornate sulla base dei contenuti del file Excel con i dettagli dello schema.
-
-Riferimento per lo schema ufficiale: https://www.agenziaentrate.gov.it/portale/web/guest/specifiche-tecniche-versione-1.8
 
 ## Generazione fattura
 

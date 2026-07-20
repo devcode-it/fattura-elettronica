@@ -10,14 +10,13 @@ use DevCode\FatturaElettronica\Interfaces\UnserializeInterface;
  */
 class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
 {
+    public static $REPLACEMENTS = [];
     protected bool $optional;
     protected int $minLength;
     protected ?int $maxLength;
     protected ?int $molteplicita;
     protected ?string $regex;
     protected ?string $content;
-
-    public static $REPLACEMENTS = [];
 
     public function __construct(
         bool $optional,
@@ -42,23 +41,22 @@ class Testo implements \IteratorAggregate, FieldInterface, UnserializeInterface
     public function set($value): void
     {
         $value = $this->cleanup($value);
-        
+
         $len = strlen($value);
         if ($len >= $this->minLength) {
             if (empty($this->molteplicita)) {
                 $this->content = $value;
 
                 return;
-            } else {
-                if (empty($this->maxLength) || empty($this->molteplicita)) {
-                    $this->content = $value;
+            }
+            if (empty($this->maxLength) || empty($this->molteplicita)) {
+                $this->content = $value;
 
-                    return;
-                } elseif (!empty($this->molteplicita) && $len <= $this->molteplicita * $this->maxLength) {
-                    $this->content = $value;
+                return;
+            } elseif (!empty($this->molteplicita) && $len <= $this->molteplicita * $this->maxLength) {
+                $this->content = $value;
 
-                    return;
-                }
+                return;
             }
         }
 

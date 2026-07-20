@@ -97,7 +97,7 @@ final class TestoTest extends TestCase
     {
         $campo = new Testo(true, 0, 100);
         Testo::$REPLACEMENTS = [
-            "e" => "E",
+            'e' => 'E',
             "\n" => '',
         ];
         $campo->set("one\ntwo");

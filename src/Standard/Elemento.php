@@ -48,8 +48,6 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
         } else {
             $this->{$name} = $value;
         }
-
-        return;
     }
 
     public function __toString(): string
@@ -77,32 +75,31 @@ abstract class Elemento implements SerializeInterface, UnserializeInterface
         foreach ($vars as $key => $var) {
             if (is_scalar($var) && isset($var)) {
                 return false;
+            }
+            if (!is_null($var) && $var instanceof Elemento) {
+                if (!$var->isEmpty()) {
+                    return false;
+                }
+            } elseif (!is_null($var) && $var instanceof EmptyInterface) {
+                if (!$var->isEmpty()) {
+                    return false;
+                }
             } else {
-                if (!is_null($var) && $var instanceof Elemento) {
-                    if (!$var->isEmpty()) {
-                        return false;
-                    }
-                } elseif (!is_null($var) && $var instanceof EmptyInterface) {
-                    if (!$var->isEmpty()) {
-                        return false;
-                    }
+                if (is_iterable($var)) {
+                    $elements = $var;
                 } else {
-                    if (is_iterable($var)) {
-                        $elements = $var;
-                    } else {
-                        $elements = [$var];
+                    $elements = [$var];
+                }
+
+                foreach ($elements as $element) {
+                    if (!isset($element)) {
+                        continue;
                     }
 
-                    foreach ($elements as $element) {
-                        if (!isset($element)) {
-                            continue;
-                        }
-
-                        if (is_scalar($element)) {
-                            return false;
-                        } elseif (!$element->isEmpty()) {
-                            return false;
-                        }
+                    if (is_scalar($element)) {
+                        return false;
+                    } elseif (!$element->isEmpty()) {
+                        return false;
                     }
                 }
             }

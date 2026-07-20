@@ -95,8 +95,9 @@ final class WriteOrdinariaTest extends TestCase
         );
         $this->assertSame($fattura->getFileName(), 'IT01234567890_001.xml');
     }
-    
-    private function normalizeNewlines(string $string):string {
+
+    private function normalizeNewlines(string $string): string
+    {
         return preg_replace('/\r\n|\r|\n/', "\n", $string);
     }
 }

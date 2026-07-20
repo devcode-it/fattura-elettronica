@@ -10,8 +10,7 @@ use DevCode\FatturaElettronica\Standard\Testo;
  *
  * @name IdFiscaleIVA
  *
- * Numero di identificazione fiscale ai fini IVA; i primi due caratteri rappresentano il paese ( IT, DE, ES
- * ..) ed i restanti (fino ad un massimo di 28) il codice vero e proprio che, per i residenti in Italia, corrisponde al numero di partita IVA. NON è obbligatorio se si valorizza l'elemento informativo 1.3.1.2 <CodiceFiscale>
+ * Numero di identificazione fiscale ai fini IVA; i primi due caratteri rappresentano il paese ( IT, DE, ES ...) ed i restanti (fino ad un massimo di 28) il codice vero e proprio che, per i residenti in Italia, corrisponde al numero di partita IVA. NON Ã¨ obbligatorio se si valorizza l'elemento informativo 1.3.1.2 <CodiceFiscale>
  */
 class IdFiscaleIVA extends Elemento
 {

@@ -14,7 +14,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name DatiBeniServizi
  *
- * Blocco sempre obbligatorio. Contiene natura, qualit‡, quantit‡ e gli elementi necessari a determinare il valore dei beni e/o dei servizi formanti oggetto dell'operazione
+ * Blocco sempre obbligatorio. Contiene natura, qualit√†, quantit√† e gli elementi necessari a determinare il valore dei beni e/o dei servizi formanti oggetto dell'operazione
  *
  * Blocco relativo ai dati di Beni Servizi della Fattura	Elettronica
  */

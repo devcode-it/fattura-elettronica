@@ -13,7 +13,7 @@ use DevCode\FatturaElettronica\Standard\Testo;
  *
  * @name DatiDDT
  *
- * Blocco da valorizzare nei casi di fattura "differita" per indicare il documento con cui è stato consegnato il bene (gli elementi informativi del blocco possono essere ripetuti se la fattura fa riferimento a più consegne e quindi a più documenti di trasporto)
+ * Blocco da valorizzare nei casi di fattura "differita" per indicare il documento con cui Ã¨ stato consegnato il bene (gli elementi informativi del blocco possono essere ripetuti se la fattura fa riferimento a piÃ¹ consegne e quindi a piÃ¹ documenti di trasporto)
  */
 class DatiDDT extends Elemento
 {

@@ -85,12 +85,17 @@ enum RegimeFiscale: string
     case RF17 = 'RF17';
 
     /**
+     * Altro.
+     */
+    case RF18 = 'RF18';
+
+    /**
      * Regime forfettario.
      */
     case RF19 = 'RF19';
 
     /**
-     * Altro.
+     * Regime transfrontaliero di Franchigia IVA (Direttiva UE 2020/285).
      */
-    case RF18 = 'RF18';
+    case RF20 = 'RF20';
 }

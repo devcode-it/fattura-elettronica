@@ -13,7 +13,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name DatiTrasmissione
  *
- * Blocco sempre obbligatorio contenente informazioni che identificano univocamente il soggetto che trasmette, il documento trasmesso, il formato in cui è stato trasmesso il documento, il soggetto destinatario
+ * Blocco sempre obbligatorio contenente informazioni che identificano univocamente il soggetto che trasmette, il documento trasmesso, il formato in cui Ã¨ stato trasmesso il documento, il soggetto destinatario
  *
  * Blocco relativo ai dati di trasmissione della Fattura Elettronica
  */

@@ -10,7 +10,7 @@ use DevCode\FatturaElettronica\Standard\Testo;
  *
  * @name Sede
  *
- * Blocco contenente i dati della sede del cedente / prestatore. Si tratta della sede legale per le societ‡ e del domicilio fiscale per le ditte individuali e i lavoratori autonomi.
+ * Blocco contenente i dati della sede del cedente / prestatore. Si tratta della sede legale per le societ√† e del domicilio fiscale per le ditte individuali e i lavoratori autonomi.
  */
 class Sede extends Elemento
 {

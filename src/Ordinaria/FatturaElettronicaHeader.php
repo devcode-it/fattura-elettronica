@@ -16,7 +16,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name FatturaElettronicaHeader
  *
- * Il blocco ha molteplicit‡ pari a 1, sia nel caso di fattura singola che nel caso di lotto di fatture
+ * Il blocco ha molteplicit√† pari a 1, sia nel caso di fattura singola che nel caso di lotto di fatture
  */
 class FatturaElettronicaHeader extends Elemento
 {

@@ -12,7 +12,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name ScontoMaggiorazione
  *
- * Eventuale sconto o maggiorazione applicati al prezzo unitario (la molteplicità N del blocco consente di gestire la presenza di più sconti  o maggiorazioni a 'cascata')
+ * Eventuale sconto o maggiorazione applicati al prezzo unitario (la molteplicitÃ  N del blocco consente di gestire la presenza di piÃ¹ sconti  o maggiorazioni a 'cascata')
  */
 class ScontoMaggiorazione extends Elemento
 {

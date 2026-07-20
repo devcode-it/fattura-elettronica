@@ -55,7 +55,7 @@ enum TipoDocumento: string
     case TD19 = 'TD19';
 
     /**
-     * Autofattura per regolarizzazione e integrazione delle fatture (ex art.6 c.8 e 9-bis d.lgs.471/97 o art.46 c.5 D.L. 331/93.
+     * Autofattura per regolarizzazione e integrazione delle fatture (ex art. 6 c.9-bis d.lgs. 471/97 o art.46 c.5 D.L. 331/93).
      */
     case TD20 = 'TD20';
 
@@ -98,4 +98,9 @@ enum TipoDocumento: string
      * Acquisti da San Marino con IVA (fattura cartacea).
      */
     case TD28 = 'TD28';
+
+    /**
+     * Comunicazione per omessa o irregolare fatturazione da parte del cedente/prestatore italiano (art. 6, comma 8, D.Lgs. 471/97).
+     */
+    case TD29 = 'TD29';
 }

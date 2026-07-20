@@ -10,8 +10,7 @@ use DevCode\FatturaElettronica\Standard\Testo;
  *
  * @name Sede
  *
- * Blocco contenente i dati della sede del cessionario / committente (nel caso di somministrazione di servizi quali energia elettrica, gas
- * , i dati possono fare riferimento all'ubicazione dell'utenza, ex DM 370/2000).
+ * Blocco contenente i dati della sede del cessionario / committente (nel caso di somministrazione di servizi quali energia elettrica, gas … , i dati possono fare riferimento all'ubicazione dell'utenza, ex DM 370/2000).
  */
 class Sede extends Elemento
 {

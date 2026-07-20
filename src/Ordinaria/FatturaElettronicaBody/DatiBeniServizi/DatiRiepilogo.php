@@ -14,7 +14,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name DatiRiepilogo
  *
- * Blocco obbligatorio, gli elementi informativi che lo compongono riepilogano le informazioni di dettaglio, aggregandole per aliquota IVA distinta oppure per aliquota IVA nulla e <Natura> distinta oppure, a parit‡ di questi elementi, per valore distinto di <Esigbilit‡>
+ * Blocco obbligatorio, gli elementi informativi che lo compongono riepilogano le informazioni di dettaglio, aggregandole per aliquota IVA distinta oppure per aliquota IVA nulla e <Natura> distinta oppure, a parit√† di questi elementi, per valore distinto di <Esigbilit√†>
  */
 class DatiRiepilogo extends Elemento
 {

@@ -14,7 +14,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name IscrizioneREA
  *
- * Blocco da valorizzare nei casi di societ‡ iscritte nel registro delle imprese ai sensi dell'art. 2250 del codice civile.
+ * Blocco da valorizzare nei casi di societ√† iscritte nel registro delle imprese ai sensi dell'art. 2250 del codice civile.
  */
 class IscrizioneREA extends Elemento
 {

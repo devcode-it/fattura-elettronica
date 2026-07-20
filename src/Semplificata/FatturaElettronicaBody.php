@@ -13,7 +13,7 @@ use DevCode\FatturaElettronica\Standard\Elemento;
  *
  * @name FatturaElettronicaBody
  *
- * Il blocco ha molteplicit‡ pari a 1 nel caso di fattura singola; nel caso di lotto di fatture, si ripete per ogni fattura componente il lotto stesso
+ * Il blocco ha molteplicit√† pari a 1 nel caso di fattura singola; nel caso di lotto di fatture, si ripete per ogni fattura componente il lotto stesso
  */
 class FatturaElettronicaBody extends Elemento
 {

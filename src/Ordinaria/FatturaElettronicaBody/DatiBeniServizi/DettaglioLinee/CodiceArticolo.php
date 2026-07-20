@@ -10,7 +10,7 @@ use DevCode\FatturaElettronica\Standard\Testo;
  *
  * @name CodiceArticolo
  *
- * Eventuale codifica dell'articolo (la molteplicità N del blocco consente di gestire la presenza di più codifiche per la medesima riga)
+ * Eventuale codifica dell'articolo (la molteplicitÃ  N del blocco consente di gestire la presenza di piÃ¹ codifiche per la medesima riga)
  */
 class CodiceArticolo extends Elemento
 {

@@ -13,7 +13,7 @@ use DevCode\FatturaElettronica\Standard\TestoEnum;
  *
  * @name DatiPagamento
  *
- * Blocco destinato a descrivere le modalit‡ di pagamento per la cessione/prestazione rappresentata in fattura
+ * Blocco destinato a descrivere le modalit√† di pagamento per la cessione/prestazione rappresentata in fattura
  *
  * Blocco relativo ai dati di Pagamento della Fattura Elettronica
  */
